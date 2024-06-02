@@ -1,4 +1,4 @@
-package co.com.park.gp.crosscutting.exceptions.messageCatalog.data;
+package co.com.park.gp.crosscutting.exceptions.messagecatalog.data;
 
 public enum TipoMensaje {
 	USUARIO,TECNICO

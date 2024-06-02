@@ -3,8 +3,8 @@ package co.com.park.gp.data.dao.entity.concrete;
 import java.sql.Connection;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.SQLHelper;
 
 public class SqlConnection {
@@ -26,9 +26,9 @@ public class SqlConnection {
 	protected final void setConexion(Connection conexion) {
 		if (!SQLHelper.isOpen(conexion)) {
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
-			var MensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00047);
+			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00047);
 
-			throw new DataGPException(mensajeUsuario, MensajeTecnico);
+			throw new DataGPException(mensajeUsuario, mensajeTecnico);
 		}
 		this.conexion = conexion;
 	}

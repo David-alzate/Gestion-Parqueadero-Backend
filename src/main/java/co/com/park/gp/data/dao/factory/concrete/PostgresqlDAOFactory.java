@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.SQLHelper;
 import co.com.park.gp.data.dao.entity.CiudadDAO;
 import co.com.park.gp.data.dao.entity.DepartamentoDAO;

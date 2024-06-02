@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.park.gp.business.facade.impl.departamento.ConsultarDepartamentosFacade;
 import co.com.park.gp.controller.response.DepartamentoResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.DepartamentoDTO;
 import co.com.park.gp.dto.PaisDTO;
 

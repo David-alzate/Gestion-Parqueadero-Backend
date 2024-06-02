@@ -1,12 +1,12 @@
-package co.com.park.gp.crosscutting.exceptions.messageCatalog.impl;
+package co.com.park.gp.crosscutting.exceptions.messagecatalog.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import co.com.park.gp.crosscutting.exceptions.custom.CroscuttingGPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalog;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.Mensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalog;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.Mensaje;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 
 public class MessageCatalogBase implements MessageCatalog {

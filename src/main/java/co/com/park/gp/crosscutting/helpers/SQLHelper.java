@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import co.com.park.gp.crosscutting.exceptions.custom.CroscuttingGPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 
 
 

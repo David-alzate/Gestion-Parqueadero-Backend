@@ -1,4 +1,4 @@
-package co.com.park.gp.crosscutting.exceptions.messageCatalog.data;
+package co.com.park.gp.crosscutting.exceptions.messagecatalog.data;
 
 import static co.com.park.gp.crosscutting.helpers.TextHelper.concatenate;
 import static co.com.park.gp.crosscutting.helpers.TextHelper.UNDERLINE;;

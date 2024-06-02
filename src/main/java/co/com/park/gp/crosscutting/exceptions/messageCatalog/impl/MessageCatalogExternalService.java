@@ -1,13 +1,13 @@
-package co.com.park.gp.crosscutting.exceptions.messageCatalog.impl;
+package co.com.park.gp.crosscutting.exceptions.messagecatalog.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import co.com.park.gp.crosscutting.exceptions.custom.CroscuttingGPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalog;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.Mensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalog;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.Mensaje;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 
 
@@ -18,7 +18,7 @@ public class MessageCatalogExternalService implements MessageCatalog {
 
 	@Override
 	public void inicializar() {
-		// TODO Auto-generated method stub
+
 		mensajes.clear();
 		mensajes.put(CodigoMensaje.M00007.getIdentificador(),
 				new Mensaje(CodigoMensaje.M00007,"la transaccion se a completado de forma satisfactoria..."));
@@ -27,13 +27,13 @@ public class MessageCatalogExternalService implements MessageCatalog {
 
 	@Override
 	public String obtenerContenidoMensaje(CodigoMensaje codigo, String... parametros) {
-		// TODO Auto-generated method stub
+
 		return obtenerMensaje(codigo, parametros).getContenido();
 	}
 
 	@Override
 	public Mensaje obtenerMensaje(CodigoMensaje codigo, String... parametros) {
-		// TODO Auto-generated method stub
+
 		if (ObjectHelper.getObjectHelper().isNull(codigo)) {
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00002);
 			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00001);

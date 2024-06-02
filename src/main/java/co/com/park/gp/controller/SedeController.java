@@ -12,8 +12,8 @@ import co.com.park.gp.business.facade.impl.sede.ConsultarSedeFacade;
 import co.com.park.gp.business.facade.impl.sede.RegistrarSedeFacade;
 import co.com.park.gp.controller.response.SedeResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messageCatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.SedeDTO;
 
 @RestController
