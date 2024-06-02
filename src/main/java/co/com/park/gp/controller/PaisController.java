@@ -33,14 +33,13 @@ public class PaisController {
 		}catch(final GPException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
 			paisResponse.getMensajes().add(excepcion.getMensajeUsuario());
-			excepcion.printStackTrace();
+
 		}catch(final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
 			paisResponse.getMensajes().add(mensajeUsuario);
 			
-			excepcion.printStackTrace();
 		}
 		
 		return new ResponseEntity<>(paisResponse,httpStatusCode);

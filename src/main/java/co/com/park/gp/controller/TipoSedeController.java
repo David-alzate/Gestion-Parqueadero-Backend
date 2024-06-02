@@ -32,14 +32,13 @@ public class TipoSedeController {
 		}catch(final GPException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
 			tipoSedeResponse.getMensajes().add(excepcion.getMensajeUsuario());
-			excepcion.printStackTrace();
+
 		}catch(final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00033);
 			tipoSedeResponse.getMensajes().add(mensajeUsuario);
 			
-			excepcion.printStackTrace();
 		}
 		
 		return new ResponseEntity<>(tipoSedeResponse,httpStatusCode);
