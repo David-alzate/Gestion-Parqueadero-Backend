@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "database.host",
+    "type": "java.lang.String",
+    "description": "A description for 'database.host'"
+  },
+  {
+    "name": "database.port",
+    "type": "java.lang.String",
+    "description": "A description for 'database.port'"
+  },
+  {
+    "name": "database.name",
+    "type": "java.lang.String",
+    "description": "A description for 'database.name'"
+  },
+  {
+    "name": "database.user",
+    "type": "java.lang.String",
+    "description": "A description for 'database.user'"
+  },
+  {
+    "name": "database.password",
+    "type": "java.lang.String",
+    "description": "A description for 'database.password'"
+  }
+]}
