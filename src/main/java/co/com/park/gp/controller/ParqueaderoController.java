@@ -74,5 +74,4 @@ public class ParqueaderoController {
 		return new ResponseEntity<>(parqueaderoResponse, httpStatusCode);
 
 	}
-
 }

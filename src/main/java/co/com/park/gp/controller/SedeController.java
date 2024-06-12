@@ -42,7 +42,6 @@ public class SedeController {
 
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00031);
 			sedeResponse.getMensajes().add(mensajeUsuario);
-
 		}
 
 		return new ResponseEntity<>(sedeResponse, httpStatusCode);

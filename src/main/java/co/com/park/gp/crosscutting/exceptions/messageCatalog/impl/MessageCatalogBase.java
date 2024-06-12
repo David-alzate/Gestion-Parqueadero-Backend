@@ -171,6 +171,10 @@ public class MessageCatalogBase implements MessageCatalog {
 				"El nombre del parqueadero es demasiado corto"));
 		mensajes.put(CodigoMensaje.M00077.getIdentificador(), new Mensaje(CodigoMensaje.M00077,
 				"El nombre del parqueadero es demasiado Largo"));
+		mensajes.put(CodigoMensaje.M00078.getIdentificador(), new Mensaje(CodigoMensaje.M00078,
+				"Se ha presentado un problema tratando de Iniciar Sesion."));
+		mensajes.put(CodigoMensaje.M00039.getIdentificador(), new Mensaje(CodigoMensaje.M00039,
+				"Se ha presentado un problema INESPERADO tratando de Iniciar Sesion."));
 
 	}
 
