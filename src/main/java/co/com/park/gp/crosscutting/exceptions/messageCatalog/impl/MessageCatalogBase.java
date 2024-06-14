@@ -173,8 +173,14 @@ public class MessageCatalogBase implements MessageCatalog {
 				"El nombre del parqueadero es demasiado Largo"));
 		mensajes.put(CodigoMensaje.M00078.getIdentificador(), new Mensaje(CodigoMensaje.M00078,
 				"Se ha presentado un problema tratando de Iniciar Sesion."));
-		mensajes.put(CodigoMensaje.M00039.getIdentificador(), new Mensaje(CodigoMensaje.M00039,
+		mensajes.put(CodigoMensaje.M00079.getIdentificador(), new Mensaje(CodigoMensaje.M00079,
 				"Se ha presentado un problema INESPERADO tratando de Iniciar Sesion."));
+		mensajes.put(CodigoMensaje.M00080.getIdentificador(), new Mensaje(CodigoMensaje.M00080,
+				"Credenciales incorrectas"));
+		mensajes.put(CodigoMensaje.M00081.getIdentificador(), new Mensaje(CodigoMensaje.M00081,
+				"El campo correo no puede estar vacio"));
+		mensajes.put(CodigoMensaje.M00082.getIdentificador(), new Mensaje(CodigoMensaje.M00082,
+				"El campo de la contraseña no puede estar vacio"));
 
 	}
 

@@ -48,41 +48,41 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
 	    final List<Object> parametros = new ArrayList<>();
 
 	    if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
-	        sentenciaSql.append("AND e.id = ?");
+	        sentenciaSql.append(" AND e.id = ?");
 	        parametros.add(data.getId());
 	    }
 
 	    if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-	        sentenciaSql.append("AND e.nombre = ?");
+	        sentenciaSql.append(" AND e.nombre = ?");
 	        parametros.add(data.getNombre());
 	    }
 
 	    if (!(data.getNumeroIdentificacion() == 0)) {
-	        sentenciaSql.append("AND e.numeroidentificacion = ?");
+	        sentenciaSql.append(" AND e.numeroidentificacion = ?");
 	        parametros.add(data.getNumeroIdentificacion());
 	    }
 
 	    if (!TextHelper.isNullOrEmpty(data.getPassword())) {
-	        sentenciaSql.append("AND e.password = ?");
+	        sentenciaSql.append(" AND e.password = ?");
 	        parametros.add(data.getPassword());
 	    }
 
 	    if (!TextHelper.isNullOrEmpty(data.getCorreoElectronico())) {
-	        sentenciaSql.append("AND e.correoelectronico = ?");
+	        sentenciaSql.append(" AND e.correoelectronico = ?");
 	        parametros.add(data.getCorreoElectronico());
 	    }
 
 	    if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado())
 	            && !ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado().getId())
 	            && !data.getTipoEmpleado().getId().equals(UUIDHelper.getDefault())) {
-	        sentenciaSql.append("AND te.id = ?");
+	        sentenciaSql.append(" AND te.id = ?");
 	        parametros.add(data.getTipoEmpleado().getId());
 	    }
 
 	    if (!ObjectHelper.getObjectHelper().isNull(data.getSede())
 	            && !ObjectHelper.getObjectHelper().isNull(data.getSede().getId())
 	            && !data.getSede().getId().equals(UUIDHelper.getDefault())) {
-	        sentenciaSql.append("AND s.id = ?");
+	        sentenciaSql.append(" AND s.id = ?");
 	        parametros.add(data.getSede().getId());
 	    }
 
@@ -135,6 +135,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
 
 	    return empleados;
 	}
+
 
 
 }

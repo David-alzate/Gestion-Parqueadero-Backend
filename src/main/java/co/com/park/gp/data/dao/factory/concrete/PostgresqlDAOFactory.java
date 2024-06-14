@@ -145,12 +145,13 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //
 //
 //		System.out.println("Consultar Empleados");
-//		var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setTipoEmpleado(TipoEmpleadoEntity.build().setId(UUIDHelper.convertToUUID("d40d1775-c48f-48fe-89de-8eba6322c921"))));
+//		var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setCorreoElectronico("jhon-a2@gmail.com").setPassword("15385403++*"));
 //
 //		for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
 //			System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
 //		}
 //
+//		
 //		System.out.println("Consultar Sede");
 //		var resultadosSede = factory.getSedeDAO().consultar(SedeEntity.build().setParqueadero(ParqueaderoEntity.build().setId(UUIDHelper.convertToUUID("e1a1e0a0-0000-0000-0000-000000000002"))));
 //
