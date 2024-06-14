@@ -16,6 +16,7 @@ public class EmpleadoEntity {
 	private String correoElectronico;
 	private TipoEmpleadoEntity tipoEmpleado;
 	private SedeEntity sede;
+	private String password;
 
 	public EmpleadoEntity() {
 		setId(UUIDHelper.getDefault());
@@ -26,11 +27,12 @@ public class EmpleadoEntity {
 		setCorreoElectronico(TextHelper.EMPTY);
 		setTipoEmpleado(TipoEmpleadoEntity.build());
 		setSede(SedeEntity.build());
+		setPassword(TextHelper.EMPTY);
 	}
 
 	public EmpleadoEntity(final UUID id, final TipoIdentificacionEntity tipoIdentificacion,
 			final int numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
-			final TipoEmpleadoEntity tipoEmpleado, final SedeEntity sede) {
+			final TipoEmpleadoEntity tipoEmpleado, final SedeEntity sede, final String password) {
 		setId(id);
 		setTipoIdentificacion(tipoIdentificacion);
 		setNumeroIdentificacion(numeroIdentificacion);
@@ -39,6 +41,11 @@ public class EmpleadoEntity {
 		setCorreoElectronico(correoElectronico);
 		setTipoEmpleado(tipoEmpleado);
 		setSede(sede);
+		setPassword(password);
+	}
+
+	public static final EmpleadoEntity build() {
+		return new EmpleadoEntity();
 	}
 
 	public final EmpleadoEntity setId(UUID id) {
@@ -82,6 +89,11 @@ public class EmpleadoEntity {
 		return this;
 	}
 
+	public final EmpleadoEntity setPassword(String password) {
+		this.password = TextHelper.applyTrim(password);
+		return this;
+	}
+
 	public final UUID getId() {
 		return id;
 	}
@@ -112,6 +124,10 @@ public class EmpleadoEntity {
 
 	public final SedeEntity getSede() {
 		return sede;
+	}
+
+	public final String getPassword() {
+		return password;
 	}
 
 }

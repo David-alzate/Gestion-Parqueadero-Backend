@@ -16,6 +16,7 @@ public class EmpleadoDTO {
 	private String correoElectronico;
 	private TipoEmpleadoDTO tipoEmpleado;
 	private SedeDTO sede;
+	private String password;
 
 	public EmpleadoDTO() {
 		setId(UUIDHelper.getDefault());
@@ -26,11 +27,12 @@ public class EmpleadoDTO {
 		setCorreoElectronico(TextHelper.EMPTY);
 		setTipoEmpleado(TipoEmpleadoDTO.build());
 		setSede(SedeDTO.build());
+		setPassword(TextHelper.EMPTY);
 	}
 
 	public EmpleadoDTO(final UUID id, final TipoIdentificacionDTO tipoIdentificacion, final int numeroIdentificacion,
 			final String nombre, final String apellido, final String correoElectronico,
-			final TipoEmpleadoDTO tipoEmpleado, final SedeDTO sede) {
+			final TipoEmpleadoDTO tipoEmpleado, final SedeDTO sede, final String password) {
 		setId(id);
 		setTipoIdentificacion(tipoIdentificacion);
 		setNumeroIdentificacion(numeroIdentificacion);
@@ -39,6 +41,11 @@ public class EmpleadoDTO {
 		setCorreoElectronico(correoElectronico);
 		setTipoEmpleado(tipoEmpleado);
 		setSede(sede);
+		setPassword(password);
+	}
+
+	public static final EmpleadoDTO build() {
+		return new EmpleadoDTO();
 	}
 
 	public final EmpleadoDTO setId(UUID id) {
@@ -47,7 +54,8 @@ public class EmpleadoDTO {
 	}
 
 	public final EmpleadoDTO setTipoIdentificacion(TipoIdentificacionDTO tipoIdentificacion) {
-		this.tipoIdentificacion = ObjectHelper.getObjectHelper().getDefaultValue(tipoIdentificacion, TipoIdentificacionDTO.build());
+		this.tipoIdentificacion = ObjectHelper.getObjectHelper().getDefaultValue(tipoIdentificacion,
+				TipoIdentificacionDTO.build());
 		return this;
 	}
 
@@ -81,6 +89,11 @@ public class EmpleadoDTO {
 		return this;
 	}
 
+	public final EmpleadoDTO setPassword(String password) {
+		this.password = TextHelper.applyTrim(password);
+		return this;
+	}
+
 	public final UUID getId() {
 		return id;
 	}
@@ -111,6 +124,10 @@ public class EmpleadoDTO {
 
 	public final SedeDTO getSede() {
 		return sede;
+	}
+
+	public final String getPassword() {
+		return password;
 	}
 
 }

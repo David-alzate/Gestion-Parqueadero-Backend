@@ -15,6 +15,7 @@ import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.SQLHelper;
 import co.com.park.gp.data.dao.entity.CiudadDAO;
 import co.com.park.gp.data.dao.entity.DepartamentoDAO;
+import co.com.park.gp.data.dao.entity.EmpleadoDAO;
 import co.com.park.gp.data.dao.entity.PaisDAO;
 import co.com.park.gp.data.dao.entity.ParqueaderoDAO;
 import co.com.park.gp.data.dao.entity.SedeDAO;
@@ -22,11 +23,13 @@ import co.com.park.gp.data.dao.entity.TipoSedeDAO;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.CiudadPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.DepartamentoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.EmpleadoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.PaisPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.ParqueaderoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.SedePostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.TipoSedePostgresqlDAO;
 import co.com.park.gp.data.dao.factory.DAOFactory;
+
 
 @Component
 public final class PostgresqlDAOFactory extends SqlConnection implements DAOFactory {
@@ -130,8 +133,42 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
         return new TipoSedePostgresqlDAO(getConexion());
     }
 
-    public static void main(String[] args) {
+	@Override
+	public EmpleadoDAO getEmpleadoDAO() {
+		return new EmpleadoPostgresqlDAO(getConexion());
+	}
 
-    }
+//    public static void main(String[] args) {
+//		DAOFactory factory = DAOFactory.getFactory();
+//		System.out.println("Iniciando transacción...");
+//		factory.iniciarTransaccion();
+//
+//
+//		System.out.println("Consultar Empleados");
+//		var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setTipoEmpleado(TipoEmpleadoEntity.build().setId(UUIDHelper.convertToUUID("d40d1775-c48f-48fe-89de-8eba6322c921"))));
+//
+//		for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
+//			System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
+//		}
+//
+//		System.out.println("Consultar Sede");
+//		var resultadosSede = factory.getSedeDAO().consultar(SedeEntity.build().setParqueadero(ParqueaderoEntity.build().setId(UUIDHelper.convertToUUID("e1a1e0a0-0000-0000-0000-000000000002"))));
+//
+//		for (SedeEntity sedeEntity : resultadosSede) {
+//			System.out.println("idSede: " + sedeEntity.getId() + ", nombreSede: " + sedeEntity.getNombre() + ", direccionSede: " + sedeEntity.getDireccion()
+//                    + ", correoElectronico: " + sedeEntity.getCorreoElectronico() + ", celdasCarro: " + sedeEntity.getCeldasCarro() + ", celdasMoto: " + sedeEntity.getCeldasMoto()
+//                    + ", celdasCamion: " + sedeEntity.getCeldascamion() + ", idPais: " + sedeEntity.getPais().getId() + ", idDepartamento: " + sedeEntity.getDepartamento().getId()
+//                    + ", idCiudad: " + sedeEntity.getCiudad().getId() + ", idParqueadero: " + sedeEntity.getParqueadero().getId() + ", idTipoSede: " + sedeEntity.getTipoSede().getId());
+//		}
+//
+//
+//	System.out.println("Confirmar transacción...");
+//	factory.confirmarTransaccion();
+//
+//	System.out.println("Cerrando conexión...");
+//	factory.cerrarConexion();
+//
+//    }
+
 
 }
