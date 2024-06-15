@@ -1,35 +1,49 @@
 package co.com.park.gp.business.assembler.dto.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
 import co.com.park.gp.business.domain.TipoEmpleadoDomain;
+import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.dto.TipoEmpleadoDTO;
 
-public class TipoEmpleadoAssemblerDTO implements AssemblerDTO<TipoEmpleadoDomain, TipoEmpleadoDTO>{
+public class TipoEmpleadoAssemblerDTO implements AssemblerDTO<TipoEmpleadoDomain, TipoEmpleadoDTO> {
+
+	private static final AssemblerDTO<TipoEmpleadoDomain, TipoEmpleadoDTO> instance = new TipoEmpleadoAssemblerDTO();
+
+	private TipoEmpleadoAssemblerDTO() {
+		super();
+	}
+
+	public static final AssemblerDTO<TipoEmpleadoDomain, TipoEmpleadoDTO> getInstance() {
+		return instance;
+	}
 
 	@Override
 	public TipoEmpleadoDomain toDomain(TipoEmpleadoDTO data) {
-		// TODO Auto-generated method stub
-		return null;
+		var tipoEmpleadoDtoTmp = ObjectHelper.getObjectHelper().getDefaultValue(data, TipoEmpleadoDTO.build());
+		return TipoEmpleadoDomain.build(tipoEmpleadoDtoTmp.getId(), tipoEmpleadoDtoTmp.getNombre());
 	}
 
 	@Override
 	public List<TipoEmpleadoDomain> toDomainCollection(List<TipoEmpleadoDTO> entityCollection) {
-		// TODO Auto-generated method stub
-		return null;
+		var dtoCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection,
+				new ArrayList<TipoEmpleadoDTO>());
+		return dtoCollectionTmp.stream().map(this::toDomain).toList();
 	}
 
 	@Override
 	public TipoEmpleadoDTO toDto(TipoEmpleadoDomain domain) {
-		// TODO Auto-generated method stub
-		return null;
+		var tipoEmpleadoDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain, TipoEmpleadoDomain.build());
+		return TipoEmpleadoDTO.build().setId(tipoEmpleadoDomainTmp.getId()).setNombre(tipoEmpleadoDomainTmp.getNombre());
 	}
 
 	@Override
 	public List<TipoEmpleadoDTO> toDTOCollection(List<TipoEmpleadoDomain> domainCollection) {
-		// TODO Auto-generated method stub
-		return null;
+		var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection,
+				new ArrayList<TipoEmpleadoDomain>());
+		return domainCollectionTmp.stream().map(this::toDto).toList();
 	}
 
 }
