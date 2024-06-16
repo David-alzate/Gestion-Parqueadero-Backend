@@ -6,6 +6,8 @@ import co.com.park.gp.data.dao.entity.EmpleadoDAO;
 import co.com.park.gp.data.dao.entity.PaisDAO;
 import co.com.park.gp.data.dao.entity.ParqueaderoDAO;
 import co.com.park.gp.data.dao.entity.SedeDAO;
+import co.com.park.gp.data.dao.entity.TipoEmpleadoDAO;
+import co.com.park.gp.data.dao.entity.TipoIdentificacionDAO;
 import co.com.park.gp.data.dao.entity.TipoSedeDAO;
 import co.com.park.gp.data.dao.factory.concrete.PostgresqlDAOFactory;
 
@@ -36,5 +38,9 @@ public interface DAOFactory {
 	TipoSedeDAO getTipoSedeDAO();
 
 	EmpleadoDAO getEmpleadoDAO();
+	
+	TipoEmpleadoDAO getTipoEmpleadoDAO();
+	
+	TipoIdentificacionDAO geTipoIdentificacionDAO();
 
 }

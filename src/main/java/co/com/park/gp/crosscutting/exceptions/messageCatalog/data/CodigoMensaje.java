@@ -86,7 +86,23 @@ public enum CodigoMensaje {
 	M00079(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00079", true),
 	M00080(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00080", true),
 	M00081(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00081", true),
-	M00082(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00082", true);
+	M00082(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00082", true),
+	M00083(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00083", true),
+	M00084(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00084", true),
+	M00085(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00085", true),
+	M00086(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00086", true),
+	M00087(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00087", true),
+	M00088(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00088", true),
+	M00089(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00089", true),
+	M00090(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00090", true),
+	M00091(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00091", true),
+	M00092(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00092", true),
+	M00093(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00093", true),
+	M00094(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00094", true),
+	M00095(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00095", true),
+	M00096(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00096", true),
+	M00097(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00097", true),
+	M00098(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00098", true);
 	
 	private TipoMensaje tipo;
 	private CategoriaMensaje categoria;

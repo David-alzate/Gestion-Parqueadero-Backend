@@ -181,6 +181,38 @@ public class MessageCatalogBase implements MessageCatalog {
 				"El campo correo no puede estar vacio"));
 		mensajes.put(CodigoMensaje.M00082.getIdentificador(), new Mensaje(CodigoMensaje.M00082,
 				"El campo de la contraseña no puede estar vacio"));
+		mensajes.put(CodigoMensaje.M00083.getIdentificador(), new Mensaje(CodigoMensaje.M00083,
+				"Se ha presentado un problema tratando de llevar un registro del empleado..."));
+		mensajes.put(CodigoMensaje.M00084.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00084, "El DAO factory para crear el empleado llegó nulo..."));
+		mensajes.put(CodigoMensaje.M00085.getIdentificador(), new Mensaje(CodigoMensaje.M00085,
+				"Se ha presentado un problema al consultar la información de los empleados"));
+		mensajes.put(CodigoMensaje.M00086.getIdentificador(), new Mensaje(CodigoMensaje.M00086,
+				"Se ha presentado una SQLException tratando de realizar la consulta de las sedes en la tabla 'Empleado' de la base de datos."));
+		mensajes.put(CodigoMensaje.M00087.getIdentificador(), new Mensaje(CodigoMensaje.M00087,
+				"Se ha presentado un problema tratando de llevar un registro del empleado..."));
+		mensajes.put(CodigoMensaje.M00088.getIdentificador(), new Mensaje(CodigoMensaje.M00088,
+				"Se ha presentado una SQLException tratando de realizar el insert del empleado en la tabla \"Empleado\" de la base de datos."));
+		mensajes.put(CodigoMensaje.M00089.getIdentificador(), new Mensaje(CodigoMensaje.M00089,
+				"Se ha presentado un problema INESPERADO tratando de consultar los empleados"));
+		mensajes.put(CodigoMensaje.M00090.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00090, "Empleados consultados exitosamente"));
+		mensajes.put(CodigoMensaje.M00091.getIdentificador(), new Mensaje(CodigoMensaje.M00091,
+				"Se ha presentado un problema tratando de consultar la informacion de los tipos de identificacion."));
+		mensajes.put(CodigoMensaje.M00092.getIdentificador(), new Mensaje(CodigoMensaje.M00092,
+				"Se ha presentado una SQLException tratando de realizar la consulta de los tipos de identificacion en la tabla \"TipoIdentificacion\" de la base de datos."));
+		mensajes.put(CodigoMensaje.M00093.getIdentificador(), new Mensaje(CodigoMensaje.M00093,
+				"Se ha presentado un problema tratando de consultar la informacion de los tipos de empleados."));
+		mensajes.put(CodigoMensaje.M00094.getIdentificador(), new Mensaje(CodigoMensaje.M00094,
+				"Se ha presentado una SQLException tratando de realizar la consulta de los tipos de empleados en la tabla \"TipoEmpleado\" de la base de datos."));
+		mensajes.put(CodigoMensaje.M00095.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00095, "tipo Empleados consultados exitosamente"));
+		mensajes.put(CodigoMensaje.M00096.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00096, "se ha presentado un error tratando de consultar los tipos de empleados"));
+		mensajes.put(CodigoMensaje.M00097.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00097, "Tipo Identificaciones consultadas exitosamente"));
+		mensajes.put(CodigoMensaje.M00098.getIdentificador(),
+				new Mensaje(CodigoMensaje.M00098, "se ha presentado un error tratando de consultar los tipos de identificaciones"));
 
 	}
 

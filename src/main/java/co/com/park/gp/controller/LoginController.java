@@ -35,13 +35,11 @@ public class LoginController {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             loginResonse.setSuccess(false);
             loginResonse.getMensajes().add(excepcion.getMensajeUsuario());
-            excepcion.printStackTrace();
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             loginResonse.setSuccess(false);
             var mensajeUsuario = "Se ha presentado un problema tratando de iniciar sesión";
             loginResonse.getMensajes().add(mensajeUsuario);
-            excepcion.printStackTrace();
         }
 
         return new ResponseEntity<>(loginResonse, httpStatusCode);

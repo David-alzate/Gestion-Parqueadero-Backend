@@ -19,6 +19,8 @@ import co.com.park.gp.data.dao.entity.EmpleadoDAO;
 import co.com.park.gp.data.dao.entity.PaisDAO;
 import co.com.park.gp.data.dao.entity.ParqueaderoDAO;
 import co.com.park.gp.data.dao.entity.SedeDAO;
+import co.com.park.gp.data.dao.entity.TipoEmpleadoDAO;
+import co.com.park.gp.data.dao.entity.TipoIdentificacionDAO;
 import co.com.park.gp.data.dao.entity.TipoSedeDAO;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.CiudadPostgresqlDAO;
@@ -27,6 +29,8 @@ import co.com.park.gp.data.dao.entity.concrete.postgresql.EmpleadoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.PaisPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.ParqueaderoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.SedePostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.TipoEmpleadoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.TipoIdentificacionPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.TipoSedePostgresqlDAO;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 
@@ -136,6 +140,16 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 	@Override
 	public EmpleadoDAO getEmpleadoDAO() {
 		return new EmpleadoPostgresqlDAO(getConexion());
+	}
+
+	@Override
+	public TipoEmpleadoDAO getTipoEmpleadoDAO() {
+		return new TipoEmpleadoPostgresqlDAO(getConexion());
+	}
+
+	@Override
+	public TipoIdentificacionDAO geTipoIdentificacionDAO() {
+		return new TipoIdentificacionPostgresqlDAO(getConexion());
 	}
 
 //    public static void main(String[] args) {
