@@ -5,7 +5,7 @@ import java.util.UUID;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 
-public class TipoEmpleadoEntity {
+public final class TipoEmpleadoEntity {
 
 	private UUID id;
 	private String nombre;
@@ -20,7 +20,7 @@ public class TipoEmpleadoEntity {
 		setNombre(nombre);
 	}
 
-	public static final TipoEmpleadoEntity build() {
+	public static TipoEmpleadoEntity build() {
 		return new TipoEmpleadoEntity();
 	}
 

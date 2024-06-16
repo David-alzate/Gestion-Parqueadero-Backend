@@ -14,13 +14,13 @@ import co.com.park.gp.dto.ParqueaderoDTO;
 
 public class ConsultarParqueaderosFacade implements FacadeWhitReturn<ParqueaderoDTO, List<ParqueaderoDTO>> {
 
-	private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
-	public ConsultarParqueaderosFacade() {
-		daoFactory = DAOFactory.getFactory();
-	}
+    public ConsultarParqueaderosFacade() {
+        daoFactory = DAOFactory.getFactory();
+    }
 
-	@Override
+    @Override
     public List<ParqueaderoDTO> execute(final ParqueaderoDTO dto) {
 
         try {
@@ -36,10 +36,10 @@ public class ConsultarParqueaderosFacade implements FacadeWhitReturn<Parqueadero
         } catch (final Exception exception) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00030);
-            
+
             throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
-            } finally {
-            	daoFactory.cerrarConexion();
-            }
-	}
+        } finally {
+            daoFactory.cerrarConexion();
+        }
+    }
 }

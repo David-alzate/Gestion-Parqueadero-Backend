@@ -12,19 +12,19 @@ import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.dto.EmpleadoDTO;
 
-public class ConsultarEmpleadoFacade implements FacadeWhitReturn<EmpleadoDTO, List<EmpleadoDTO>>{
-	
-	private DAOFactory daoFactory;
+public class ConsultarEmpleadoFacade implements FacadeWhitReturn<EmpleadoDTO, List<EmpleadoDTO>> {
+
+    private final DAOFactory daoFactory;
 
     public ConsultarEmpleadoFacade() {
         daoFactory = DAOFactory.getFactory();
     }
 
-	@Override
-	public List<EmpleadoDTO> execute(EmpleadoDTO dto) {
+    @Override
+    public List<EmpleadoDTO> execute(EmpleadoDTO dto) {
 
         try {
-        	
+
             var useCase = new ConsultarEmpleado(daoFactory);
             var empleadoDomain = EmpleadoAssemblerDTO.getInstance().toDomain(dto);
             var resultadosDomain = useCase.execute(empleadoDomain);

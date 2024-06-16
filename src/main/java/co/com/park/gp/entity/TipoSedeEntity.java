@@ -15,12 +15,12 @@ public final class TipoSedeEntity {
 		setNombre(TextHelper.EMPTY);
 	}
 
-	public TipoSedeEntity(final UUID id,final String nombre) {
+	public TipoSedeEntity(final UUID id, final String nombre) {
 		setId(id);
 		setNombre(nombre);
 	}
-	
-	public static final TipoSedeEntity build() {
+
+	public static TipoSedeEntity build() {
 		return new TipoSedeEntity();
 	}
 

@@ -8,7 +8,7 @@ import co.com.park.gp.business.domain.TipoEmpleadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.entity.TipoEmpleadoEntity;
 
-public class TipoEmpleadoAssemblerEntity implements AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> {
+public final class TipoEmpleadoAssemblerEntity implements AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> {
 
 	private static final AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> instance = new TipoEmpleadoAssemblerEntity();
 
@@ -16,12 +16,12 @@ public class TipoEmpleadoAssemblerEntity implements AssemblerEntity<TipoEmpleado
 		super();
 	}
 
-	public static final AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> getInstance() {
+	public static AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> getInstance() {
 		return instance;
 	}
 
 	@Override
-	public TipoEmpleadoDomain toDomain(TipoEmpleadoEntity data) {
+	public TipoEmpleadoDomain toDomain(final TipoEmpleadoEntity data) {
 		var tipoEmpleadoEntityTmp = ObjectHelper.getObjectHelper().getDefaultValue(data, TipoEmpleadoEntity.build());
 		return TipoEmpleadoDomain.build(tipoEmpleadoEntityTmp.getId(), tipoEmpleadoEntityTmp.getNombre());
 	}
@@ -34,7 +34,7 @@ public class TipoEmpleadoAssemblerEntity implements AssemblerEntity<TipoEmpleado
 	}
 
 	@Override
-	public TipoEmpleadoEntity toEntity(TipoEmpleadoDomain domain) {
+	public TipoEmpleadoEntity toEntity(final TipoEmpleadoDomain domain) {
 		var tipoEmpleadoDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain, TipoEmpleadoDomain.build());
 		return TipoEmpleadoEntity.build().setId(tipoEmpleadoDomainTmp.getId())
 				.setNombre(tipoEmpleadoDomainTmp.getNombre());

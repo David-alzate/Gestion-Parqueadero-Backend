@@ -14,7 +14,7 @@ import co.com.park.gp.dto.LoginDTO;
 
 @RestController
 @RequestMapping("/login/")
-public class LoginController {
+public final class LoginController {
 	
 	@PostMapping
     public ResponseEntity<LoginResonse> crear(@RequestBody LoginDTO data) {

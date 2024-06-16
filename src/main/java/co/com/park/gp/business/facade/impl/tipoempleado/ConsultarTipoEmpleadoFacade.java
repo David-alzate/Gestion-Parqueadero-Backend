@@ -10,30 +10,30 @@ import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.dto.TipoEmpleadoDTO;
 
-public class ConsultarTipoEmpleadoFacade implements FacadeWhitReturn<TipoEmpleadoDTO, List<TipoEmpleadoDTO>>{
-	
-	 private DAOFactory daoFactory;
+public class ConsultarTipoEmpleadoFacade implements FacadeWhitReturn<TipoEmpleadoDTO, List<TipoEmpleadoDTO>> {
 
-	    public ConsultarTipoEmpleadoFacade() {
-	        this.daoFactory = DAOFactory.getFactory();
-	    }
+    private final DAOFactory daoFactory;
 
-		@Override
-		public List<TipoEmpleadoDTO> execute(TipoEmpleadoDTO dto) {
-			 try {
-		            var useCase = new ConsultarTipoEmpleado(daoFactory);
-		            var tipoEmpleadoDomain = TipoEmpleadoAssemblerDTO.getInstance().toDomain(dto);
-		            var resultadosDomain = useCase.execute(tipoEmpleadoDomain);
-		            return TipoEmpleadoAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
-		        } catch (GPException exception) {
-		            throw exception;
-		        } catch (Exception exception) {
-		            var mensajeUsuario = "Se ha presentado un problema al consultar la información de los tipos de empleado.";
-		            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar los tipos de empleado.";
-		            throw new BusinessGPException(mensajeUsuario, mensajeTecnico, exception);
-		        } finally {
-		            daoFactory.cerrarConexion();
-		        }
-		    }
+    public ConsultarTipoEmpleadoFacade() {
+        this.daoFactory = DAOFactory.getFactory();
+    }
+
+    @Override
+    public List<TipoEmpleadoDTO> execute(TipoEmpleadoDTO dto) {
+        try {
+            var useCase = new ConsultarTipoEmpleado(daoFactory);
+            var tipoEmpleadoDomain = TipoEmpleadoAssemblerDTO.getInstance().toDomain(dto);
+            var resultadosDomain = useCase.execute(tipoEmpleadoDomain);
+            return TipoEmpleadoAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
+        } catch (GPException exception) {
+            throw exception;
+        } catch (Exception exception) {
+            var mensajeUsuario = "Se ha presentado un problema al consultar la información de los tipos de empleado.";
+            var mensajeTecnico = "Se ha presentado un problema INESPERADO tratando de consultar los tipos de empleado.";
+            throw new BusinessGPException(mensajeUsuario, mensajeTecnico, exception);
+        } finally {
+            daoFactory.cerrarConexion();
+        }
+    }
 
 }

@@ -24,7 +24,7 @@ public final class DepartamentoEntity {
 		setPais(pais);
 	}
 
-	public static final DepartamentoEntity build() {
+	public static DepartamentoEntity build() {
 		return new DepartamentoEntity();
 	}
 

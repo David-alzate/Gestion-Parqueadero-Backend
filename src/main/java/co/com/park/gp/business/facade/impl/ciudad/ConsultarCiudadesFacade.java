@@ -14,35 +14,32 @@ import co.com.park.gp.dto.CiudadDTO;
 
 public class ConsultarCiudadesFacade implements FacadeWhitReturn<CiudadDTO, List<CiudadDTO>> {
 
-	private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
-	public ConsultarCiudadesFacade() {
-		daoFactory = DAOFactory.getFactory();
-	}
+    public ConsultarCiudadesFacade() {
+        daoFactory = DAOFactory.getFactory();
+    }
 
-	@Override
-	public List<CiudadDTO> execute(final CiudadDTO dto) {
+    @Override
+    public List<CiudadDTO> execute(final CiudadDTO dto) {
 
-		try {
-			var usecase = new ConsultarCiudades(daoFactory);
-			var ciudadDomain = CiudadAssemblerDTO.getInstance().toDomain(dto);
-			var resultadosDomain = usecase.execute(ciudadDomain);
-			return CiudadAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
+        try {
+            var usecase = new ConsultarCiudades(daoFactory);
+            var ciudadDomain = CiudadAssemblerDTO.getInstance().toDomain(dto);
+            var resultadosDomain = usecase.execute(ciudadDomain);
+            return CiudadAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
 
-		} catch (final GPException exception) {
-			throw exception;
-		} catch (final Exception exception) {
+        } catch (final GPException exception) {
+            throw exception;
+        } catch (final Exception exception) {
 
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00023);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00024);
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00023);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00024);
 
-			throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
+            throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
 
-		} finally {
-			daoFactory.cerrarConexion();
-		}
-	}
-
-
-
+        } finally {
+            daoFactory.cerrarConexion();
+        }
+    }
 }

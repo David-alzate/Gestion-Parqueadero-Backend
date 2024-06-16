@@ -12,33 +12,33 @@ import co.com.park.gp.dto.LoginDTO;
 
 public class IniciarSesionFacade implements FacadeWhitReturn<LoginDTO, Boolean> {
 
-	private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
-	public IniciarSesionFacade() {
-		daoFactory = DAOFactory.getFactory();
-	}
+    public IniciarSesionFacade() {
+        daoFactory = DAOFactory.getFactory();
+    }
 
-	@Override
-	public Boolean execute(LoginDTO dto) {
-		daoFactory.iniciarTransaccion();
-		try {
+    @Override
+    public Boolean execute(LoginDTO dto) {
+        daoFactory.iniciarTransaccion();
+        try {
 
-			var useCase = new IniciarSesion(daoFactory);
-			var loginDomain = LoginAssemblerDTO.getInstance().toDomain(dto);
+            var useCase = new IniciarSesion(daoFactory);
+            var loginDomain = LoginAssemblerDTO.getInstance().toDomain(dto);
 
-			return useCase.execute(loginDomain);
-		} catch (final GPException exception) {
-			throw exception;
-		} catch (final Exception exception) {
+            return useCase.execute(loginDomain);
+        } catch (final GPException exception) {
+            throw exception;
+        } catch (final Exception exception) {
 
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00031);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00032);
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00031);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00032);
 
-			throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
+            throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
 
-		} finally {
-			daoFactory.cerrarConexion();
-		}
-	}
+        } finally {
+            daoFactory.cerrarConexion();
+        }
+    }
 
 }

@@ -11,24 +11,24 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 
 public class ConsultarDepartamentos implements UseCaseWithReturn<DepartamentoDomain, List<DepartamentoDomain>> {
 
-    private DAOFactory factory;
+    private final DAOFactory factory;
 
     public ConsultarDepartamentos(final DAOFactory factory) {
-        if(ObjectHelper.getObjectHelper().isNull(factory)) {
+        if (ObjectHelper.getObjectHelper().isNull(factory)) {
             var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo la consulta de los departamentos...";
             var mensajeTecnico = "El dao factory para consultar el departamento llegó nulo...";
             throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
         }
-        
+
         this.factory = factory;
     }
 
     @Override
     public List<DepartamentoDomain> execute(final DepartamentoDomain data) {
-        var departamentoEntityFilter = 
+        var departamentoEntityFilter =
                 DepartamentoAssemblerEntity.getInstance().toEntity(data);
         var resultadosEntity = factory.getDepartamentoDAO().consultar(departamentoEntityFilter);
-        
+
         return DepartamentoAssemblerEntity.getInstance().
                 toDomainCollection(resultadosEntity);
     }

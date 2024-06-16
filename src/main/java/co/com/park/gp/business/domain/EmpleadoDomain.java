@@ -32,19 +32,19 @@ public final class EmpleadoDomain {
 		setPassword(password);
 	}
 
-	public static final EmpleadoDomain build(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
+	public static EmpleadoDomain build(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
 			final int numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
 			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final String password) {
 		return new EmpleadoDomain(id, tipoIdentificacion, numeroIdentificacion, nombre, apellido, correoElectronico,
 				tipoEmpleado, sede, password);
 	}
 
-	public static final EmpleadoDomain build(final UUID id) {
+	public static EmpleadoDomain build(final UUID id) {
 		return new EmpleadoDomain(id, TipoIdentificacionDomain.build(), 0, TextHelper.EMPTY, TextHelper.EMPTY,
 				TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
 	}
 
-	public static final EmpleadoDomain build() {
+	public static EmpleadoDomain build() {
 		return new EmpleadoDomain(UUIDHelper.getDefault(), TipoIdentificacionDomain.build(), 0, TextHelper.EMPTY,
 				TextHelper.EMPTY, TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
 	}

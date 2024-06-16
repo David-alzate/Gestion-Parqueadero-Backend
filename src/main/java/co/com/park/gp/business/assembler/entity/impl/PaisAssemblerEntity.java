@@ -16,7 +16,7 @@ public final class PaisAssemblerEntity implements AssemblerEntity<PaisDomain, Pa
 		super();
 	}
 
-	public static final AssemblerEntity<PaisDomain, PaisEntity> getInstance() {
+	public static AssemblerEntity<PaisDomain, PaisEntity> getInstance() {
 		return instance;
 	}
 

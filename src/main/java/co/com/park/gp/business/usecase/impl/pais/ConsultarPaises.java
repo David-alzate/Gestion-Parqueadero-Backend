@@ -11,24 +11,24 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 
 public class ConsultarPaises implements UseCaseWithReturn<PaisDomain, List<PaisDomain>> {
 
-    private DAOFactory factory;
+    private final DAOFactory factory;
 
     public ConsultarPaises(final DAOFactory factory) {
-        if(ObjectHelper.getObjectHelper().isNull(factory)) {
+        if (ObjectHelper.getObjectHelper().isNull(factory)) {
             var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo la consulta de los países...";
             var mensajeTecnico = "El dao factory para consultar el país llegó nulo...";
             throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
         }
-        
+
         this.factory = factory;
     }
 
     @Override
     public List<PaisDomain> execute(final PaisDomain data) {
-        var paisEntityFilter = 
+        var paisEntityFilter =
                 PaisAssemblerEntity.getInstance().toEntity(data);
         var resultadosEntity = factory.getPaisDAO().consultar(paisEntityFilter);
-        
+
         return PaisAssemblerEntity.getInstance().
                 toDomainCollection(resultadosEntity);
     }

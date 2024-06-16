@@ -15,7 +15,7 @@ import co.com.park.gp.dto.PaisDTO;
 
 @RestController
 @RequestMapping("/paises/")
-public class PaisController {
+public final class PaisController {
 
     @GetMapping
     public ResponseEntity<PaisResponse> consultar() {

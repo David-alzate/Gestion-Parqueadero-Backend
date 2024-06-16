@@ -14,7 +14,7 @@ import co.com.park.gp.dto.DepartamentoDTO;
 
 public class ConsultarDepartamentosFacade implements FacadeWhitReturn<DepartamentoDTO, List<DepartamentoDTO>> {
 
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public ConsultarDepartamentosFacade() {
         daoFactory = DAOFactory.getFactory();

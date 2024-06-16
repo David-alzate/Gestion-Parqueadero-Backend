@@ -14,7 +14,7 @@ import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.TipoSedeDTO;
 @RestController
 @RequestMapping("/tipoSedes/")
-public class TipoSedeController {
+public final class TipoSedeController {
 	
 	@GetMapping
 	public ResponseEntity<TipoSedeResponse> consultar(){

@@ -4,36 +4,36 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 
 public class LoginDomain {
 
-	private String correoElectronico;
-	private String password;
+    private String correoElectronico;
+    private String password;
 
-	public LoginDomain(final String correoElectronico, final String password) {
-		setCorreoElectronico(correoElectronico);
-		setPassword(password);
-	}
-	
-	public static final LoginDomain build(final String correoElectronico, final String password) {
-		return new LoginDomain(correoElectronico, password);
-	}
-	
-	public static final LoginDomain build() {
-		return new LoginDomain(TextHelper.EMPTY, TextHelper.EMPTY);
-	}
+    public LoginDomain(final String correoElectronico, final String password) {
+        setCorreoElectronico(correoElectronico);
+        setPassword(password);
+    }
 
-	private final void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = TextHelper.applyTrim(correoElectronico);
-	}
+    public static LoginDomain build(final String correoElectronico, final String password) {
+        return new LoginDomain(correoElectronico, password);
+    }
 
-	private final void setPassword(String password) {
-		this.password = TextHelper.applyTrim(password);
-	}
+    public static LoginDomain build() {
+        return new LoginDomain(TextHelper.EMPTY, TextHelper.EMPTY);
+    }
 
-	public final String getCorreoElectronico() {
-		return correoElectronico;
-	}
+    private final void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = TextHelper.applyTrim(correoElectronico);
+    }
 
-	public final String getPassword() {
-		return password;
-	}
+    private final void setPassword(String password) {
+        this.password = TextHelper.applyTrim(password);
+    }
+
+    public final String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public final String getPassword() {
+        return password;
+    }
 
 }

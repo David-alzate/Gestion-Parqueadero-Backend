@@ -19,85 +19,85 @@ import co.com.park.gp.entity.ParqueaderoEntity;
 
 public class ParqueaderoPostgresqlDAO extends SqlConnection implements ParqueaderoDAO {
 
-	public ParqueaderoPostgresqlDAO(final Connection conexion) {
-		super(conexion);
-	}
+    public ParqueaderoPostgresqlDAO(final Connection conexion) {
+        super(conexion);
+    }
 
-	@Override
-	public List<ParqueaderoEntity> consultar(ParqueaderoEntity data) {
-		final StringBuilder sentenciaSql = new StringBuilder();
-		sentenciaSql.append("SELECT p.id, p.nombre");
-		sentenciaSql.append(" FROM parqueadero p");
-		sentenciaSql.append(" WHERE 1=1");
+    @Override
+    public List<ParqueaderoEntity> consultar(ParqueaderoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+        sentenciaSql.append("SELECT p.id, p.nombre");
+        sentenciaSql.append(" FROM parqueadero p");
+        sentenciaSql.append(" WHERE 1=1");
 
-		final List<Object> parametros = new ArrayList<>();
+        final List<Object> parametros = new ArrayList<>();
 
-		if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
-			sentenciaSql.append(" AND p.id = ?");
-			parametros.add(data.getId());
-		}
-		
-		if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-			sentenciaSql.append(" AND p.nombre = ?");
-			parametros.add(data.getNombre());
-		}
+        if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
+            sentenciaSql.append(" AND p.id = ?");
+            parametros.add(data.getId());
+        }
 
-		final List<ParqueaderoEntity> parqueaderos = new ArrayList<>();
+        if (!TextHelper.isNullOrEmpty(data.getNombre())) {
+            sentenciaSql.append(" AND p.nombre = ?");
+            parametros.add(data.getNombre());
+        }
 
-		try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
-			for (int i = 0; i < parametros.size(); i++) {
-				sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
-			}
+        final List<ParqueaderoEntity> parqueaderos = new ArrayList<>();
 
-			try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
-				while (resultado.next()) {
-					ParqueaderoEntity parqueadero = ParqueaderoEntity.build();
-					parqueadero.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
-					parqueadero.setNombre(resultado.getString("nombre"));
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+            for (int i = 0; i < parametros.size(); i++) {
+                sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
+            }
 
-					parqueaderos.add(parqueadero);
-				}
-			}
+            try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
+                while (resultado.next()) {
+                    ParqueaderoEntity parqueadero = ParqueaderoEntity.build();
+                    parqueadero.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
+                    parqueadero.setNombre(resultado.getString("nombre"));
 
-		} catch (final SQLException excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
-			var mensajeTecnico =MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00051);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+                    parqueaderos.add(parqueadero);
+                }
+            }
 
-		} catch (final Exception excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00051);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
-		}
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00051);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
 
-		return parqueaderos;
-	}
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00029);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00051);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
 
-	@Override
-	public void crear(ParqueaderoEntity data) {
-		final StringBuilder sentenciaSql = new StringBuilder();
-		
-		sentenciaSql.append("INSERT INTO parqueadero (id, nombre)");
-		sentenciaSql.append("VALUES (?, ?)");
-		
-		try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())){
-			
-			sentenciaSqlPreparada.setObject(1, data.getId());
-			sentenciaSqlPreparada.setString(2, data.getNombre());
-			
-			sentenciaSqlPreparada.executeUpdate();
-			
-		} catch (final SQLException excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        return parqueaderos;
+    }
 
-		} catch (final Exception excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
-		}
-		
-	}
+    @Override
+    public void crear(ParqueaderoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("INSERT INTO parqueadero (id, nombre)");
+        sentenciaSql.append("VALUES (?, ?)");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setObject(1, data.getId());
+            sentenciaSqlPreparada.setString(2, data.getNombre());
+
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+
+    }
 
 }

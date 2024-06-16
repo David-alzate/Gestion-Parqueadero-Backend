@@ -12,7 +12,7 @@ import co.com.park.gp.dto.SedeDTO;
 
 public final class RegistrarSedeFacade implements FacadeWhitoutReturn<SedeDTO> {
 
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public RegistrarSedeFacade() {
         daoFactory = DAOFactory.getFactory();

@@ -17,7 +17,7 @@ import co.com.park.gp.dto.EmpleadoDTO;
 
 @RestController
 @RequestMapping("/empleados/")
-public class EmpleadoController {
+public final class EmpleadoController {
 
 	@GetMapping
 	public ResponseEntity<EmpleadoResponse> consultar() {

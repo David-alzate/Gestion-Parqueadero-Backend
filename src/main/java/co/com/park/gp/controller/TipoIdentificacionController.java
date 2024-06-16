@@ -15,7 +15,7 @@ import co.com.park.gp.dto.TipoIdentificacionDTO;
 
 @RestController
 @RequestMapping("/tipoIdentificaciones/")
-public class TipoIdentificacionController {
+public final class TipoIdentificacionController {
 
 	@GetMapping
 	public ResponseEntity<TipoIdentificacionResponse> consultar() {

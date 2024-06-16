@@ -13,24 +13,24 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 
 public class ConsultarTipoEmpleado implements UseCaseWithReturn<TipoEmpleadoDomain, List<TipoEmpleadoDomain>> {
 
-	private DAOFactory factory;
+    private final DAOFactory factory;
 
-	public ConsultarTipoEmpleado(final DAOFactory factory) {
-		if (ObjectHelper.getObjectHelper().isNull(factory)) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00037);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00038);
-			throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
-		}
+    public ConsultarTipoEmpleado(final DAOFactory factory) {
+        if (ObjectHelper.getObjectHelper().isNull(factory)) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00037);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00038);
+            throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
+        }
 
-		this.factory = factory;
-	}
+        this.factory = factory;
+    }
 
-	@Override
-	public List<TipoEmpleadoDomain> execute(TipoEmpleadoDomain data) {
-		var tipoEmpleadoEntityFilter = TipoEmpleadoAssemblerEntity.getInstance().toEntity(data);
-		var resultadosEntity = factory.getTipoEmpleadoDAO().consultar(tipoEmpleadoEntityFilter);
+    @Override
+    public List<TipoEmpleadoDomain> execute(TipoEmpleadoDomain data) {
+        var tipoEmpleadoEntityFilter = TipoEmpleadoAssemblerEntity.getInstance().toEntity(data);
+        var resultadosEntity = factory.getTipoEmpleadoDAO().consultar(tipoEmpleadoEntityFilter);
 
-		return TipoEmpleadoAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);
-	}
+        return TipoEmpleadoAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);
+    }
 
 }

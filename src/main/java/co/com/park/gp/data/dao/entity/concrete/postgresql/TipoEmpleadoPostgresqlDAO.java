@@ -17,59 +17,59 @@ import co.com.park.gp.data.dao.entity.TipoEmpleadoDAO;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.entity.TipoEmpleadoEntity;
 
-public class TipoEmpleadoPostgresqlDAO extends SqlConnection implements TipoEmpleadoDAO{
-	
-	public TipoEmpleadoPostgresqlDAO(final Connection conexion) {
-		super(conexion);
-	}
+public class TipoEmpleadoPostgresqlDAO extends SqlConnection implements TipoEmpleadoDAO {
 
-	@Override
-	public List<TipoEmpleadoEntity> consultar(TipoEmpleadoEntity data) {
-		final StringBuilder sentenciaSql = new StringBuilder();
-		sentenciaSql.append("SELECT te.id, te.nombre");
-		sentenciaSql.append(" FROM tipoempleado te");
-		sentenciaSql.append(" WHERE 1=1");
+    public TipoEmpleadoPostgresqlDAO(final Connection conexion) {
+        super(conexion);
+    }
 
-		final List<Object> parametros = new ArrayList<>();
+    @Override
+    public List<TipoEmpleadoEntity> consultar(TipoEmpleadoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+        sentenciaSql.append("SELECT te.id, te.nombre");
+        sentenciaSql.append(" FROM tipoempleado te");
+        sentenciaSql.append(" WHERE 1=1");
 
-		if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
-			sentenciaSql.append(" AND te.id = ?");
-			parametros.add(data.getId());
-		}
-		if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-			sentenciaSql.append(" AND te.nombre = ?");
-			parametros.add(data.getNombre());
-		}
+        final List<Object> parametros = new ArrayList<>();
 
-		final List<TipoEmpleadoEntity> tiposEmpleados = new ArrayList<>();
+        if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
+            sentenciaSql.append(" AND te.id = ?");
+            parametros.add(data.getId());
+        }
+        if (!TextHelper.isNullOrEmpty(data.getNombre())) {
+            sentenciaSql.append(" AND te.nombre = ?");
+            parametros.add(data.getNombre());
+        }
 
-		try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
-			for (int i = 0; i < parametros.size(); i++) {
-				sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
-			}
+        final List<TipoEmpleadoEntity> tiposEmpleados = new ArrayList<>();
 
-			try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
-				while (resultado.next()) {
-					TipoEmpleadoEntity tipoEmpleado = TipoEmpleadoEntity.build();
-					tipoEmpleado.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
-					tipoEmpleado.setNombre(resultado.getString("nombre"));
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+            for (int i = 0; i < parametros.size(); i++) {
+                sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
+            }
 
-					tiposEmpleados.add(tipoEmpleado);
-				}
-			}
+            try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
+                while (resultado.next()) {
+                    TipoEmpleadoEntity tipoEmpleado = TipoEmpleadoEntity.build();
+                    tipoEmpleado.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
+                    tipoEmpleado.setNombre(resultado.getString("nombre"));
 
-		} catch (final SQLException excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00093);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00094);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+                    tiposEmpleados.add(tipoEmpleado);
+                }
+            }
 
-		} catch (final Exception excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00093);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00094);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
-		}
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00093);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00094);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
 
-		return tiposEmpleados;
-	}
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00093);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00094);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+
+        return tiposEmpleados;
+    }
 
 }

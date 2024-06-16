@@ -17,44 +17,44 @@ import co.com.park.gp.entity.EmpleadoEntity;
 
 public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
-	private DAOFactory factory;
+    private final DAOFactory factory;
 
-	public RegistrarEmpleado(final DAOFactory factory) {
-		if (ObjectHelper.getObjectHelper().isNull(factory)) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00082);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00083);
-			throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
-		}
+    public RegistrarEmpleado(final DAOFactory factory) {
+        if (ObjectHelper.getObjectHelper().isNull(factory)) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00082);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00083);
+            throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
+        }
 
-		this.factory = factory;
-	}
+        this.factory = factory;
+    }
 
-	@Override
-	public void execute(EmpleadoDomain data) {
+    @Override
+    public void execute(EmpleadoDomain data) {
 
-		var empleadoEntity = EmpleadoEntity.build().setId(generarIdentificadorEmpleado())
-				.setTipoIdentificacion(
-						TipoIdentificacionAssemblerEntity.getInstance().toEntity(data.getTipoIdentificacion()))
-				.setNumeroIdentificacion(data.getNumeroIdentificacion()).setNombre(data.getNombre())
-				.setApellido(data.getApellido()).setCorreoElectronico(data.getCorreoElectronico())
-				.setTipoEmpleado(TipoEmpleadoAssemblerEntity.getInstance().toEntity(data.getTipoEmpleado()))
-				.setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setPassword(data.getPassword());
+        var empleadoEntity = EmpleadoEntity.build().setId(generarIdentificadorEmpleado())
+                .setTipoIdentificacion(
+                        TipoIdentificacionAssemblerEntity.getInstance().toEntity(data.getTipoIdentificacion()))
+                .setNumeroIdentificacion(data.getNumeroIdentificacion()).setNombre(data.getNombre())
+                .setApellido(data.getApellido()).setCorreoElectronico(data.getCorreoElectronico())
+                .setTipoEmpleado(TipoEmpleadoAssemblerEntity.getInstance().toEntity(data.getTipoEmpleado()))
+                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setPassword(data.getPassword());
 
-		factory.getEmpleadoDAO().crear(empleadoEntity);
+        factory.getEmpleadoDAO().crear(empleadoEntity);
 
-	}
+    }
 
-	private final UUID generarIdentificadorEmpleado() {
-		UUID id = UUIDHelper.generate();
-		boolean existeId = true;
+    private final UUID generarIdentificadorEmpleado() {
+        UUID id = UUIDHelper.generate();
+        boolean existeId = true;
 
-		while (existeId) {
-			id = UUIDHelper.generate();
-			var empleadoEntity = EmpleadoEntity.build().setId(id);
-			var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
-			existeId = !resultados.isEmpty();
-		}
-		return id;
-	}
+        while (existeId) {
+            id = UUIDHelper.generate();
+            var empleadoEntity = EmpleadoEntity.build().setId(id);
+            var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
+            existeId = !resultados.isEmpty();
+        }
+        return id;
+    }
 
 }

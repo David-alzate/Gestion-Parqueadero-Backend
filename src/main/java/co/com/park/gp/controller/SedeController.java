@@ -18,7 +18,7 @@ import co.com.park.gp.dto.SedeDTO;
 
 @RestController
 @RequestMapping("/sedes/")
-public class SedeController {
+public final class SedeController {
 
 	@GetMapping
 	public ResponseEntity<SedeResponse> consultar() {

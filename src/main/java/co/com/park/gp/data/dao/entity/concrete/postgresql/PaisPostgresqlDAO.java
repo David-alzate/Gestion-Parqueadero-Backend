@@ -19,57 +19,57 @@ import co.com.park.gp.entity.PaisEntity;
 
 public class PaisPostgresqlDAO extends SqlConnection implements PaisDAO {
 
-	public PaisPostgresqlDAO(final Connection conexion) {
-		super(conexion);
-	}
+    public PaisPostgresqlDAO(final Connection conexion) {
+        super(conexion);
+    }
 
-	@Override
-	public List<PaisEntity> consultar(PaisEntity data) {
-		final StringBuilder sentenciaSql = new StringBuilder();
-		sentenciaSql.append("SELECT p.id, p.nombre");
-		sentenciaSql.append(" FROM pais p");
-		sentenciaSql.append(" WHERE 1=1");
+    @Override
+    public List<PaisEntity> consultar(PaisEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+        sentenciaSql.append("SELECT p.id, p.nombre");
+        sentenciaSql.append(" FROM pais p");
+        sentenciaSql.append(" WHERE 1=1");
 
-		final List<Object> parametros = new ArrayList<>();
+        final List<Object> parametros = new ArrayList<>();
 
-		if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
-			sentenciaSql.append(" AND p.id = ?");
-			parametros.add(data.getId());
-		}
-		if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-			sentenciaSql.append(" AND p.nombre = ?");
-			parametros.add(data.getNombre());
-		}
+        if (!ObjectHelper.getObjectHelper().isNull(data.getId()) && !data.getId().equals(UUIDHelper.getDefault())) {
+            sentenciaSql.append(" AND p.id = ?");
+            parametros.add(data.getId());
+        }
+        if (!TextHelper.isNullOrEmpty(data.getNombre())) {
+            sentenciaSql.append(" AND p.nombre = ?");
+            parametros.add(data.getNombre());
+        }
 
-		final List<PaisEntity> paises = new ArrayList<>();
+        final List<PaisEntity> paises = new ArrayList<>();
 
-		try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
-			for (int i = 0; i < parametros.size(); i++) {
-				sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
-			}
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+            for (int i = 0; i < parametros.size(); i++) {
+                sentenciaSqlPreparada.setObject(i + 1, parametros.get(i));
+            }
 
-			try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
-				while (resultado.next()) {
-					PaisEntity pais = PaisEntity.build();
-					pais.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
-					pais.setNombre(resultado.getString("nombre"));
+            try (final ResultSet resultado = sentenciaSqlPreparada.executeQuery()) {
+                while (resultado.next()) {
+                    PaisEntity pais = PaisEntity.build();
+                    pais.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
+                    pais.setNombre(resultado.getString("nombre"));
 
-					paises.add(pais);
-				}
-			}
+                    paises.add(pais);
+                }
+            }
 
-		} catch (final SQLException excepcion) {
-			var mensajeUsuario =MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
-			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00050);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00050);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
 
-		} catch (final Exception excepcion) {
-			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
-			var mensajeTecnico =  MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00050);
-			throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
-		}
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00027);
+            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00050);
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
 
-		return paises;
-	}
+        return paises;
+    }
 
 }

@@ -18,7 +18,7 @@ import co.com.park.gp.dto.ParqueaderoDTO;
 
 @RestController
 @RequestMapping("/parqueaderos/")
-public class ParqueaderoController {
+public final class ParqueaderoController {
 
 	@GetMapping
 	public ResponseEntity<ParqueaderoResponse> consultar() {

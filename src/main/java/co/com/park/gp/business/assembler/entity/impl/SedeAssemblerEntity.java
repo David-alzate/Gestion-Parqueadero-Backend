@@ -18,7 +18,7 @@ import co.com.park.gp.entity.ParqueaderoEntity;
 import co.com.park.gp.entity.SedeEntity;
 import co.com.park.gp.entity.TipoSedeEntity;
 
-public class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, SedeEntity> {
+public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, SedeEntity> {
 
 	private static final AssemblerEntity<ParqueaderoDomain, ParqueaderoEntity> parqueaderoAssembler = ParqueaderoAssemblerEntity
 			.getInstance();
@@ -55,7 +55,7 @@ public class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, SedeEnti
 	}
 
 	@Override
-	public SedeEntity toEntity(SedeDomain domain) {
+	public SedeEntity toEntity(final SedeDomain domain) {
 		var sedeDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain, SedeDomain.build());
 		var parqueaderoEntity = parqueaderoAssembler.toEntity(sedeDomainTmp.getParqueadero());
 		var ciudadEntity = ciudadAssembler.toEntity(sedeDomainTmp.getCiudad());

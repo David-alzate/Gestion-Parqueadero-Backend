@@ -14,7 +14,7 @@ import co.com.park.gp.dto.PaisDTO;
 
 public class ConsultarPaisesFacade implements FacadeWhitReturn<PaisDTO, List<PaisDTO>> {
 
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public ConsultarPaisesFacade() {
         daoFactory = DAOFactory.getFactory();

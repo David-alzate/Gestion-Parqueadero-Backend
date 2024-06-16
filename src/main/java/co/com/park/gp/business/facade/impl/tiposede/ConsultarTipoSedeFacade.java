@@ -12,7 +12,7 @@ import co.com.park.gp.dto.TipoSedeDTO;
 
 public class ConsultarTipoSedeFacade implements FacadeWhitReturn<TipoSedeDTO, List<TipoSedeDTO>> {
 
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public ConsultarTipoSedeFacade() {
         this.daoFactory = DAOFactory.getFactory();

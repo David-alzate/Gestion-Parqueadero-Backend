@@ -14,7 +14,7 @@ import co.com.park.gp.dto.SedeDTO;
 
 public class ConsultarSedeFacade implements FacadeWhitReturn<SedeDTO, List<SedeDTO>> {
 
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     public ConsultarSedeFacade() {
         daoFactory = DAOFactory.getFactory();
@@ -24,7 +24,7 @@ public class ConsultarSedeFacade implements FacadeWhitReturn<SedeDTO, List<SedeD
     public List<SedeDTO> execute(final SedeDTO dto) {
 
         try {
-        	
+
             var useCase = new ConsultarSedes(daoFactory);
             var sedeDomain = SedeAssemblerDTO.getInstance().toDomain(dto);
             var resultadosDomain = useCase.execute(sedeDomain);
