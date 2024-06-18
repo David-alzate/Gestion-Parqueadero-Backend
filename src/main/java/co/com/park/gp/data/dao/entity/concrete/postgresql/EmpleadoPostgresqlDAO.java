@@ -131,7 +131,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
                     empleado.setCorreoElectronico(resultado.getString("correoelectronico"));
                     empleado.setPassword(resultado.getString("password"));
 
-                    SedeEntity sede = new SedeEntity();
+                    SedeEntity sede = SedeEntity.build();
                     sede.setId(UUIDHelper.convertToUUID(resultado.getString("idSede")));
                     sede.setNombre(resultado.getString("nombreSede"));
                     empleado.setSede(sede);
