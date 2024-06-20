@@ -53,7 +53,11 @@ public class TextHelper {
         return mensajeReemplazado;
     }
 
-    public static boolean EmailValido(final String email) {
+    public static boolean emailValido(final String email) {
         return !isNullOrEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    public static String convertToLowercase(String string) {
+        return string.toLowerCase();
     }
 }

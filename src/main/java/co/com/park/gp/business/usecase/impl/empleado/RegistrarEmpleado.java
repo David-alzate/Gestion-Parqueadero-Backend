@@ -50,7 +50,7 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
     }
 
-    private final UUID generarIdentificadorEmpleado() {
+    private UUID generarIdentificadorEmpleado() {
         UUID id = UUIDHelper.generate();
         boolean existeId = true;
 
@@ -111,7 +111,7 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
             throw new BusinessGPException(mensajeUsuario);
         }
 
-        if (!(TextHelper.EmailValido(correoElectronico))) {
+        if (!(TextHelper.emailValido(correoElectronico))) {
             var mensajeUsuario = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00107), correoElectronico);
             throw new BusinessGPException(mensajeUsuario);
         }

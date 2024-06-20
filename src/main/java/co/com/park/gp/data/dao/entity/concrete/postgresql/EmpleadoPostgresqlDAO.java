@@ -96,8 +96,8 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
         }
 
         if (!TextHelper.isNullOrEmpty(data.getCorreoElectronico())) {
-            sentenciaSql.append(" AND e.correoelectronico = ?");
-            parametros.add(data.getCorreoElectronico());
+            sentenciaSql.append(" AND LOWER(e.correoelectronico) = ?");
+            parametros.add(TextHelper.convertToLowercase(data.getCorreoElectronico()));
         }
 
         if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado())
@@ -128,7 +128,8 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
                     empleado.setNombre(resultado.getString("nombre"));
                     empleado.setApellido(resultado.getString("apellido"));
                     empleado.setNumeroIdentificacion(resultado.getInt("numeroidentificacion"));
-                    empleado.setCorreoElectronico(resultado.getString("correoelectronico"));
+                    empleado.setCorreoElectronico(resultado.getString("correoelectronico").toLowerCase()); // Convertir a minúsculas
+
                     empleado.setPassword(resultado.getString("password"));
 
                     SedeEntity sede = SedeEntity.build();
@@ -163,5 +164,6 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
 
         return empleados;
     }
+
 
 }

@@ -101,7 +101,7 @@ public final class RegistrarSede implements UseCaseWithoutReturn<SedeDomain> {
             throw new BusinessGPException(mensajeUsuario);
         }
 
-        if (!(TextHelper.EmailValido(correo))) {
+        if (!(TextHelper.emailValido(correo))) {
             var mensajeUsuario = TextHelper
                     .reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00059), correo);
             throw new BusinessGPException(mensajeUsuario);

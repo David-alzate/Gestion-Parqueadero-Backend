@@ -33,7 +33,8 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
     }
 
     private void validarUsuario(final String correoElectronico, final String password) {
-        var empleadoEntity = EmpleadoEntity.build().setCorreoElectronico(correoElectronico)
+        var email = TextHelper.convertToLowercase(correoElectronico);
+        var empleadoEntity = EmpleadoEntity.build().setCorreoElectronico(email)
                 .setPassword(password);
 
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
@@ -47,6 +48,11 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
     private void validarCorreoElectronio(final String correoElectronico) {
         if (TextHelper.isNullOrEmpty(correoElectronico)) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00081);
+            throw new BusinessGPException(mensajeUsuario);
+        }
+
+        if (!(TextHelper.emailValido(correoElectronico))) {
+            var mensajeUsuario = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00107), correoElectronico);
             throw new BusinessGPException(mensajeUsuario);
         }
     }

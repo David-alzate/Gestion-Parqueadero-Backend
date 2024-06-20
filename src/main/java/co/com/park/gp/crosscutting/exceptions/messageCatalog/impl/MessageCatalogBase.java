@@ -213,6 +213,24 @@ public class MessageCatalogBase implements MessageCatalog {
                 new Mensaje(CodigoMensaje.M00097, "Tipo Identificaciones consultadas exitosamente"));
         mensajes.put(CodigoMensaje.M00098.getIdentificador(),
                 new Mensaje(CodigoMensaje.M00098, "se ha presentado un error tratando de consultar los tipos de identificaciones"));
+        mensajes.put(CodigoMensaje.M00099.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00099, "El nombre del empleado no puede estar vacio"));
+        mensajes.put(CodigoMensaje.M00100.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00100, "El nombre del empleado \"${1}\" es demaciado corto"));
+        mensajes.put(CodigoMensaje.M00101.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00101, "El nombre del empleado \"${1}\" es demaciado Largo"));
+        mensajes.put(CodigoMensaje.M00102.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00102, "El Apellido del empleado no puede ser nulo"));
+        mensajes.put(CodigoMensaje.M00103.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00103, "El Apellido del empleado es demaciado corto"));
+        mensajes.put(CodigoMensaje.M00104.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00104, "El Apellido del empleado es demaciado largo"));
+        mensajes.put(CodigoMensaje.M00105.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00105, "El Numero de identificacion del empleado no puede estar vacio"));
+        mensajes.put(CodigoMensaje.M00106.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00106, "El correo Electronico no puede estar vacio"));
+        mensajes.put(CodigoMensaje.M00107.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00107, "El formato del correo no es valido"));
 
     }
 
