@@ -5,10 +5,14 @@ import java.util.List;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
 import co.com.park.gp.business.domain.LoginDomain;
+import co.com.park.gp.business.domain.TipoEmpleadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.dto.LoginDTO;
+import co.com.park.gp.dto.TipoEmpleadoDTO;
 
 public final class LoginAssemblerDTO implements AssemblerDTO<LoginDomain, LoginDTO> {
+
+    private static final AssemblerDTO<TipoEmpleadoDomain, TipoEmpleadoDTO> tipoEmpleadoAssembler = TipoEmpleadoAssemblerDTO.getInstance();
 
     private static final AssemblerDTO<LoginDomain, LoginDTO> instance = new LoginAssemblerDTO();
 
@@ -22,8 +26,9 @@ public final class LoginAssemblerDTO implements AssemblerDTO<LoginDomain, LoginD
 
     @Override
     public LoginDomain toDomain(final LoginDTO data) {
+        var tipoEmpleadoDomain = tipoEmpleadoAssembler.toDomain(data.getTipoEmpleado());
         var loginDtoTmp = ObjectHelper.getObjectHelper().getDefaultValue(data, LoginDTO.build());
-        return LoginDomain.build(loginDtoTmp.getCorreoElectronico(), loginDtoTmp.getPassword());
+        return LoginDomain.build(tipoEmpleadoDomain, loginDtoTmp.getNumeroIdentificacion(), loginDtoTmp.getPassword());
     }
 
     @Override
@@ -35,8 +40,9 @@ public final class LoginAssemblerDTO implements AssemblerDTO<LoginDomain, LoginD
 
     @Override
     public LoginDTO toDto(final LoginDomain domain) {
+        var tipoEmpleadoDto = tipoEmpleadoAssembler.toDto(domain.getTipoEmpleado());
         var loginDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain, LoginDomain.build());
-        return LoginDTO.build().setCorreoElectronico(loginDomainTmp.getCorreoElectronico())
+        return LoginDTO.build().setTipoEmpleado(tipoEmpleadoDto).setNumeroIdentificacion(loginDomainTmp.getNumeroIdentificacion())
                 .setPassword(loginDomainTmp.getPassword());
     }
 

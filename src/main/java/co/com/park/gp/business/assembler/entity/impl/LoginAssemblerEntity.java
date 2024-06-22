@@ -5,10 +5,14 @@ import java.util.List;
 
 import co.com.park.gp.business.assembler.entity.AssemblerEntity;
 import co.com.park.gp.business.domain.LoginDomain;
+import co.com.park.gp.business.domain.TipoEmpleadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.entity.LoginEntity;
+import co.com.park.gp.entity.TipoEmpleadoEntity;
 
 public final class LoginAssemblerEntity implements AssemblerEntity<LoginDomain, LoginEntity> {
+
+    private static final AssemblerEntity<TipoEmpleadoDomain, TipoEmpleadoEntity> tipoEmpleadoAssembler = TipoEmpleadoAssemblerEntity.getInstance();
 
     private static final AssemblerEntity<LoginDomain, LoginEntity> instance = new LoginAssemblerEntity();
 
@@ -23,7 +27,8 @@ public final class LoginAssemblerEntity implements AssemblerEntity<LoginDomain, 
     @Override
     public LoginDomain toDomain(final LoginEntity data) {
         var loginEntityTmp = ObjectHelper.getObjectHelper().getDefaultValue(data, LoginEntity.build());
-        return LoginDomain.build(loginEntityTmp.getCorreoElectronico(), loginEntityTmp.getPassword());
+        var tipoEmpleadoDomain = tipoEmpleadoAssembler.toDomain(loginEntityTmp.getTipoEmpleado());
+        return LoginDomain.build(tipoEmpleadoDomain, loginEntityTmp.getNumeroIdentificacion(), loginEntityTmp.getPassword());
     }
 
     @Override
@@ -36,7 +41,8 @@ public final class LoginAssemblerEntity implements AssemblerEntity<LoginDomain, 
     @Override
     public LoginEntity toEntity(final LoginDomain domain) {
         var loginDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain, LoginDomain.build());
-        return LoginEntity.build().setCorreoElectronico(loginDomainTmp.getCorreoElectronico())
+        var tipoEmpleadoEntity = tipoEmpleadoAssembler.toEntity(loginDomainTmp.getTipoEmpleado());
+        return LoginEntity.build().setTipoEmpleado(tipoEmpleadoEntity).setNumeroIdentificacion(loginDomainTmp.getNumeroIdentificacion())
                 .setPassword(loginDomainTmp.getPassword());
     }
 

@@ -1,20 +1,24 @@
 package co.com.park.gp.dto;
 
+import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 
 public final class LoginDTO {
 
-    private String correoElectronico;
+    private TipoEmpleadoDTO tipoEmpleado;
+    private int numeroIdentificacion;
     private String password;
 
     public LoginDTO() {
         super();
-        setCorreoElectronico(TextHelper.EMPTY);
+        setTipoEmpleado(TipoEmpleadoDTO.build());
+        setNumeroIdentificacion(0);
         setPassword(TextHelper.EMPTY);
     }
 
-    public LoginDTO(final String correoElectronico, final String password) {
-        setCorreoElectronico(correoElectronico);
+    public LoginDTO(TipoEmpleadoDTO tipoEmpleado, String password, int numeroIdentificacion) {
+        setTipoEmpleado(tipoEmpleado);
+        setNumeroIdentificacion(numeroIdentificacion);
         setPassword(password);
     }
 
@@ -22,18 +26,27 @@ public final class LoginDTO {
         return new LoginDTO();
     }
 
-    public final LoginDTO setCorreoElectronico(final String correoElectronico) {
-        this.correoElectronico = TextHelper.applyTrim(correoElectronico);
+    public LoginDTO setTipoEmpleado(TipoEmpleadoDTO tipoEmpleado) {
+        this.tipoEmpleado = ObjectHelper.getObjectHelper().getDefaultValue(tipoEmpleado, TipoEmpleadoDTO.build());
         return this;
     }
 
-    public final LoginDTO setPassword(final String password) {
+    public LoginDTO setNumeroIdentificacion(final int numeroIdentificacion) {
+        this.numeroIdentificacion = numeroIdentificacion;
+        return this;
+    }
+
+    public LoginDTO setPassword(final String password) {
         this.password = TextHelper.applyTrim(password);
         return this;
     }
 
-    public final String getCorreoElectronico() {
-        return correoElectronico;
+    public TipoEmpleadoDTO getTipoEmpleado() {
+        return tipoEmpleado;
+    }
+
+    public int getNumeroIdentificacion() {
+        return numeroIdentificacion;
     }
 
     public String getPassword() {

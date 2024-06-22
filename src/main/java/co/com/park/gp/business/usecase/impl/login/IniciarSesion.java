@@ -20,21 +20,19 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00079);
             throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
         }
-
         this.factory = factory;
     }
 
     @Override
     public Boolean execute(LoginDomain data) {
-        validarCorreoElectronio(data.getCorreoElectronico());
+        validarNumeroIdentificacion(data.getNumeroIdentificacion());
         validarPassword(data.getPassword());
-        validarUsuario(data.getCorreoElectronico(), data.getPassword());
+        validarUsuario(data.getNumeroIdentificacion(), data.getPassword());
         return true;
     }
 
-    private void validarUsuario(final String correoElectronico, final String password) {
-        var email = TextHelper.convertToLowercase(correoElectronico);
-        var empleadoEntity = EmpleadoEntity.build().setCorreoElectronico(email)
+    private void validarUsuario(final int numeroIdentificacion, final String password) {
+        var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion)
                 .setPassword(password);
 
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
@@ -45,14 +43,9 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
         }
     }
 
-    private void validarCorreoElectronio(final String correoElectronico) {
-        if (TextHelper.isNullOrEmpty(correoElectronico)) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00081);
-            throw new BusinessGPException(mensajeUsuario);
-        }
-
-        if (!(TextHelper.emailValido(correoElectronico))) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00107), correoElectronico);
+    private void validarNumeroIdentificacion(final int numeroIdentificacion) {
+        if (numeroIdentificacion == 0) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00106);
             throw new BusinessGPException(mensajeUsuario);
         }
     }
