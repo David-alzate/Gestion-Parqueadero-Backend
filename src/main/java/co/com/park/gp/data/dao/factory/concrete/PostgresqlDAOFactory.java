@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import co.com.park.gp.entity.EmpleadoEntity;
+import co.com.park.gp.entity.TipoEmpleadoEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -137,35 +139,35 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
         return new TipoSedePostgresqlDAO(getConexion());
     }
 
-	@Override
-	public EmpleadoDAO getEmpleadoDAO() {
-		return new EmpleadoPostgresqlDAO(getConexion());
-	}
+    @Override
+    public EmpleadoDAO getEmpleadoDAO() {
+        return new EmpleadoPostgresqlDAO(getConexion());
+    }
 
-	@Override
-	public TipoEmpleadoDAO getTipoEmpleadoDAO() {
-		return new TipoEmpleadoPostgresqlDAO(getConexion());
-	}
+    @Override
+    public TipoEmpleadoDAO getTipoEmpleadoDAO() {
+        return new TipoEmpleadoPostgresqlDAO(getConexion());
+    }
 
-	@Override
-	public TipoIdentificacionDAO geTipoIdentificacionDAO() {
-		return new TipoIdentificacionPostgresqlDAO(getConexion());
-	}
+    @Override
+    public TipoIdentificacionDAO geTipoIdentificacionDAO() {
+        return new TipoIdentificacionPostgresqlDAO(getConexion());
+    }
 
 //    public static void main(String[] args) {
-//		DAOFactory factory = DAOFactory.getFactory();
-//		System.out.println("Iniciando transacción...");
-//		factory.iniciarTransaccion();
+//        DAOFactory factory = DAOFactory.getFactory();
+//        System.out.println("Iniciando transacción...");
+//        factory.iniciarTransaccion();
 //
 //
-//		System.out.println("Consultar Empleados");
-//		var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setCorreoElectronico("jhon-a2@gmail.com").setPassword("15385403++*"));
+//        System.out.println("Consultar Empleados");
+//        var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setNumeroIdentificacion(1040031815).setPassword("1040031815").setTipoEmpleado(TipoEmpleadoEntity.build().setNombre("Administrador")));
 //
-//		for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
-//			System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
-//		}
+//        for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
+//            System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
+//        }
 //
-//		
+//
 //		System.out.println("Consultar Sede");
 //		var resultadosSede = factory.getSedeDAO().consultar(SedeEntity.build().setParqueadero(ParqueaderoEntity.build().setId(UUIDHelper.convertToUUID("e1a1e0a0-0000-0000-0000-000000000002"))));
 //
@@ -177,11 +179,11 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //		}
 //
 //
-//	System.out.println("Confirmar transacción...");
-//	factory.confirmarTransaccion();
+//        System.out.println("Confirmar transacción...");
+//        factory.confirmarTransaccion();
 //
-//	System.out.println("Cerrando conexión...");
-//	factory.cerrarConexion();
+//        System.out.println("Cerrando conexión...");
+//        factory.cerrarConexion();
 //
 //    }
 

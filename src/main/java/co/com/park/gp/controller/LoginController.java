@@ -2,21 +2,17 @@ package co.com.park.gp.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import co.com.park.gp.business.facade.impl.login.IniciarSesionFacade;
 import co.com.park.gp.controller.response.LoginResonse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.LoginDTO;
 
-
 @RestController
 @RequestMapping("/login/")
 public final class LoginController {
-	
-	@PostMapping
+
+    @PostMapping
     public ResponseEntity<LoginResonse> crear(@RequestBody LoginDTO data) {
         var httpStatusCode = HttpStatus.ACCEPTED;
         var loginResonse = new LoginResonse();
@@ -44,6 +40,6 @@ public final class LoginController {
 
         return new ResponseEntity<>(loginResonse, httpStatusCode);
     }
-	
+
 
 }

@@ -6,13 +6,13 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 public final class LoginEntity {
 
     private TipoEmpleadoEntity tipoEmpleado;
-    private int numeroIdentificacion;
+    private Long numeroIdentificacion;
     private String password;
 
     public LoginEntity() {
         super();
         setTipoEmpleado(new TipoEmpleadoEntity());
-        setNumeroIdentificacion(0);
+        setNumeroIdentificacion(0L);
         setPassword(TextHelper.EMPTY);
     }
 
@@ -20,7 +20,7 @@ public final class LoginEntity {
         return new LoginEntity();
     }
 
-    public LoginEntity(TipoEmpleadoEntity tipoEmpleado, String password, int numeroIdentificacion) {
+    public LoginEntity(TipoEmpleadoEntity tipoEmpleado, String password, Long numeroIdentificacion) {
         setTipoEmpleado(tipoEmpleado);
         setNumeroIdentificacion(numeroIdentificacion);
         setPassword(password);
@@ -31,7 +31,7 @@ public final class LoginEntity {
         return this;
     }
 
-    public LoginEntity setNumeroIdentificacion(final int numeroIdentificacion) {
+    public LoginEntity setNumeroIdentificacion(final Long numeroIdentificacion) {
         this.numeroIdentificacion = numeroIdentificacion;
         return this;
     }
@@ -41,7 +41,7 @@ public final class LoginEntity {
         return this;
     }
 
-    public int getNumeroIdentificacion() {
+    public Long getNumeroIdentificacion() {
         return numeroIdentificacion;
     }
 

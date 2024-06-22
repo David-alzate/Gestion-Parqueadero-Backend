@@ -10,7 +10,7 @@ public final class EmpleadoEntity {
 
     private UUID id;
     private TipoIdentificacionEntity tipoIdentificacion;
-    private int numeroIdentificacion;
+    private Long numeroIdentificacion;
     private String nombre;
     private String apellido;
     private String correoElectronico;
@@ -21,7 +21,7 @@ public final class EmpleadoEntity {
     public EmpleadoEntity() {
         setId(UUIDHelper.getDefault());
         setTipoIdentificacion(TipoIdentificacionEntity.build());
-        setNumeroIdentificacion(0);
+        setNumeroIdentificacion(0L);
         setNombre(TextHelper.EMPTY);
         setApellido(TextHelper.EMPTY);
         setCorreoElectronico(TextHelper.EMPTY);
@@ -31,7 +31,7 @@ public final class EmpleadoEntity {
     }
 
     public EmpleadoEntity(final UUID id, final TipoIdentificacionEntity tipoIdentificacion,
-                          final int numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
+                          final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
                           final TipoEmpleadoEntity tipoEmpleado, final SedeEntity sede, final String password) {
         setId(id);
         setTipoIdentificacion(tipoIdentificacion);
@@ -59,7 +59,7 @@ public final class EmpleadoEntity {
         return this;
     }
 
-    public final EmpleadoEntity setNumeroIdentificacion(int numeroIdentificacion) {
+    public final EmpleadoEntity setNumeroIdentificacion(Long numeroIdentificacion) {
         this.numeroIdentificacion = numeroIdentificacion;
         return this;
     }
@@ -102,7 +102,7 @@ public final class EmpleadoEntity {
         return tipoIdentificacion;
     }
 
-    public final int getNumeroIdentificacion() {
+    public final Long getNumeroIdentificacion() {
         return numeroIdentificacion;
     }
 

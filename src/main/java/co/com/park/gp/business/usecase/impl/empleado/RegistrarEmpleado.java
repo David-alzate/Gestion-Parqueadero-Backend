@@ -97,7 +97,7 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         }
     }
 
-    private void validarNumeroIdentificacion(int numeroIdentificacion) {
+    private void validarNumeroIdentificacion(Long numeroIdentificacion) {
         if (numeroIdentificacion == 0) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00105);
             throw new BusinessGPException(mensajeUsuario);

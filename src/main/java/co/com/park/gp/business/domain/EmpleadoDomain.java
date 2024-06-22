@@ -10,7 +10,7 @@ public final class EmpleadoDomain {
 
 	private UUID id;
 	private TipoIdentificacionDomain tipoIdentificacion;
-	private int numeroIdentificacion;
+	private Long numeroIdentificacion;
 	private String nombre;
 	private String apellido;
 	private String correoElectronico;
@@ -19,7 +19,7 @@ public final class EmpleadoDomain {
 	private String password;
 
 	public EmpleadoDomain(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
-			final int numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
+			final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
 			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final String password) {
 		setId(id);
 		setTipoIdentificacion(tipoIdentificacion);
@@ -33,19 +33,19 @@ public final class EmpleadoDomain {
 	}
 
 	public static EmpleadoDomain build(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
-			final int numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
+			final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
 			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final String password) {
 		return new EmpleadoDomain(id, tipoIdentificacion, numeroIdentificacion, nombre, apellido, correoElectronico,
 				tipoEmpleado, sede, password);
 	}
 
 	public static EmpleadoDomain build(final UUID id) {
-		return new EmpleadoDomain(id, TipoIdentificacionDomain.build(), 0, TextHelper.EMPTY, TextHelper.EMPTY,
+		return new EmpleadoDomain(id, TipoIdentificacionDomain.build(), 0L, TextHelper.EMPTY, TextHelper.EMPTY,
 				TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
 	}
 
 	public static EmpleadoDomain build() {
-		return new EmpleadoDomain(UUIDHelper.getDefault(), TipoIdentificacionDomain.build(), 0, TextHelper.EMPTY,
+		return new EmpleadoDomain(UUIDHelper.getDefault(), TipoIdentificacionDomain.build(), 0L, TextHelper.EMPTY,
 				TextHelper.EMPTY, TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
 	}
 
@@ -58,7 +58,7 @@ public final class EmpleadoDomain {
 				TipoIdentificacionDomain.build());
 	}
 
-	public final void setNumeroIdentificacion(int numeroIdentificacion) {
+	public final void setNumeroIdentificacion(Long numeroIdentificacion) {
 		this.numeroIdentificacion = numeroIdentificacion;
 	}
 
@@ -94,7 +94,7 @@ public final class EmpleadoDomain {
 		return tipoIdentificacion;
 	}
 
-	public final int getNumeroIdentificacion() {
+	public final Long getNumeroIdentificacion() {
 		return numeroIdentificacion;
 	}
 

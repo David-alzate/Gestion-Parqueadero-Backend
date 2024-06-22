@@ -31,7 +31,7 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
         return true;
     }
 
-    private void validarUsuario(final int numeroIdentificacion, final String password) {
+    private void validarUsuario(final Long numeroIdentificacion, final String password) {
         var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion)
                 .setPassword(password);
 
@@ -43,7 +43,7 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
         }
     }
 
-    private void validarNumeroIdentificacion(final int numeroIdentificacion) {
+    private void validarNumeroIdentificacion(final Long numeroIdentificacion) {
         if (numeroIdentificacion == 0) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00106);
             throw new BusinessGPException(mensajeUsuario);

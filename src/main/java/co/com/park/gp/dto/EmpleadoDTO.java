@@ -10,7 +10,7 @@ public class EmpleadoDTO {
 
     private UUID id;
     private TipoIdentificacionDTO tipoIdentificacion;
-    private int numeroIdentificacion;
+    private Long numeroIdentificacion;
     private String nombre;
     private String apellido;
     private String correoElectronico;
@@ -21,7 +21,7 @@ public class EmpleadoDTO {
     public EmpleadoDTO() {
         setId(UUIDHelper.getDefault());
         setTipoIdentificacion(TipoIdentificacionDTO.build());
-        setNumeroIdentificacion(0);
+        setNumeroIdentificacion(0L);
         setNombre(TextHelper.EMPTY);
         setApellido(TextHelper.EMPTY);
         setCorreoElectronico(TextHelper.EMPTY);
@@ -30,7 +30,7 @@ public class EmpleadoDTO {
         setPassword(TextHelper.EMPTY);
     }
 
-    public EmpleadoDTO(final UUID id, final TipoIdentificacionDTO tipoIdentificacion, final int numeroIdentificacion,
+    public EmpleadoDTO(final UUID id, final TipoIdentificacionDTO tipoIdentificacion, final Long numeroIdentificacion,
                        final String nombre, final String apellido, final String correoElectronico,
                        final TipoEmpleadoDTO tipoEmpleado, final SedeDTO sede, final String password) {
         setId(id);
@@ -59,7 +59,7 @@ public class EmpleadoDTO {
         return this;
     }
 
-    public final EmpleadoDTO setNumeroIdentificacion(int numeroIdentificacion) {
+    public final EmpleadoDTO setNumeroIdentificacion(Long numeroIdentificacion) {
         this.numeroIdentificacion = numeroIdentificacion;
         return this;
     }
@@ -102,7 +102,7 @@ public class EmpleadoDTO {
         return tipoIdentificacion;
     }
 
-    public final int getNumeroIdentificacion() {
+    public final Long getNumeroIdentificacion() {
         return numeroIdentificacion;
     }
 

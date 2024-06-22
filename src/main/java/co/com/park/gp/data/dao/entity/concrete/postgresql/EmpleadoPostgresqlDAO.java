@@ -44,7 +44,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             sentenciaSqlPreparada.setObject(6, data.getTipoIdentificacion().getId());
             sentenciaSqlPreparada.setObject(7, data.getTipoEmpleado().getId());
             sentenciaSqlPreparada.setString(8, data.getPassword());
-            sentenciaSqlPreparada.setInt(9, data.getNumeroIdentificacion());
+            sentenciaSqlPreparada.setLong(9, data.getNumeroIdentificacion());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -80,12 +80,17 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             parametros.add(data.getId());
         }
 
+        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado().getNombre())){
+            sentenciaSql.append(" AND te.nombre = ?");
+            parametros.add(data.getTipoEmpleado().getNombre());
+        }
+
         if (!TextHelper.isNullOrEmpty(data.getNombre())) {
             sentenciaSql.append(" AND e.nombre = ?");
             parametros.add(data.getNombre());
         }
 
-        if (!(data.getNumeroIdentificacion() == 0)) {
+        if ((data.getNumeroIdentificacion() != 0)) {
             sentenciaSql.append(" AND e.numeroidentificacion = ?");
             parametros.add(data.getNumeroIdentificacion());
         }
@@ -127,7 +132,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
                     empleado.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
                     empleado.setNombre(resultado.getString("nombre"));
                     empleado.setApellido(resultado.getString("apellido"));
-                    empleado.setNumeroIdentificacion(resultado.getInt("numeroidentificacion"));
+                    empleado.setNumeroIdentificacion(resultado.getLong("numeroidentificacion"));
                     empleado.setCorreoElectronico(resultado.getString("correoelectronico").toLowerCase()); // Convertir a minúsculas
 
                     empleado.setPassword(resultado.getString("password"));
