@@ -15,6 +15,7 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.EmpleadoEntity;
+import co.com.park.gp.entity.TipoEmpleadoEntity;
 
 public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
@@ -37,6 +38,8 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         validarApellido(data.getApellido());
         validarNumeroIdentificacion(data.getNumeroIdentificacion());
         validarEmail(data.getCorreoElectronico());
+        validarMismoNumeroIdentificacionMismoTipoEmpleado(data.getNumeroIdentificacion(), data.getTipoEmpleado().getNombre());
+        validarMismoCorreoMismoTipoEmpleado(data.getCorreoElectronico(), data.getTipoEmpleado().getNombre());
 
         var empleadoEntity = EmpleadoEntity.build().setId(generarIdentificadorEmpleado())
                 .setTipoIdentificacion(
@@ -113,6 +116,26 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
         if (!(TextHelper.emailValido(correoElectronico))) {
             var mensajeUsuario = TextHelper.reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00107), correoElectronico);
+            throw new BusinessGPException(mensajeUsuario);
+        }
+    }
+
+    private void validarMismoNumeroIdentificacionMismoTipoEmpleado(Long numeroIdentificacion, String tipoEmpleado) {
+        var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
+        var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
+
+        if (!resultados.isEmpty()) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00108);
+            throw new BusinessGPException(mensajeUsuario);
+        }
+    }
+
+    private void validarMismoCorreoMismoTipoEmpleado(String correoElectronico, String tipoEmpleado) {
+        var empleadoEntity = EmpleadoEntity.build().setCorreoElectronico(correoElectronico).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
+        var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
+
+        if (!resultados.isEmpty()) {
+            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00109);
             throw new BusinessGPException(mensajeUsuario);
         }
     }

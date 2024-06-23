@@ -80,7 +80,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             parametros.add(data.getId());
         }
 
-        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado().getNombre())){
+        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado().getNombre()) && !data.getId().equals(UUIDHelper.getDefault())){
             sentenciaSql.append(" AND te.nombre = ?");
             parametros.add(data.getTipoEmpleado().getNombre());
         }

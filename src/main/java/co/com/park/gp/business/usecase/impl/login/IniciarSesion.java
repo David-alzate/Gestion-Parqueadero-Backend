@@ -9,6 +9,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.EmpleadoEntity;
+import co.com.park.gp.entity.TipoEmpleadoEntity;
 
 public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
 
@@ -25,15 +26,15 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
 
     @Override
     public Boolean execute(LoginDomain data) {
-        validarNumeroIdentificacion(data.getNumeroIdentificacion());
         validarPassword(data.getPassword());
-        validarUsuario(data.getNumeroIdentificacion(), data.getPassword());
+        validarNumeroIdentificacion(data.getNumeroIdentificacion());
+        validarUsuario(data.getNumeroIdentificacion(), data.getPassword(), data.getTipoEmpleado().getNombre());
         return true;
     }
 
-    private void validarUsuario(final Long numeroIdentificacion, final String password) {
+    private void validarUsuario(final Long numeroIdentificacion, final String password, String tipoEmpleado) {
         var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion)
-                .setPassword(password);
+                .setPassword(password).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
 
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
 
@@ -43,16 +44,16 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
         }
     }
 
-    private void validarNumeroIdentificacion(final Long numeroIdentificacion) {
-        if (numeroIdentificacion == 0) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00106);
+    private void validarNumeroIdentificacion(final Long numeroIdentificacion){
+        if (numeroIdentificacion == 0){
+            var mensajeUsuario = "El numero de identificacion no puede estar vacio";
             throw new BusinessGPException(mensajeUsuario);
         }
     }
 
-    private void validarPassword(final String password) {
-        if (TextHelper.isNullOrEmpty(password)) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00082);
+    private void validarPassword(final String password){
+        if (TextHelper.isNullOrEmpty(password)){
+            var mensajeUsuario = "La contraseña no puede estar vacio";
             throw new BusinessGPException(mensajeUsuario);
         }
     }

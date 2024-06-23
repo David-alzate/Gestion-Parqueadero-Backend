@@ -231,6 +231,10 @@ public class MessageCatalogBase implements MessageCatalog {
                 new Mensaje(CodigoMensaje.M00106, "El Numero de identificacion no puede estar vacio"));
         mensajes.put(CodigoMensaje.M00107.getIdentificador(),
                 new Mensaje(CodigoMensaje.M00107, "El formato del correo no es valido"));
+        mensajes.put(CodigoMensaje.M00108.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00108, "El numero de identificacion con este tipo de empleado ya esta registrado en el sistema"));
+        mensajes.put(CodigoMensaje.M00109.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00109, "El correo electronico con este tipo de empleado ya esta registrado a un usuario"));
 
     }
 
