@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
@@ -105,9 +106,7 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
             parametros.add(data.getDireccion());
         }
 
-        if (!ObjectHelper.getObjectHelper().isNull(data.getParqueadero())
-                && !ObjectHelper.getObjectHelper().isNull(data.getParqueadero().getId())
-                && !data.getParqueadero().getId().equals(UUIDHelper.getDefault())) {
+        if (!ObjectHelper.getObjectHelper().isNull(data.getParqueadero()) && !ObjectHelper.getObjectHelper().isNull(data.getParqueadero().getId()) && !data.getParqueadero().getId().equals(UUIDHelper.getDefault())) {
             sentenciaSql.append(" AND par.id = ?");
             parametros.add(data.getParqueadero().getId());
         }
@@ -171,6 +170,63 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
         }
 
         return sedes;
+    }
+
+    @Override
+    public void eliminar(UUID id) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("DELETE FROM sede WHERE id = ?");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setObject(1, id);
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la sede...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Delete de la sede en la tabla \"Sede\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la sede...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Delete de la sede en la tabla \"Sede\" de la base de datoss.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+    }
+
+    @Override
+    public void modificar(SedeEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("UPDATE sede SET nombresede=?, celdascarro=?, celdamoto=?, caldascamion=?, correoelectronico=?, ");
+        sentenciaSql.append("direccion=?, ciudad_id=?, departamento_id=?, pais_id=?, parqueadero_id=?, tiposede_id=? ");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setString(1, data.getNombre());
+            sentenciaSqlPreparada.setInt(2, data.getCeldasCarro());
+            sentenciaSqlPreparada.setInt(3, data.getCeldasMoto());
+            sentenciaSqlPreparada.setInt(4, data.getCeldascamion());
+            sentenciaSqlPreparada.setString(5, data.getCorreoElectronico());
+            sentenciaSqlPreparada.setString(6, data.getDireccion());
+            sentenciaSqlPreparada.setObject(7, data.getCiudad().getId());
+            sentenciaSqlPreparada.setObject(8, data.getDepartamento().getId());
+            sentenciaSqlPreparada.setObject(9, data.getPais().getId());
+            sentenciaSqlPreparada.setObject(10, data.getParqueadero().getId());
+            sentenciaSqlPreparada.setObject(11, data.getTipoSede().getId());
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la sede...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Update de la sede en la tabla \"Sede\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la sede...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update de la sede en la tabla \"Sede\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
     }
 
 }
