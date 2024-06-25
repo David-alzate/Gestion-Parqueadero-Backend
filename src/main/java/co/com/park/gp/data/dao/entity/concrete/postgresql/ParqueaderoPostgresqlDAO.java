@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
@@ -100,4 +101,51 @@ public class ParqueaderoPostgresqlDAO extends SqlConnection implements Parqueade
 
     }
 
+    @Override
+    public void eliminar(UUID id) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("DELETE FROM parqueadero WHERE id = ?");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setObject(1, id);
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar El parqueadero...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Delete de la sede en la tabla \"Parqueadero\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar el parqueadero...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Delete de la sede en la tabla \"Parqueadero\" de la base de datoss.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+    }
+
+
+    @Override
+    public void modificar(ParqueaderoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("UPDATE parqueadero SET nombre=? WHERE id=? ");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setString(1, data.getNombre());
+            sentenciaSqlPreparada.setObject(2, data.getId());
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar el Parqueadero...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Update de la sede en la tabla \"Parqueadero\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar el Parqueadero...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update de la sede en la tabla \"Parqueadero\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+    }
 }

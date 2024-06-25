@@ -200,7 +200,7 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("UPDATE sede SET nombresede=?, celdascarro=?, celdamoto=?, caldascamion=?, correoelectronico=?, ");
-        sentenciaSql.append("direccion=?, ciudad_id=?, departamento_id=?, pais_id=?, parqueadero_id=?, tiposede_id=? ");
+        sentenciaSql.append("direccion=?, ciudad_id=?, departamento_id=?, pais_id=?, parqueadero_id=?, tiposede_id=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -215,6 +215,7 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
             sentenciaSqlPreparada.setObject(9, data.getPais().getId());
             sentenciaSqlPreparada.setObject(10, data.getParqueadero().getId());
             sentenciaSqlPreparada.setObject(11, data.getTipoSede().getId());
+            sentenciaSqlPreparada.setObject(12, data.getId());
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {

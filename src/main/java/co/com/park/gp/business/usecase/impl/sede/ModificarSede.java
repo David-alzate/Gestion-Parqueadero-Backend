@@ -25,7 +25,7 @@ public class ModificarSede implements UseCaseWithoutReturn<SedeDomain> {
     @Override
     public void execute(SedeDomain data) {
 
-        var sedeEntity = SedeEntity.build()
+        var sedeEntity = SedeEntity.build().setId(data.getId())
                 .setParqueadero(ParqueaderoAssemblerEntity.getInstance().toEntity(data.getParqueadero()))
                 .setNombre(data.getNombre()).setCiudad(CiudadAssemblerEntity.getInstance().toEntity(data.getCiudad()))
                 .setDireccion(data.getDireccion()).setCorreoElectronico(data.getCorreoElectronico())

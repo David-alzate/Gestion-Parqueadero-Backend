@@ -85,14 +85,14 @@ public final class SedeController {
             var facade = new ModificarSedeFacade();
 
             facade.execute(sedeDTO);
-            sedeResponse.getMensajes().add("Ciudad modificada existosamente ");
+            sedeResponse.getMensajes().add("Sede modificada existosamente ");
         } catch (final GPException exception) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sedeResponse.getMensajes().add(exception.getMensajeUsuario());
         } catch (final Exception exception) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la ciudades";
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la sede";
             sedeResponse.getMensajes().add(mensajeUsuario);
         }
         return new ResponseEntity<>(sedeResponse, httpStatusCode);
@@ -107,14 +107,14 @@ public final class SedeController {
         try {
             var facade = new EliminarSedeFacade();
             facade.execute(id);
-            sedeResponse.getMensajes().add("Ciudad eliminada existosamente ");
+            sedeResponse.getMensajes().add("Sede eliminada existosamente ");
         } catch (final GPException exception) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sedeResponse.getMensajes().add(exception.getMensajeUsuario());
         } catch (final Exception exception) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la ciudades";
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la sede";
             sedeResponse.getMensajes().add(mensajeUsuario);
 
         }
