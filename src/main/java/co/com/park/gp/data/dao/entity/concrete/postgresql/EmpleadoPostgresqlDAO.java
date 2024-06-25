@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
@@ -171,4 +172,59 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
     }
 
 
+    @Override
+    public void eliminar(UUID id) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("DELETE FROM empleado WHERE id = ?");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setObject(1, id);
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar el Empleado...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Delete del Empleado en la tabla \"Empleado\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar El Empleado...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Delete del Empleado en la tabla \"Empleado\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+
+    }
+
+    @Override
+    public void modificar(EmpleadoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("UPDATE empleado SET nombre=?, apellido=?, correoelectronico=?, sede_id=?, tipoidentificacion_id=?,  ");
+        sentenciaSql.append("tipoempleado_id=?, password=?, numeroidentificacion=? WHERE id=? ");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setString(1, data.getNombre());
+            sentenciaSqlPreparada.setString(2, data.getApellido());
+            sentenciaSqlPreparada.setString(3, data.getCorreoElectronico());
+            sentenciaSqlPreparada.setObject(4, data.getSede().getId());
+            sentenciaSqlPreparada.setObject(5, data.getTipoIdentificacion().getId());
+            sentenciaSqlPreparada.setObject(6, data.getTipoEmpleado().getId());
+            sentenciaSqlPreparada.setString(7, data.getPassword());
+            sentenciaSqlPreparada.setLong(8, data.getNumeroIdentificacion());
+            sentenciaSqlPreparada.setObject(9, data.getId());
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar el Empleado...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Update del Empleado en la tabla \"Empleado\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar el Empleado...";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update Empleado en la tabla \"Empleado\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
+    }
 }

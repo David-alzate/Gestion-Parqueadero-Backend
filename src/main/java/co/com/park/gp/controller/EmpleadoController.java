@@ -1,12 +1,10 @@
 package co.com.park.gp.controller;
 
+import co.com.park.gp.business.facade.impl.empleado.EliminarEmpleadoFacade;
+import co.com.park.gp.business.facade.impl.empleado.ModificarEmpleadoFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import co.com.park.gp.business.facade.impl.empleado.ConsultarEmpleadoFacade;
 import co.com.park.gp.business.facade.impl.empleado.RegistrarEmpleadoFacade;
 import co.com.park.gp.controller.response.EmpleadoResponse;
@@ -14,6 +12,8 @@ import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.EmpleadoDTO;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/empleados/")
@@ -69,6 +69,53 @@ public final class EmpleadoController {
 
 		return new ResponseEntity<>(empleadoResponse, httpStatusCode);
 
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<EmpleadoResponse> modificar(@PathVariable UUID id, @RequestBody EmpleadoDTO empleadoDTO) {
+
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var empleadoResponse = new EmpleadoResponse();
+
+		try {
+			empleadoDTO.setId(id);
+			var facade = new ModificarEmpleadoFacade();
+
+			facade.execute(empleadoDTO);
+			empleadoResponse.getMensajes().add("Empleado modificado existosamente ");
+		} catch (final GPException exception) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			empleadoResponse.getMensajes().add(exception.getMensajeUsuario());
+		} catch (final Exception exception) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+			var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion del Empleado";
+			empleadoResponse.getMensajes().add(mensajeUsuario);
+		}
+		return new ResponseEntity<>(empleadoResponse, httpStatusCode);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<EmpleadoResponse> eliminar(@PathVariable UUID id) {
+
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var empleadoResponse = new EmpleadoResponse();
+
+		try {
+			var facade = new EliminarEmpleadoFacade();
+			facade.execute(id);
+			empleadoResponse.getMensajes().add("Empleado eliminado existosamente ");
+		} catch (final GPException exception) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			empleadoResponse.getMensajes().add(exception.getMensajeUsuario());
+		} catch (final Exception exception) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+			var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion del Empleado";
+			empleadoResponse.getMensajes().add(mensajeUsuario);
+
+		}
+		return new ResponseEntity<>(empleadoResponse, httpStatusCode);
 	}
 
 }

@@ -190,7 +190,7 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
 
         } catch (final Exception excepcion) {
             var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la sede...";
-            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Delete de la sede en la tabla \"Sede\" de la base de datoss.";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Delete de la sede en la tabla \"Sede\" de la base de datos.";
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
     }
