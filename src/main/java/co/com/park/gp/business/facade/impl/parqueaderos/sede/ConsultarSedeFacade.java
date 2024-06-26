@@ -1,32 +1,36 @@
-package co.com.park.gp.business.facade.impl.login;
+package co.com.park.gp.business.facade.impl.parqueaderos.sede;
 
-import co.com.park.gp.business.assembler.dto.impl.login.LoginAssemblerDTO;
+import java.util.List;
+
+import co.com.park.gp.business.assembler.dto.impl.parqueaderos.SedeAssemblerDTO;
 import co.com.park.gp.business.facade.FacadeWhitReturn;
-import co.com.park.gp.business.usecase.impl.login.IniciarSesion;
+import co.com.park.gp.business.usecase.impl.parqueaderos.sede.ConsultarSedes;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
 import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.data.dao.factory.DAOFactory;
-import co.com.park.gp.dto.login.LoginDTO;
+import co.com.park.gp.dto.parqueaderos.SedeDTO;
 
-public class IniciarSesionFacade implements FacadeWhitReturn<LoginDTO, Boolean> {
+public class ConsultarSedeFacade implements FacadeWhitReturn<SedeDTO, List<SedeDTO>> {
 
     private final DAOFactory daoFactory;
 
-    public IniciarSesionFacade() {
+    public ConsultarSedeFacade() {
         daoFactory = DAOFactory.getFactory();
     }
 
     @Override
-    public Boolean execute(LoginDTO dto) {
-        daoFactory.iniciarTransaccion();
+    public List<SedeDTO> execute(final SedeDTO dto) {
+
         try {
 
-            var useCase = new IniciarSesion(daoFactory);
-            var loginDomain = LoginAssemblerDTO.getInstance().toDomain(dto);
+            var useCase = new ConsultarSedes(daoFactory);
+            var sedeDomain = SedeAssemblerDTO.getInstance().toDomain(dto);
+            var resultadosDomain = useCase.execute(sedeDomain);
 
-            return useCase.execute(loginDomain);
+            return SedeAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
+
         } catch (final GPException exception) {
             throw exception;
         } catch (final Exception exception) {
@@ -40,5 +44,4 @@ public class IniciarSesionFacade implements FacadeWhitReturn<LoginDTO, Boolean> 
             daoFactory.cerrarConexion();
         }
     }
-
 }
