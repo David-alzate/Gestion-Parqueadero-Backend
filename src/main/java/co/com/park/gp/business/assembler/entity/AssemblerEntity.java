@@ -10,4 +10,4 @@ public interface AssemblerEntity<D, K> extends Assembler<D, K> {
 
 	List<K> toEntityCollection(List<D> domainCollection);
 
-}
+}	
