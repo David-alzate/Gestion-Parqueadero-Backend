@@ -2,8 +2,10 @@ package co.com.park.gp.business.assembler.dto.impl.tarifas;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
 import co.com.park.gp.business.domain.tarifas.EstadoDomain;
+import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.dto.tarifas.EstadoDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstadoAssemblerDTO implements AssemblerDTO<EstadoDomain, EstadoDTO> {
@@ -20,21 +22,29 @@ public class EstadoAssemblerDTO implements AssemblerDTO<EstadoDomain, EstadoDTO>
 
     @Override
     public EstadoDTO toDto(final EstadoDomain domain) {
-        return null;
+        var estadoDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain,
+                EstadoDomain.build());
+        return EstadoDTO.build().setId(estadoDomainTmp.getId()).setEstado(estadoDomainTmp.getEstado());
     }
 
     @Override
     public List<EstadoDTO> toDTOCollection(List<EstadoDomain> domainCollection) {
-        return List.of();
+        var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection,
+                new ArrayList<EstadoDomain>());
+        return domainCollectionTmp.stream().map(this::toDto).toList();
     }
 
     @Override
     public EstadoDomain toDomain(final EstadoDTO data) {
-        return null;
+        var estadoDtoTmp = ObjectHelper.getObjectHelper().getDefaultValue(data,
+                EstadoDTO.build());
+        return EstadoDomain.build(estadoDtoTmp.getId(), estadoDtoTmp.getEstado());
     }
 
     @Override
     public List<EstadoDomain> toDomainCollection(List<EstadoDTO> entityCollection) {
-        return List.of();
+        var dtoCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection,
+                new ArrayList<EstadoDTO>());
+        return dtoCollectionTmp.stream().map(this::toDomain).toList();
     }
 }

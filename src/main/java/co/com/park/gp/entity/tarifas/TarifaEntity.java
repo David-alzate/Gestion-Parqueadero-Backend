@@ -41,6 +41,10 @@ public class TarifaEntity {
         setFechaFinVigencia(fechaFinVigencia);
     }
 
+    public static TarifaEntity build() {
+        return new TarifaEntity();
+    }
+
     public TarifaEntity setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;

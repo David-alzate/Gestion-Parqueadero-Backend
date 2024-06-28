@@ -2,8 +2,10 @@ package co.com.park.gp.business.assembler.dto.impl.comunes;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
 import co.com.park.gp.business.domain.comunes.TipoVehiculoDomain;
+import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.dto.comunes.TipoVehiculoDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TipoVehiculoAssemblerDTO implements AssemblerDTO<TipoVehiculoDomain, TipoVehiculoDTO> {
@@ -20,21 +22,30 @@ public class TipoVehiculoAssemblerDTO implements AssemblerDTO<TipoVehiculoDomain
 
     @Override
     public TipoVehiculoDTO toDto(final TipoVehiculoDomain domain) {
-        return null;
+        var tipoVehiculoDomainTmp = ObjectHelper.getObjectHelper().getDefaultValue(domain,
+                TipoVehiculoDomain.build());
+        return TipoVehiculoDTO.build().setId(tipoVehiculoDomainTmp.getId()).setTipoVehiculo(tipoVehiculoDomainTmp.getTipoVehiculo());
+
     }
 
     @Override
     public List<TipoVehiculoDTO> toDTOCollection(List<TipoVehiculoDomain> domainCollection) {
-        return List.of();
+        var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection,
+                new ArrayList<TipoVehiculoDomain>());
+        return domainCollectionTmp.stream().map(this::toDto).toList();
     }
 
     @Override
     public TipoVehiculoDomain toDomain(final TipoVehiculoDTO data) {
-        return null;
+        var tipoVehiculoDtoTmp = ObjectHelper.getObjectHelper().getDefaultValue(data,
+                TipoVehiculoDTO.build());
+        return TipoVehiculoDomain.build(tipoVehiculoDtoTmp.getId(), tipoVehiculoDtoTmp.getTipoVehiculo());
     }
 
     @Override
     public List<TipoVehiculoDomain> toDomainCollection(List<TipoVehiculoDTO> entityCollection) {
-        return List.of();
+        var dtoCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection,
+                new ArrayList<TipoVehiculoDTO>());
+        return dtoCollectionTmp.stream().map(this::toDomain).toList();
     }
 }

@@ -45,7 +45,7 @@ public final class TarifaDomain {
                 LocalDate.now(), LocalDate.now().plusYears(1));
     }
 
-    private void setId(UUID id) {
+    public void setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 

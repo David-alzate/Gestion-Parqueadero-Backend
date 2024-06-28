@@ -41,6 +41,10 @@ public class TarifaDTO {
         setFechaFinVigencia(fechaFinVigencia);
     }
 
+    public static TarifaDTO build() {
+        return new TarifaDTO();
+    }
+
     public TarifaDTO setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
