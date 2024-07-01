@@ -15,7 +15,7 @@ public class TipoVehiculoAssemblerEntity implements AssemblerEntity<TipoVehiculo
     private TipoVehiculoAssemblerEntity() {
         super();
     }
-
+    
     public static AssemblerEntity<TipoVehiculoDomain, TipoVehiculoEntity> getInstance() {
         return instance;
     }

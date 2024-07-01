@@ -31,6 +31,7 @@ public final class RegistrarParqueadero implements UseCaseWithoutReturn<Parquead
     public void execute(final ParqueaderoDomain data) {
 
         validarParqueadero(data.getNombre());
+        validarParqueaderoExiste(data.getNombre());
 
         var parqueaderoEntity = ParqueaderoEntity.build().setId(generarIdentificadorSede()).setNombre(data.getNombre());
 
@@ -69,6 +70,16 @@ public final class RegistrarParqueadero implements UseCaseWithoutReturn<Parquead
             throw new BusinessGPException(mensajeUsuario);
         }
 
+    }
+
+    private void validarParqueaderoExiste(final String nombreParqueadero) {
+        var parqueaderoEntity = ParqueaderoEntity.build().setNombre(nombreParqueadero);
+        var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
+        if (!resultados.isEmpty()) {
+            var mensajeUsuario = TextHelper.reemplazarParametro(
+                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00110), nombreParqueadero);
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 
 }

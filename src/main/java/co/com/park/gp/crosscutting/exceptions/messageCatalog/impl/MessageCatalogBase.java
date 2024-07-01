@@ -235,6 +235,8 @@ public class MessageCatalogBase implements MessageCatalog {
                 new Mensaje(CodigoMensaje.M00108, "El numero de identificacion con este tipo de empleado ya esta registrado en el sistema"));
         mensajes.put(CodigoMensaje.M00109.getIdentificador(),
                 new Mensaje(CodigoMensaje.M00109, "El correo electronico con este tipo de empleado ya esta registrado a un usuario"));
+        mensajes.put(CodigoMensaje.M00110.getIdentificador(),
+                new Mensaje(CodigoMensaje.M00110, "El nombre del parqueadero \"${1}\" ya esta registrado en el sistema"));
 
     }
 
