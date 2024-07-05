@@ -1,5 +1,6 @@
 package co.com.park.gp.business.usecase.impl.tarifas.estado;
 
+import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
 import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
@@ -22,9 +23,11 @@ public class ConsultarEstado implements UseCaseWithReturn<EstadoDomain, List<Est
         this.factory = factory;
     }
 
-
     @Override
     public List<EstadoDomain> execute(EstadoDomain data) {
-        return List.of();
+        var estadoEntityFilter = EstadoAssemblerEntity.getInstance().toEntity(data);
+        var resultadosEntity = factory.getEstadoDAO().consultar(estadoEntityFilter);
+
+        return EstadoAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);
     }
 }

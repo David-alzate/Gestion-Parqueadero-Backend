@@ -1,5 +1,6 @@
 package co.com.park.gp.data.dao.factory;
 
+import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
 import co.com.park.gp.data.dao.entity.parqueaderos.CiudadDAO;
 import co.com.park.gp.data.dao.entity.parqueaderos.DepartamentoDAO;
 import co.com.park.gp.data.dao.entity.empleados.EmpleadoDAO;
@@ -9,6 +10,9 @@ import co.com.park.gp.data.dao.entity.parqueaderos.SedeDAO;
 import co.com.park.gp.data.dao.entity.empleados.TipoEmpleadoDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoIdentificacionDAO;
 import co.com.park.gp.data.dao.entity.parqueaderos.TipoSedeDAO;
+import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
+import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
+import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.factory.concrete.PostgresqlDAOFactory;
 
 public interface DAOFactory {
@@ -43,4 +47,11 @@ public interface DAOFactory {
 	
 	TipoIdentificacionDAO geTipoIdentificacionDAO();
 
+	TipoVehiculoDAO getTipoVehiculoDAO();
+
+	TipoTarifaDAO getTipoTarifaDAO();
+
+	EstadoDAO getEstadoDAO();
+
+	TarifaDAO getTarifaDAO();
 }

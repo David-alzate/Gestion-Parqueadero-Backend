@@ -6,6 +6,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.comunes.TipoVehiculoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.EstadoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TarifaPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TipoTarifaPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
+import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
+import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -150,6 +158,26 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
     @Override
     public TipoIdentificacionDAO geTipoIdentificacionDAO() {
         return new TipoIdentificacionPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public TipoVehiculoDAO getTipoVehiculoDAO() {
+        return new TipoVehiculoPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public TipoTarifaDAO getTipoTarifaDAO() {
+        return new TipoTarifaPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public EstadoDAO getEstadoDAO() {
+        return new EstadoPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public TarifaDAO getTarifaDAO() {
+        return new TarifaPostgresqlDAO(getConexion());
     }
 
 //    public static void main(String[] args) {
