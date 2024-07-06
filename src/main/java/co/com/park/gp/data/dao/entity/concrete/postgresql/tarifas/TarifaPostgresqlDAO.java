@@ -29,7 +29,7 @@ public class TarifaPostgresqlDAO extends SqlConnection implements TarifaDAO {
     public void crear(TarifaEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("INSERT INTO tarifa (id, sede_id, tipovehiculo_id, tipotarifa_id, ");
-        sentenciaSql.append("tarifa, estado_id, fechainiciovigencia, fechafinvigencia ");
+        sentenciaSql.append("tarifa, estado_id, fechainiciovigencia, fechafinvigencia) ");
         sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {

@@ -8,29 +8,27 @@ import co.com.park.gp.business.domain.tarifas.TarifaDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
-import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.tarifas.TarifaEntity;
 
-import java.util.UUID;
-
-public class RegistrarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
+public class ModificarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
 
     private final DAOFactory factory;
 
-    public RegistrarTarifa(final DAOFactory factory) {
+    public ModificarTarifa(final DAOFactory factory) {
         if (ObjectHelper.getObjectHelper().isNull(factory)) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de llevar un registro de la tarifa...";
-            var mensajeTecnico = "El DAO factory para crear la tarifa lleno nulo..";
+            var mensajeUsuario = "Se ha presentado un problema tratando de llevar una modificacion de la tarifa...";
+            var mensajeTecnico = "El DAO factory para modificar la tarifa llegó nulo...";
             throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
         }
+
         this.factory = factory;
     }
 
     @Override
     public void execute(TarifaDomain data) {
 
-        var tarifaEntity = TarifaEntity.build().setId(generarIdentificadorTarifa())
+        var tarifaEntity = TarifaEntity.build().setId(data.getId())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setTipoVehiculo(TipoVehiculoAssemblerEntity.getInstance().toEntity(data.getTipoVehiculo()))
                 .setTipoTarifa(TipoTarifaAssemblerEntity.getInstance().toEntity(data.getTipoTarifa()))
@@ -39,19 +37,6 @@ public class RegistrarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
                 .setFechaInicioVigencia(data.getFechaInicioVigencia())
                 .setFechaFinVigencia(data.getFechaFinVigencia());
 
-        factory.getTarifaDAO().crear(tarifaEntity);
-    }
-
-    private final UUID generarIdentificadorTarifa() {
-        UUID id = UUIDHelper.generate();
-        boolean existeId = true;
-
-        while (existeId) {
-            id = UUIDHelper.generate();
-            var tarifaEntity = TarifaEntity.build().setId(id);
-            var resultados = factory.getTarifaDAO().consultar(tarifaEntity);
-            existeId = !resultados.isEmpty();
-        }
-        return id;
+        factory.getTarifaDAO().modificar(tarifaEntity);
     }
 }
