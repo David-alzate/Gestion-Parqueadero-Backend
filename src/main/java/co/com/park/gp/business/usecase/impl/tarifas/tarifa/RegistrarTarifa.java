@@ -10,7 +10,10 @@ import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
+import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.tarifas.TarifaEntity;
+import co.com.park.gp.entity.tarifas.TipoTarifaEntity;
 
 import java.util.UUID;
 
@@ -29,6 +32,8 @@ public class RegistrarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
 
     @Override
     public void execute(TarifaDomain data) {
+
+        tarifaExiste(data.getSede().getId(), data.getTipoVehiculo().getId(), data.getTipoTarifa().getId(), data.getEstado().getEstado());
 
         var tarifaEntity = TarifaEntity.build().setId(generarIdentificadorTarifa())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
@@ -53,5 +58,17 @@ public class RegistrarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
             existeId = !resultados.isEmpty();
         }
         return id;
+    }
+
+    private void tarifaExiste(final UUID idSede, final UUID idTipoVehiculo, final UUID idTipoTarifa, final String estado){
+        var tarifaEntity = TarifaEntity.build().setSede(SedeEntity.build().setId(idSede)).setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo))
+                .setTipoTarifa(TipoTarifaEntity.build().setId(idTipoTarifa));
+
+        var resultados = factory.getTarifaDAO().consultar(tarifaEntity);
+
+        if(!resultados.isEmpty() && estado.equals("Activa")){
+            var mensajeUsuario = "Ya existe una tarifa activa para esa sede con este tipo de vehiculo";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 }

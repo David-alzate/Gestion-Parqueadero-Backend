@@ -12,7 +12,6 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.parqueaderos.ParqueaderoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 
-import java.sql.ResultSet;
 import java.util.UUID;
 
 public class ModificarSede implements UseCaseWithoutReturn<SedeDomain> {
