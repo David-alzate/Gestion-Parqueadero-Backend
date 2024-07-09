@@ -12,6 +12,7 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.parqueaderos.ParqueaderoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 
+import java.sql.ResultSet;
 import java.util.UUID;
 
 public class ModificarSede implements UseCaseWithoutReturn<SedeDomain> {
@@ -35,9 +36,9 @@ public class ModificarSede implements UseCaseWithoutReturn<SedeDomain> {
         validarFormatoCorreo(data.getCorreoElectronico());
         validarDireccion(data.getDireccion());
         validarCantidadCeldas(data.getCeldasCarro(), data.getCeldasMoto(), data.getCeldascamion());
-        validarSedeMismoNombreMismoParqueaero(data.getNombre(), data.getParqueadero().getId());
-        validarSedeMismaDireccionMismoParqueadero(data.getDireccion(), data.getParqueadero().getId());
-        validarMismoCorreo(data.getCorreoElectronico());
+        validarSedeMismoNombreMismoParqueadero(data.getNombre(), data.getParqueadero().getId(), data.getId());
+        validarSedeMismaDireccionMismoParqueadero(data.getDireccion(), data.getParqueadero().getId(), data.getId());
+        validarMismoCorreo(data.getCorreoElectronico(), data.getId());
 
         var sedeEntity = SedeEntity.build().setId(data.getId())
                 .setParqueadero(ParqueaderoAssemblerEntity.getInstance().toEntity(data.getParqueadero()))
@@ -130,39 +131,48 @@ public class ModificarSede implements UseCaseWithoutReturn<SedeDomain> {
         }
     }
 
-    private void validarSedeMismoNombreMismoParqueaero(final String nombreSede, final UUID idParqueadero) {
-        var sedeEntity = SedeEntity.build().setNombre(nombreSede)
+    private void validarSedeMismoNombreMismoParqueadero(final String nombreSede, final UUID idParqueadero, final UUID idSedeActual) {
+        var sedeEntity = SedeEntity.build()
+                .setNombre(nombreSede)
                 .setParqueadero(ParqueaderoEntity.build().setId(idParqueadero));
 
         var resultados = factory.getSedeDAO().consultar(sedeEntity);
 
-        if (!resultados.isEmpty()) {
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(sede -> !sede.getId().equals(idSedeActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = TextHelper
                     .reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00056), nombreSede);
             throw new BusinessGPException(mensajeUsuario);
         }
-
     }
 
-    private void validarSedeMismaDireccionMismoParqueadero(final String direccion, final UUID idparqueadero) {
+    private void validarSedeMismaDireccionMismoParqueadero(final String direccion, final UUID idparqueadero, final UUID idSedeActual) {
         var sedeEntity = SedeEntity.build().setDireccion(direccion)
                 .setParqueadero(ParqueaderoEntity.build().setId(idparqueadero));
 
         var resultados = factory.getSedeDAO().consultar(sedeEntity);
 
-        if (!resultados.isEmpty()) {
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(sede -> !sede.getId().equals(idSedeActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = TextHelper
                     .reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00062), direccion);
             throw new BusinessGPException(mensajeUsuario);
         }
     }
 
-    private void validarMismoCorreo(final String correo) {
+    private void validarMismoCorreo(final String correo, final UUID idSedeActual) {
         var sedeEntity = SedeEntity.build().setCorreoElectronico(correo);
 
         var resultados = factory.getSedeDAO().consultar(sedeEntity);
 
-        if (!resultados.isEmpty()) {
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(sede -> !sede.getId().equals(idSedeActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = TextHelper
                     .reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00060), correo);
             throw new BusinessGPException(mensajeUsuario);

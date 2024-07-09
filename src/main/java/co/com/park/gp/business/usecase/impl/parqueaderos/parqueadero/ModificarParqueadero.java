@@ -10,6 +10,8 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.parqueaderos.ParqueaderoEntity;
 
+import java.util.UUID;
+
 public class ModificarParqueadero implements UseCaseWithoutReturn<ParqueaderoDomain> {
 
     private final DAOFactory factory;
@@ -26,7 +28,7 @@ public class ModificarParqueadero implements UseCaseWithoutReturn<ParqueaderoDom
     @Override
     public void execute(ParqueaderoDomain data) {
         validarParqueadero(data.getNombre());
-        validarParqueaderoExiste(data.getNombre());
+        validarParqueaderoExiste(data.getNombre(), data.getId());
 
         var parqueaderoEntity = ParqueaderoEntity.build()
                 .setId(data.getId())
@@ -56,10 +58,14 @@ public class ModificarParqueadero implements UseCaseWithoutReturn<ParqueaderoDom
 
     }
 
-    private void validarParqueaderoExiste(final String nombreParqueadero) {
+    private void validarParqueaderoExiste(final String nombreParqueadero, final UUID idParqueaderoActual) {
         var parqueaderoEntity = ParqueaderoEntity.build().setNombre(nombreParqueadero);
         var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
-        if (!resultados.isEmpty()) {
+
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(parqueadero -> !parqueadero.getId().equals(idParqueaderoActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = TextHelper.reemplazarParametro(
                     MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00110), nombreParqueadero);
             throw new BusinessGPException(mensajeUsuario);

@@ -14,6 +14,8 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
 
+import java.util.UUID;
+
 public class ModificarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
     private final DAOFactory factory;
@@ -34,8 +36,8 @@ public class ModificarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         validarApellido(data.getApellido());
         validarNumeroIdentificacion(data.getNumeroIdentificacion());
         validarEmail(data.getCorreoElectronico());
-        validarMismoNumeroIdentificacionMismoTipoEmpleado(data.getNumeroIdentificacion(), data.getTipoEmpleado().getNombre());
-        validarMismoCorreoMismoTipoEmpleado(data.getCorreoElectronico(), data.getTipoEmpleado().getNombre());
+        validarMismoNumeroIdentificacionMismoTipoEmpleado(data.getNumeroIdentificacion(), data.getTipoEmpleado().getNombre(), data.getId());
+        validarMismoCorreoMismoTipoEmpleado(data.getCorreoElectronico(), data.getTipoEmpleado().getNombre(), data.getId());
 
         var empleadoEntity = EmpleadoEntity.build().setId(data.getId())
                 .setTipoIdentificacion(
@@ -102,21 +104,27 @@ public class ModificarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         }
     }
 
-    private void validarMismoNumeroIdentificacionMismoTipoEmpleado(Long numeroIdentificacion, String tipoEmpleado) {
+    private void validarMismoNumeroIdentificacionMismoTipoEmpleado(Long numeroIdentificacion, String tipoEmpleado, UUID idEmpleadoActual) {
         var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
 
-        if (!resultados.isEmpty()) {
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(empleado -> !empleado.getId().equals(idEmpleadoActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00108);
             throw new BusinessGPException(mensajeUsuario);
         }
     }
 
-    private void validarMismoCorreoMismoTipoEmpleado(String correoElectronico, String tipoEmpleado) {
+    private void validarMismoCorreoMismoTipoEmpleado(String correoElectronico, String tipoEmpleado, UUID idEmpleadoActual) {
         var empleadoEntity = EmpleadoEntity.build().setCorreoElectronico(correoElectronico).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
 
-        if (!resultados.isEmpty()) {
+        boolean existeDuplicado = resultados.stream()
+                .anyMatch(empleado -> !empleado.getId().equals(idEmpleadoActual));
+
+        if (existeDuplicado) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00109);
             throw new BusinessGPException(mensajeUsuario);
         }
