@@ -11,6 +11,8 @@ import co.com.park.gp.data.dao.entity.parqueaderos.SedeDAO;
 import co.com.park.gp.data.dao.entity.empleados.TipoEmpleadoDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoIdentificacionDAO;
 import co.com.park.gp.data.dao.entity.parqueaderos.TipoSedeDAO;
+import co.com.park.gp.data.dao.entity.planes.PlanDAO;
+import co.com.park.gp.data.dao.entity.planes.TipoPlanDAO;
 import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
@@ -60,4 +62,8 @@ public interface DAOFactory {
 	ClienteDAO getClienteDAO();
 
 	VehiculoDAO getVehiculoDAO();
+
+	TipoPlanDAO getTipoPlanDAO();
+
+	PlanDAO getPlanDAO();
 }
