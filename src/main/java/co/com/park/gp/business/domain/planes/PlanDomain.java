@@ -15,11 +15,11 @@ public final class PlanDomain {
     private SedeDomain sede;
     private VehiculoDomain vehiculo;
     private ClienteDomain cliente;
-    private TIpoPlanDomain tipoPlan;
+    private TipoPlanDomain tipoPlan;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
-    public PlanDomain(UUID id, SedeDomain sede, VehiculoDomain vehiculo, ClienteDomain cliente, TIpoPlanDomain tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
+    public PlanDomain(UUID id, SedeDomain sede, VehiculoDomain vehiculo, ClienteDomain cliente, TipoPlanDomain tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
         setId(id);
         setSede(sede);
         setVehiculo(vehiculo);
@@ -29,12 +29,16 @@ public final class PlanDomain {
         setFechaFin(fechaFin);
     }
 
-    public static PlanDomain build(UUID id, SedeDomain sede, VehiculoDomain vehiculo, ClienteDomain cliente, TIpoPlanDomain tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
+    public static PlanDomain build(UUID id, SedeDomain sede, VehiculoDomain vehiculo, ClienteDomain cliente, TipoPlanDomain tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
         return new PlanDomain(id, sede, vehiculo, cliente, tipoPlan, fechaInicio, fechaFin);
     }
 
     public static PlanDomain build(UUID id) {
-        return new PlanDomain(id, SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TIpoPlanDomain.build(), LocalDate.now(), LocalDate.now());
+        return new PlanDomain(id, SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), LocalDate.now(), LocalDate.now());
+    }
+
+    public static PlanDomain build() {
+        return new PlanDomain(UUIDHelper.getDefault(), SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), LocalDate.now(), LocalDate.now());
     }
 
     public void setId(UUID id) {
@@ -53,8 +57,8 @@ public final class PlanDomain {
         this.cliente = ObjectHelper.getObjectHelper().getDefaultValue(cliente, ClienteDomain.build());
     }
 
-    public void setTipoPlan(TIpoPlanDomain tipoPlan) {
-        this.tipoPlan = ObjectHelper.getObjectHelper().getDefaultValue(tipoPlan, TIpoPlanDomain.build());
+    public void setTipoPlan(TipoPlanDomain tipoPlan) {
+        this.tipoPlan = ObjectHelper.getObjectHelper().getDefaultValue(tipoPlan, TipoPlanDomain.build());
     }
 
     public void setFechaInicio(LocalDate fechaInicio) {
@@ -81,7 +85,7 @@ public final class PlanDomain {
         return cliente;
     }
 
-    public TIpoPlanDomain getTipoPlan() {
+    public TipoPlanDomain getTipoPlan() {
         return tipoPlan;
     }
 
