@@ -28,7 +28,7 @@ public class VehiculoPostgresqlDAO extends SqlConnection implements VehiculoDAO 
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("INSERT INTO vehiculo (id, tipovehiculo_id, placa)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?)");
+        sentenciaSql.append("VALUES (?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -143,7 +143,7 @@ public class VehiculoPostgresqlDAO extends SqlConnection implements VehiculoDAO 
     public void modificar(VehiculoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("UPDATE cliente SET tipovehiculo_id=?, placa=? WHERE id=? ");
+        sentenciaSql.append("UPDATE vehiculo SET tipovehiculo_id=?, placa=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
