@@ -1,5 +1,6 @@
 package co.com.park.gp.business.usecase.impl.login;
 
+import co.com.park.gp.business.assembler.entity.impl.empleados.TipoEmpleadoAssemblerEntity;
 import co.com.park.gp.business.domain.login.LoginDomain;
 import co.com.park.gp.business.usecase.UseCaseWithReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
@@ -11,7 +12,7 @@ import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
 
-public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
+public class IniciarSesion implements UseCaseWithReturn<LoginDomain, LoginDomain> {
 
     private final DAOFactory factory;
 
@@ -25,14 +26,16 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
     }
 
     @Override
-    public Boolean execute(LoginDomain data) {
+    public LoginDomain execute(LoginDomain data) {
         validarPassword(data.getPassword());
         validarNumeroIdentificacion(data.getNumeroIdentificacion());
-        validarUsuario(data.getNumeroIdentificacion(), data.getPassword(), data.getTipoEmpleado().getNombre());
-        return true;
+        var empleado = validarUsuario(data.getNumeroIdentificacion(), data.getPassword(), data.getTipoEmpleado().getNombre());
+        var tipoEmpleado = TipoEmpleadoAssemblerEntity.getInstance().toDomain(empleado.getTipoEmpleado());
+        data.setTipoEmpleado(tipoEmpleado);
+        return data;
     }
 
-    private void validarUsuario(final Long numeroIdentificacion, final String password, String tipoEmpleado) {
+    private EmpleadoEntity validarUsuario(final Long numeroIdentificacion, final String password, String tipoEmpleado) {
         var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion)
                 .setPassword(password).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
 
@@ -42,6 +45,7 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00080);
             throw new BusinessGPException(mensajeUsuario);
         }
+        return resultados.getFirst();
     }
 
     private void validarNumeroIdentificacion(final Long numeroIdentificacion){
@@ -57,5 +61,4 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, Boolean> {
             throw new BusinessGPException(mensajeUsuario);
         }
     }
-
 }

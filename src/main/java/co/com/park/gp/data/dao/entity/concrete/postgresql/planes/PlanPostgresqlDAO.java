@@ -85,7 +85,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT p.id, s.id as idSede, s.nombresede as nombreSede, ");
         sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, ");
-        sentenciaSql.append("c.id as idCliente, c.nombre as nombreCliente, ");
+        sentenciaSql.append("c.id as idCliente, c.nombre as nombreCliente, c.numeroidentificacion as numeroIdentificacionCliente, ");
         sentenciaSql.append("tp.id as idTipoPlan, tp.nombre as tipoPlanNombre, ");
         sentenciaSql.append("p.fechainicio, p.fechafin ");
         sentenciaSql.append("FROM plan p ");
@@ -157,6 +157,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
                     ClienteEntity cliente = ClienteEntity.build();
                     cliente.setId(UUIDHelper.convertToUUID(resultado.getString("idCliente")));
                     cliente.setNombre(resultado.getString("nombreCliente"));
+                    cliente.setNumeroIdentificacion(resultado.getLong("numeroIdentificacionCliente"));
                     plan.setCliente(cliente);
 
                     TipoPlanEntity tipoPlan = TipoPlanEntity.build();

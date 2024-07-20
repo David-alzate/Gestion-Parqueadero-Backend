@@ -24,7 +24,7 @@ public class LoginDomain {
         return new LoginDomain(TipoEmpleadoDomain.build(), 0L, TextHelper.EMPTY);
     }
 
-    private void setTipoEmpleado(TipoEmpleadoDomain tipoEmpleado) {
+    public void setTipoEmpleado(TipoEmpleadoDomain tipoEmpleado) {
         this.tipoEmpleado = ObjectHelper.getObjectHelper().getDefaultValue(tipoEmpleado, TipoEmpleadoDomain.build());
     }
 
@@ -47,5 +47,7 @@ public class LoginDomain {
     public final String getPassword() {
         return password;
     }
+
+
 
 }

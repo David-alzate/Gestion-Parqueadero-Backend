@@ -19,14 +19,10 @@ public final class LoginController {
 
         try {
             var facade = new IniciarSesionFacade();
-            boolean loginSuccess = facade.execute(data);
-            loginResonse.setSuccess(loginSuccess);
-            if (loginSuccess) {
-                loginResonse.getMensajes().add("Inicio de sesión exitoso");
-            } else {
-                httpStatusCode = HttpStatus.UNAUTHORIZED;
-                loginResonse.getMensajes().add("Credenciales incorrectas");
-            }
+            LoginResonse response = facade.execute(data);
+            loginResonse.setSuccess(response.isSuccess());
+            loginResonse.setTipoEmpleado(response.getTipoEmpleado());
+            loginResonse.getMensajes().addAll(response.getMensajes());
         } catch (final GPException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             loginResonse.setSuccess(false);

@@ -81,7 +81,8 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             parametros.add(data.getId());
         }
 
-        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado().getNombre()) && !data.getId().equals(UUIDHelper.getDefault())){
+        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoEmpleado())
+                && !TextHelper.isNullOrEmpty(data.getTipoEmpleado().getNombre())) {
             sentenciaSql.append(" AND te.nombre = ?");
             parametros.add(data.getTipoEmpleado().getNombre());
         }
@@ -91,7 +92,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             parametros.add(data.getNombre());
         }
 
-        if ((data.getNumeroIdentificacion() != 0)) {
+        if (data.getNumeroIdentificacion() != 0) {
             sentenciaSql.append(" AND e.numeroidentificacion = ?");
             parametros.add(data.getNumeroIdentificacion());
         }
@@ -134,7 +135,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
                     empleado.setNombre(resultado.getString("nombre"));
                     empleado.setApellido(resultado.getString("apellido"));
                     empleado.setNumeroIdentificacion(resultado.getLong("numeroidentificacion"));
-                    empleado.setCorreoElectronico(resultado.getString("correoelectronico").toLowerCase()); // Convertir a minúsculas
+                    empleado.setCorreoElectronico(resultado.getString("correoelectronico").toLowerCase());
 
                     empleado.setPassword(resultado.getString("password"));
 

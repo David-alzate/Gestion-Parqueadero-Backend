@@ -8,6 +8,7 @@ import co.com.park.gp.dto.login.LoginDTO;
 public class LoginResonse extends Response<LoginDTO> {
 
     private boolean success;
+    private String tipoEmpleado;
 
     public LoginResonse() {
         setMensajes(new ArrayList<>());
@@ -20,5 +21,13 @@ public class LoginResonse extends Response<LoginDTO> {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getTipoEmpleado() {
+        return tipoEmpleado;
+    }
+
+    public void setTipoEmpleado(String tipoEmpleado) {
+        this.tipoEmpleado = tipoEmpleado;
     }
 }

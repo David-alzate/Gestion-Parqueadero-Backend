@@ -13,7 +13,7 @@ public final class ClienteEntity {
     private TipoIdentificacionEntity tipoIdentificacion;
     private Long numeroIdentificacion;
     private String nombre;
-    private String apellido;
+    private String apellido;    
     private String correoElectronico;
 
     public ClienteEntity() {

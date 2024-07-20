@@ -23,6 +23,8 @@ import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.entity.vehiculos.VehiculoDAO;
+import co.com.park.gp.entity.empleados.EmpleadoEntity;
+import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.tarifas.TarifaEntity;
 import org.springframework.beans.factory.annotation.Value;
@@ -219,7 +221,7 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //
 //
 //        System.out.println("Consultar Empleados");
-//        var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setNumeroIdentificacion(1040031815).setPassword("1040031815").setTipoEmpleado(TipoEmpleadoEntity.build().setNombre("Administrador")));
+//        var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setNumeroIdentificacion(1040031815L).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre("Administradora")));
 //
 //        for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
 //            System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
