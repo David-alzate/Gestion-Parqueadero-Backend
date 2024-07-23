@@ -13,12 +13,14 @@ import co.com.park.gp.data.dao.entity.concrete.postgresql.clientes.ClientePostgr
 import co.com.park.gp.data.dao.entity.concrete.postgresql.comunes.TipoVehiculoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.PlanPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.TipoPlanPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.sesionparqueo.SesionParqueoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.EstadoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TipoTarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.vehiculos.VehiculoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
 import co.com.park.gp.data.dao.entity.planes.TipoPlanDAO;
+import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
@@ -211,6 +213,11 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
     @Override
     public PlanDAO getPlanDAO() {
         return new PlanPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public SesionParqueoDAO getSesionParqueoDAO() {
+        return new SesionParqueoPostgresqlDAO(getConexion());
     }
 
 

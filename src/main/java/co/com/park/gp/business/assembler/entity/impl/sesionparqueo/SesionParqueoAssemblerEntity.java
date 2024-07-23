@@ -13,7 +13,7 @@ import co.com.park.gp.business.domain.vehiculos.VehiculoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
-import co.com.park.gp.entity.sesionparqueo.SesionParqueoEntity;
+import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 

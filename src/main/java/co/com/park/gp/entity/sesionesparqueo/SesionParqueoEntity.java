@@ -1,11 +1,7 @@
-package co.com.park.gp.entity.sesionparqueo;
+package co.com.park.gp.entity.sesionesparqueo;
 
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
-import co.com.park.gp.dto.empleados.EmpleadoDTO;
-import co.com.park.gp.dto.parqueaderos.SedeDTO;
-import co.com.park.gp.dto.tarifas.EstadoDTO;
-import co.com.park.gp.dto.vehiculos.VehiculoDTO;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;

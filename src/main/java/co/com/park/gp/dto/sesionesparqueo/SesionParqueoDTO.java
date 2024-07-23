@@ -1,4 +1,4 @@
-package co.com.park.gp.dto.sesionparqueo;
+package co.com.park.gp.dto.sesionesparqueo;
 
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
