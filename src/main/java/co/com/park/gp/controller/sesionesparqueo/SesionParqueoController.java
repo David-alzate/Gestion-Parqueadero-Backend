@@ -1,5 +1,6 @@
 package co.com.park.gp.controller.sesionesparqueo;
 
+import co.com.park.gp.business.facade.impl.sesionesparqueo.ConsultarSesionParqueoFacade;
 import co.com.park.gp.business.facade.impl.sesionesparqueo.IngresarVehiculoFacade;
 import co.com.park.gp.business.facade.impl.sesionesparqueo.SalidaVehiculoFacade;
 import co.com.park.gp.controller.response.sesionesparqueo.SesionParqueoResponse;
@@ -7,14 +8,38 @@ import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.sesionesparqueo.SesionParqueoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sesionesParqueo/")
 public class SesionParqueoController {
+
+    @GetMapping
+    public ResponseEntity<SesionParqueoResponse> consultar() {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var sesionParqueoResponse = new SesionParqueoResponse();
+
+        try {
+            var sesionParqueoDto = SesionParqueoDTO.build();
+            var facade = new ConsultarSesionParqueoFacade();
+
+            sesionParqueoResponse.setDatos(facade.execute(sesionParqueoDto));
+            sesionParqueoResponse.getMensajes().add("Sesiones de parqueo Consultadas exitosamente");
+
+        } catch (final GPException excepcion) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            sesionParqueoResponse.getMensajes().add(excepcion.getMensajeUsuario());
+
+        } catch (final Exception excepcion) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "se ha presentado un problema tratando de consultar las sesiones de parqueo";
+            sesionParqueoResponse.getMensajes().add(mensajeUsuario);
+        }
+
+        return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
+    }
 
     @PostMapping("/ingresoVehiculo")
     public ResponseEntity<SesionParqueoResponse> ingresarVehiculo(@RequestBody SesionParqueoDTO sesion) {
