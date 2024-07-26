@@ -27,7 +27,7 @@ public final class SesionParqueoEntity {
         setEmpleado(EmpleadoEntity.build());
         setEstado(EstadoEntity.build());
         setFechaHoraIngreso(LocalDateTime.now());
-        setFechaHoraSalida(LocalDateTime.now());
+        setFechaHoraSalida(LocalDateTime.of(0, 1, 1, 0, 0, 0));
     }
 
     public SesionParqueoEntity(UUID id, SedeEntity sede, VehiculoEntity vehiculo, EmpleadoEntity empleado, EstadoEntity estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {

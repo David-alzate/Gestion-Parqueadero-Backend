@@ -1,14 +1,14 @@
 package co.com.park.gp.controller.sesionesparqueo;
 
-import co.com.park.gp.business.facade.impl.sesionesparqueo.ConsultarSesionParqueoFacade;
-import co.com.park.gp.business.facade.impl.sesionesparqueo.IngresarVehiculoFacade;
-import co.com.park.gp.business.facade.impl.sesionesparqueo.SalidaVehiculoFacade;
+import co.com.park.gp.business.facade.impl.sesionesparqueo.*;
 import co.com.park.gp.controller.response.sesionesparqueo.SesionParqueoResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.sesionesparqueo.SesionParqueoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/sesionesParqueo/")
@@ -86,6 +86,53 @@ public class SesionParqueoController {
             sesionParqueoResponse.getMensajes().add(mensajeUsuario);
         }
 
+        return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SesionParqueoResponse> modificar(@PathVariable UUID id, @RequestBody SesionParqueoDTO sesion) {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var sesionParqueoResponse = new SesionParqueoResponse();
+
+        try {
+            sesion.setId(id);
+            var facade = new ModificarSesionParqueoFacade();
+
+            facade.execute(sesion);
+            sesionParqueoResponse.getMensajes().add("Sesion de parqueo modificado existosamente ");
+        } catch (final GPException exception) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            sesionParqueoResponse.getMensajes().add(exception.getMensajeUsuario());
+        } catch (final Exception exception) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la sesion de parqueo";
+            sesionParqueoResponse.getMensajes().add(mensajeUsuario);
+        }
+        return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<SesionParqueoResponse> eliminar(@PathVariable UUID id) {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var sesionParqueoResponse = new SesionParqueoResponse();
+
+        try {
+            var facade = new EliminarSesionParqueoFacade();
+            facade.execute(id);
+            sesionParqueoResponse.getMensajes().add("Sesion de Parqueo eliminada existosamente ");
+        } catch (final GPException exception) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            sesionParqueoResponse.getMensajes().add(exception.getMensajeUsuario());
+        } catch (final Exception exception) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la sesion de parqueo ";
+            sesionParqueoResponse.getMensajes().add(mensajeUsuario);
+
+        }
         return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
     }
 }

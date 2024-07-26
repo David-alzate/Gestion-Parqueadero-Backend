@@ -27,7 +27,7 @@ public final class SesionParqueoDTO {
         setEmpleado(EmpleadoDTO.build());
         setEstado(EstadoDTO.build());
         setFechaHoraIngreso(LocalDateTime.now());
-        setFechaHoraSalida(LocalDateTime.now());
+        setFechaHoraSalida(LocalDateTime.of(0, 1, 1, 0, 0, 0));
     }
 
     public SesionParqueoDTO(UUID id, SedeDTO sede, VehiculoDTO vehiculo, EmpleadoDTO empleado, EstadoDTO estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
