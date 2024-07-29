@@ -3,8 +3,8 @@ package co.com.park.gp.business.domain.sesionparqueo;
 import co.com.park.gp.business.domain.empleados.EmpleadoDomain;
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
 import co.com.park.gp.business.domain.tarifas.EstadoDomain;
-import co.com.park.gp.business.domain.vehiculos.VehiculoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 
 import java.time.LocalDateTime;
@@ -14,32 +14,32 @@ public final class SesionParqueoDomain {
 
     private UUID id;
     private SedeDomain sede;
-    private VehiculoDomain vehiculo;
+    private String placa;
     private EmpleadoDomain empleado;
     private EstadoDomain estado;
     private LocalDateTime fechaHoraIngreso;
     private LocalDateTime fechaHoraSalida;
 
-    public SesionParqueoDomain(UUID id, SedeDomain sede, VehiculoDomain vehiculo, EmpleadoDomain empleado, EstadoDomain estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
-        this.id = id;
-        this.sede = sede;
-        this.vehiculo = vehiculo;
-        this.empleado = empleado;
-        this.estado = estado;
-        this.fechaHoraIngreso = fechaHoraIngreso;
-        this.fechaHoraSalida = fechaHoraSalida;
+    public SesionParqueoDomain(UUID id, SedeDomain sede, String placa, EmpleadoDomain empleado, EstadoDomain estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
+        setId(id);
+        setSede(sede);
+        setPlaca(placa);
+        setEmpleado(empleado);
+        setEstado(estado);
+        setFechaHoraIngreso(fechaHoraIngreso);
+        setFechaHoraSalida(fechaHoraSalida);
     }
 
-    public static SesionParqueoDomain build(UUID id, SedeDomain sede, VehiculoDomain vehiculo, EmpleadoDomain empleado, EstadoDomain estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida){
-        return new SesionParqueoDomain(id, sede, vehiculo, empleado, estado, fechaHoraIngreso, fechaHoraSalida);
+    public static SesionParqueoDomain build(UUID id, SedeDomain sede, String placa, EmpleadoDomain empleado, EstadoDomain estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida){
+        return new SesionParqueoDomain(id, sede, placa, empleado, estado, fechaHoraIngreso, fechaHoraSalida);
     }
 
     public static SesionParqueoDomain build(UUID id){
-        return new SesionParqueoDomain(id, SedeDomain.build(), VehiculoDomain.build(), EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
+        return new SesionParqueoDomain(id, SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
     }
 
     public static SesionParqueoDomain build(){
-        return new SesionParqueoDomain(UUIDHelper.getDefault(), SedeDomain.build(), VehiculoDomain.build(), EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
+        return new SesionParqueoDomain(UUIDHelper.getDefault(), SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
     }
 
     public void setId(UUID id) {
@@ -50,8 +50,8 @@ public final class SesionParqueoDomain {
         this.sede = ObjectHelper.getObjectHelper().getDefaultValue(sede, SedeDomain.build());
     }
 
-    public void setVehiculo(VehiculoDomain vehiculo) {
-        this.vehiculo = ObjectHelper.getObjectHelper().getDefaultValue(vehiculo, VehiculoDomain.build());
+    public void setPlaca(String placa) {
+        this.placa = TextHelper.applyTrim(placa);
     }
 
     public void setEmpleado(EmpleadoDomain empleado) {
@@ -78,8 +78,8 @@ public final class SesionParqueoDomain {
         return sede;
     }
 
-    public VehiculoDomain getVehiculo() {
-        return vehiculo;
+    public String getPlaca() {
+        return placa;
     }
 
     public EmpleadoDomain getEmpleado() {

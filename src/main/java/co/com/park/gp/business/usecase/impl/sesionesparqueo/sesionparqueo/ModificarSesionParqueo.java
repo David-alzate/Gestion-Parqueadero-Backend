@@ -30,7 +30,7 @@ public class ModificarSesionParqueo implements UseCaseWithoutReturn<SesionParque
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(data.getId())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setEmpleado(EmpleadoAssemblerEntity.getInstance().toEntity(data.getEmpleado()))
-                .setVehiculo(VehiculoAssemblerEntity.getInstance().toEntity(data.getVehiculo()))
+                .setPlaca(data.getPlaca())
                 .setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
                 .setFechaHoraIngreso(data.getFechaHoraIngreso())
                 .setFechaHoraSalida(data.getFechaHoraSalida());

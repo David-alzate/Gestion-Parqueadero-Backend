@@ -33,7 +33,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(generarIdentificadorSesionParqueo())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setEmpleado(EmpleadoAssemblerEntity.getInstance().toEntity(data.getEmpleado()))
-                .setVehiculo(VehiculoAssemblerEntity.getInstance().toEntity(data.getVehiculo()))
+                .setPlaca(data.getPlaca())
                 .setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
                 .setFechaHoraIngreso(data.getFechaHoraIngreso());
 

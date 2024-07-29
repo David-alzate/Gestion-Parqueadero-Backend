@@ -21,18 +21,16 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
     public void ingresarVehiculo(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, vehiculo_id, empleado_id, ");
-        sentenciaSql.append("estado_id, fechahoraingreso)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?)");
+        sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, vehiculo_id, empleado_id, fechahoraingreso, estado_id)");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setObject(1, data.getId());
             sentenciaSqlPreparada.setObject(2, data.getSede().getId());
-            sentenciaSqlPreparada.setObject(3, data.getVehiculo().getId());
+            sentenciaSqlPreparada.setObject(3, data.getPlaca());
             sentenciaSqlPreparada.setObject(4, data.getEmpleado().getId());
-            sentenciaSqlPreparada.setObject(5, data.getEstado().getId());
-            sentenciaSqlPreparada.setObject(6, data.getFechaHoraIngreso());
+            sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -47,6 +45,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
     }
+
 
     @Override
     public void salidaVehiculo(SesionParqueoEntity data) {
@@ -91,7 +90,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setObject(1, data.getSede().getId());
-            sentenciaSqlPreparada.setObject(2, data.getVehiculo().getId());
+            sentenciaSqlPreparada.setObject(2, data.getPlaca());
             sentenciaSqlPreparada.setObject(3, data.getEmpleado().getId());
             sentenciaSqlPreparada.setObject(4, data.getEstado().getId());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());

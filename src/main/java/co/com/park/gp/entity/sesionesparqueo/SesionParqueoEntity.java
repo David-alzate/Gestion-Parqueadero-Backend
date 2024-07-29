@@ -1,11 +1,11 @@
 package co.com.park.gp.entity.sesionesparqueo;
 
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
-import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,7 +14,7 @@ public final class SesionParqueoEntity {
 
     private UUID id;
     private SedeEntity sede;
-    private VehiculoEntity vehiculo;
+    private String placa;
     private EmpleadoEntity empleado;
     private EstadoEntity estado;
     private LocalDateTime fechaHoraIngreso;
@@ -23,17 +23,17 @@ public final class SesionParqueoEntity {
     public SesionParqueoEntity() {
         setId(UUIDHelper.generate());
         setSede(SedeEntity.build());
-        setVehiculo(VehiculoEntity.build());
+        setPlaca(TextHelper.EMPTY);
         setEmpleado(EmpleadoEntity.build());
         setEstado(EstadoEntity.build());
         setFechaHoraIngreso(LocalDateTime.now());
         setFechaHoraSalida(LocalDateTime.of(0, 1, 1, 0, 0, 0));
     }
 
-    public SesionParqueoEntity(UUID id, SedeEntity sede, VehiculoEntity vehiculo, EmpleadoEntity empleado, EstadoEntity estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
+    public SesionParqueoEntity(UUID id, SedeEntity sede, String placa, EmpleadoEntity empleado, EstadoEntity estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
         setId(id);
         setSede(sede);
-        setVehiculo(vehiculo);
+        setPlaca(placa);
         setEmpleado(empleado);
         setEstado(estado);
         setFechaHoraIngreso(fechaHoraIngreso);
@@ -62,12 +62,12 @@ public final class SesionParqueoEntity {
         return this;
     }
 
-    public VehiculoEntity getVehiculo() {
-        return vehiculo;
+    public String getPlaca() {
+        return placa;
     }
 
-    public SesionParqueoEntity setVehiculo(VehiculoEntity vehiculo) {
-        this.vehiculo = ObjectHelper.getObjectHelper().getDefaultValue(vehiculo, VehiculoEntity.build());
+    public SesionParqueoEntity setPlaca(String placa) {
+        this.placa = TextHelper.applyTrim(placa);
         return this;
     }
 
