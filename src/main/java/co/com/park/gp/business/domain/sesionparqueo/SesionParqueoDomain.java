@@ -35,11 +35,11 @@ public final class SesionParqueoDomain {
     }
 
     public static SesionParqueoDomain build(UUID id){
-        return new SesionParqueoDomain(id, SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
+        return new SesionParqueoDomain(id, SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now().withSecond(0).withNano(0), LocalDateTime.of(0, 1, 1, 0, 0));
     }
 
     public static SesionParqueoDomain build(){
-        return new SesionParqueoDomain(UUIDHelper.getDefault(), SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0));
+        return new SesionParqueoDomain(UUIDHelper.getDefault(), SedeDomain.build(), TextHelper.EMPTY, EmpleadoDomain.build(), EstadoDomain.build(), LocalDateTime.now().withSecond(0).withNano(0), LocalDateTime.of(0, 1, 1, 0, 0));
     }
 
     public void setId(UUID id) {
