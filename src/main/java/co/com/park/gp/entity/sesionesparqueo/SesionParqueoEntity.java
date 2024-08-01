@@ -21,7 +21,7 @@ public final class SesionParqueoEntity {
     private LocalDateTime fechaHoraSalida;
 
     public SesionParqueoEntity() {
-        setId(UUIDHelper.generate());
+        setId(UUIDHelper.getDefault());
         setSede(SedeEntity.build());
         setPlaca(TextHelper.EMPTY);
         setEmpleado(EmpleadoEntity.build());

@@ -25,9 +25,8 @@ import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.entity.vehiculos.VehiculoDAO;
-import co.com.park.gp.entity.empleados.EmpleadoEntity;
-import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
+import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.TarifaEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -221,21 +220,21 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
     }
 
 
-//    public static void main(String[] args) {
-//        DAOFactory factory = DAOFactory.getFactory();
-//        System.out.println("Iniciando transacción...");
-//        factory.iniciarTransaccion();
-//
-//
-//        System.out.println("Consultar Empleados");
-//        var resultadosEmpleado = factory.getEmpleadoDAO().consultar(EmpleadoEntity.build().setNumeroIdentificacion(1040031815L).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre("Administradora")));
-//
-//        for (EmpleadoEntity empleadoEntity : resultadosEmpleado) {
-//            System.out.println("idEmpleado : " + empleadoEntity.getId() + ", nombreEmpleado: " + empleadoEntity.getNombre() + ", Tipo Empleado: " + empleadoEntity.getTipoEmpleado().getNombre());
-//        }
-//
+    public static void main(String[] args) {
+        DAOFactory factory = DAOFactory.getFactory();
+        System.out.println("Iniciando transacción...");
+        factory.iniciarTransaccion();
+
+
+        System.out.println("Consultar Sesiones");
+        var resultadosSesiones = factory.getSesionParqueoDAO().consultar(SesionParqueoEntity.build());
+
+        for (SesionParqueoEntity sesionParqueoEntity : resultadosSesiones) {
+            System.out.println("idSesion : " + sesionParqueoEntity.getId() + ", Placa: " + sesionParqueoEntity.getPlaca());
+        }
+
 //        System.out.println("Consultar Tarifas");
-//        var resultadosTarifa = factory.getTarifaDAO().consultar(TarifaEntity.build().setSede(SedeEntity.build().setId(UUIDHelper.convertToUUID("913c9d14-b46d-4294-af4a-b7421ff3d146"))));
+//        var resultadosTarifa = factory.getTarifaDAO().consultar(TarifaEntity.build());
 //
 //        for (TarifaEntity tarifaEntity : resultadosTarifa) {
 //            System.out.println("idTarifa : " + tarifaEntity.getId() + ", idSede: " + tarifaEntity.getSede().getId());
@@ -251,15 +250,15 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //                    + ", celdasCamion: " + sedeEntity.getCeldascamion() + ", idPais: " + sedeEntity.getPais().getId() + ", idDepartamento: " + sedeEntity.getDepartamento().getId()
 //                    + ", idCiudad: " + sedeEntity.getCiudad().getId() + ", idParqueadero: " + sedeEntity.getParqueadero().getId() + ", idTipoSede: " + sedeEntity.getTipoSede().getId());
 //		}
-//
-//
-//        System.out.println("Confirmar transacción...");
-//        factory.confirmarTransaccion();
-//
-//        System.out.println("Cerrando conexión...");
-//        factory.cerrarConexion();
-//
-//    }
+
+
+        System.out.println("Confirmar transacción...");
+        factory.confirmarTransaccion();
+
+        System.out.println("Cerrando conexión...");
+        factory.cerrarConexion();
+
+    }
 
 
 }

@@ -117,21 +117,6 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             parametros.add(data.getEstado().getId());
         }
 
-        if (!ObjectHelper.getObjectHelper().isNull(data.getFechaHoraIngreso())) {
-            sentenciaSql.append(" AND s.fechahoraingreso = ?");
-            parametros.add(data.getFechaHoraIngreso());
-        }
-
-        if (!ObjectHelper.getObjectHelper().isNull(data.getFechaHoraSalida())) {
-            sentenciaSql.append(" AND s.fechahorasalida = ?");
-            parametros.add(data.getFechaHoraSalida());
-        }
-
-        if (!ObjectHelper.getObjectHelper().isNull(data.getPlaca())) {
-            sentenciaSql.append(" AND s.placa = ?");
-            parametros.add(data.getPlaca());
-        }
-
         final List<SesionParqueoEntity> sesiones = new ArrayList<>();
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {

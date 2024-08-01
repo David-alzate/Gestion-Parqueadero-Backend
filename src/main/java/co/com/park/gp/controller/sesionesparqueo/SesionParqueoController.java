@@ -14,11 +14,6 @@ import java.util.UUID;
 @RequestMapping("/sesionesParqueo/")
 public class SesionParqueoController {
 
-    @GetMapping("/dummy")
-    public SesionParqueoDTO dummy(){
-        return new SesionParqueoDTO();
-    }
-
     @GetMapping
     public ResponseEntity<SesionParqueoResponse> consultar() {
 
@@ -35,12 +30,13 @@ public class SesionParqueoController {
         } catch (final GPException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sesionParqueoResponse.getMensajes().add(excepcion.getMensajeUsuario());
-
+            excepcion.printStackTrace();
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
             var mensajeUsuario = "se ha presentado un problema tratando de consultar las sesiones de parqueo";
             sesionParqueoResponse.getMensajes().add(mensajeUsuario);
+            excepcion.printStackTrace();
         }
 
         return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);

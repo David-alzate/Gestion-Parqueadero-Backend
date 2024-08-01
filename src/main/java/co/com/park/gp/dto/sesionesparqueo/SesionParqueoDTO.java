@@ -21,7 +21,7 @@ public final class SesionParqueoDTO {
     private LocalDateTime fechaHoraSalida;
 
     public SesionParqueoDTO() {
-        setId(UUIDHelper.generate());
+        setId(UUIDHelper.getDefault());
         setSede(SedeDTO.build());
         setPlaca(TextHelper.EMPTY);
         setEmpleado(EmpleadoDTO.build());
