@@ -3,7 +3,6 @@ package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 import co.com.park.gp.business.assembler.entity.impl.empleados.EmpleadoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
-import co.com.park.gp.business.assembler.entity.impl.vehiculos.VehiculoAssemblerEntity;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
@@ -11,6 +10,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 
 import java.util.UUID;
 
@@ -29,6 +29,8 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
 
     @Override
     public void execute(SesionParqueoDomain data) {
+
+        validarMismoVehiculoEstadoActivo(data.getPlaca());
 
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(generarIdentificadorSesionParqueo())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
@@ -52,5 +54,17 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             existeId = !resultados.isEmpty();
         }
         return id;
+    }
+
+    private void validarMismoVehiculoEstadoActivo(String placa){
+        var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa)
+                .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+
+        var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
+
+        if (!resultados.isEmpty()){
+            var mensajeUsuario = "El vehiculo ya cuenta con una sesion de parqueo Activa";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 }

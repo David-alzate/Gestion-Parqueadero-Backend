@@ -42,9 +42,8 @@ public class SesionParqueoAssemblerEntity implements AssemblerEntity<SesionParqu
         var sedeEntity = sedeAssembler.toEntity(domainTmp.getSede());
         var empleadoEntity = empleadoAssembler.toEntity(domainTmp.getEmpleado());
         var estadoEntity = estadoAssembler.toEntity(domainTmp.getEstado());
-        return SesionParqueoEntity.build().setId(domainTmp.getId()).setSede(sedeEntity).setEmpleado(empleadoEntity)
-                .setEstado(estadoEntity).setFechaHoraIngreso(domainTmp.getFechaHoraIngreso()).setFechaHoraSalida(domainTmp.getFechaHoraSalida())
-                .setPlaca(domain.getPlaca());
+        return SesionParqueoEntity.build().setId(domainTmp.getId()).setSede(sedeEntity).setPlaca(domainTmp.getPlaca()).setEmpleado(empleadoEntity)
+                .setEstado(estadoEntity).setFechaHoraIngreso(domainTmp.getFechaHoraIngreso()).setFechaHoraSalida(domainTmp.getFechaHoraSalida());
     }
 
     @Override

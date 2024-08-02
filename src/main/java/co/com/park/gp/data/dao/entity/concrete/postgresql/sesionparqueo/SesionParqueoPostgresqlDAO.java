@@ -2,6 +2,7 @@ package co.com.park.gp.data.dao.entity.concrete.postgresql.sesionparqueo;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
@@ -115,6 +116,11 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
         if (!ObjectHelper.getObjectHelper().isNull(data.getEstado()) && !ObjectHelper.getObjectHelper().isNull(data.getEstado().getId()) && !data.getEstado().getId().equals(UUIDHelper.getDefault())) {
             sentenciaSql.append(" AND es.id = ?");
             parametros.add(data.getEstado().getId());
+        }
+
+        if (!TextHelper.isNullOrEmpty(data.getPlaca())) {
+            sentenciaSql.append(" AND s.placa = ?");
+            parametros.add(data.getPlaca());
         }
 
         final List<SesionParqueoEntity> sesiones = new ArrayList<>();
