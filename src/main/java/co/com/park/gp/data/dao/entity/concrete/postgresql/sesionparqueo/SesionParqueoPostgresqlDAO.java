@@ -160,7 +160,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
                         sesion.setFechaHoraSalida(sqlFechaHoraSalida.toLocalDateTime());
                     }
 
-                    sesion.setPlaca(resultado.getString("placa"));
+                    sesion.setPlaca(resultado.getString("placa").toUpperCase());
 
                     sesiones.add(sesion);
                 }
@@ -185,16 +185,15 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
     public void modificar(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("UPDATE sesionparqueo SET sede_id=?, vehiculo_id=?, empleado_id=?,  ");
-        sentenciaSql.append("estado_id=?, fechahoraingreso=?, fechahorasalida=? WHERE id=? ");
+        sentenciaSql.append("UPDATE sesionparqueo SET sede_id=?, placa=?, empleado_id=?,  ");
+        sentenciaSql.append("fechahoraingreso=?, fechahorasalida=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setObject(1, data.getSede().getId());
             sentenciaSqlPreparada.setObject(2, data.getPlaca());
             sentenciaSqlPreparada.setObject(3, data.getEmpleado().getId());
-            sentenciaSqlPreparada.setObject(4, data.getEstado().getId());
-            sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
+            sentenciaSqlPreparada.setObject(4, data.getFechaHoraIngreso());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraSalida());
             sentenciaSqlPreparada.setObject(6, data.getId());
             sentenciaSqlPreparada.executeUpdate();

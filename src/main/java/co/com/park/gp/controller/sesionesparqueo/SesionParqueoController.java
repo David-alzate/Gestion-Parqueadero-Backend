@@ -30,13 +30,37 @@ public class SesionParqueoController {
         } catch (final GPException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sesionParqueoResponse.getMensajes().add(excepcion.getMensajeUsuario());
-            excepcion.printStackTrace();
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
             var mensajeUsuario = "se ha presentado un problema tratando de consultar las sesiones de parqueo";
             sesionParqueoResponse.getMensajes().add(mensajeUsuario);
-            excepcion.printStackTrace();
+        }
+
+        return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
+    }
+
+    @GetMapping("/activas")
+    public ResponseEntity<SesionParqueoResponse> consultarActivas() {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var sesionParqueoResponse = new SesionParqueoResponse();
+
+        try {
+            var sesionParqueoDto = SesionParqueoDTO.build();
+            var facade = new ConsultarSesionParqueoActivaFacade();
+
+            sesionParqueoResponse.setDatos(facade.execute(sesionParqueoDto));
+            sesionParqueoResponse.getMensajes().add("Sesiones de parqueo Activas Consultadas exitosamente");
+
+        } catch (final GPException excepcion) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            sesionParqueoResponse.getMensajes().add(excepcion.getMensajeUsuario());
+        } catch (final Exception excepcion) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "se ha presentado un problema tratando de consultar las sesiones de parqueo Acivas";
+            sesionParqueoResponse.getMensajes().add(mensajeUsuario);
         }
 
         return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
@@ -56,13 +80,11 @@ public class SesionParqueoController {
         } catch (final GPException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sesionParqueoResponse.getMensajes().add(excepcion.getMensajeUsuario());
-            excepcion.printStackTrace();
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
             var mensajeUsuario = "se ha presentado un problema tratando de ingresar el vehiculo";
             sesionParqueoResponse.getMensajes().add(mensajeUsuario);
-            excepcion.printStackTrace();
         }
 
         return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
