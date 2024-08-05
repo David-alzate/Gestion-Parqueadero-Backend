@@ -26,9 +26,10 @@ import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.entity.vehiculos.VehiculoDAO;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
+import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
-import co.com.park.gp.entity.tarifas.TarifaEntity;
+import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -221,19 +222,19 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
     }
 
 
-//    public static void main(String[] args) {
-//        DAOFactory factory = DAOFactory.getFactory();
-//        System.out.println("Iniciando transacción...");
-//        factory.iniciarTransaccion();
-//
-//
-//        System.out.println("Consultar Sesiones");
-//        var resultadosSesiones = factory.getSesionParqueoDAO().consultar(SesionParqueoEntity.build().setPlaca("SWT56G").setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657"))));
-//
-//        for (SesionParqueoEntity sesionParqueoEntity : resultadosSesiones) {
-//            System.out.println("idSesion : " + sesionParqueoEntity.getId() + ", Placa: " + sesionParqueoEntity.getPlaca() + ", Estado: " + sesionParqueoEntity.getEstado().getEstado());
-//        }
-//
+    public static void main(String[] args) {
+        DAOFactory factory = DAOFactory.getFactory();
+        System.out.println("Iniciando transacción...");
+        factory.iniciarTransaccion();
+
+
+        System.out.println("Consultar planes");
+        var resultadosPlanes = factory.getPlanDAO().consultar(PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca("UZM06F")));
+
+        for (PlanEntity planEntity : resultadosPlanes) {
+            System.out.println("idPlan : " + planEntity.getId() + ", Placa: " + planEntity.getVehiculo().getPlaca());
+        }
+
 //        System.out.println("Consultar Tarifas");
 //        var resultadosTarifa = factory.getTarifaDAO().consultar(TarifaEntity.build());
 //
@@ -251,15 +252,15 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //                    + ", celdasCamion: " + sedeEntity.getCeldascamion() + ", idPais: " + sedeEntity.getPais().getId() + ", idDepartamento: " + sedeEntity.getDepartamento().getId()
 //                    + ", idCiudad: " + sedeEntity.getCiudad().getId() + ", idParqueadero: " + sedeEntity.getParqueadero().getId() + ", idTipoSede: " + sedeEntity.getTipoSede().getId());
 //		}
-//
-//
-//        System.out.println("Confirmar transacción...");
-//        factory.confirmarTransaccion();
-//
-//        System.out.println("Cerrando conexión...");
-//        factory.cerrarConexion();
-//
-//    }
+
+
+        System.out.println("Confirmar transacción...");
+        factory.confirmarTransaccion();
+
+        System.out.println("Cerrando conexión...");
+        factory.cerrarConexion();
+
+    }
 
 
 }

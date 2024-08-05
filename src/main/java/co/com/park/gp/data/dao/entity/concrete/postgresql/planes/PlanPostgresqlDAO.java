@@ -2,6 +2,7 @@ package co.com.park.gp.data.dao.entity.concrete.postgresql.planes;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
@@ -110,6 +111,11 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         if (!ObjectHelper.getObjectHelper().isNull(data.getVehiculo()) && !ObjectHelper.getObjectHelper().isNull(data.getVehiculo().getId()) && !data.getVehiculo().getId().equals(UUIDHelper.getDefault())) {
             sentenciaSql.append(" AND v.id = ?");
             parametros.add(data.getVehiculo().getId());
+        }
+
+        if (!TextHelper.isNullOrEmpty(data.getVehiculo().getPlaca())) {
+            sentenciaSql.append(" AND v.placa = ?");
+            parametros.add(data.getVehiculo().getPlaca());
         }
 
         if (!ObjectHelper.getObjectHelper().isNull(data.getCliente()) && !ObjectHelper.getObjectHelper().isNull(data.getCliente().getId()) && !data.getCliente().getId().equals(UUIDHelper.getDefault())) {

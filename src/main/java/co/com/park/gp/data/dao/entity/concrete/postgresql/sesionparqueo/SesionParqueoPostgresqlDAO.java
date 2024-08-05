@@ -36,7 +36,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
 
             sentenciaSqlPreparada.setObject(1, data.getId());
             sentenciaSqlPreparada.setObject(2, data.getSede().getId());
-            sentenciaSqlPreparada.setObject(3, data.getPlaca());
+            sentenciaSqlPreparada.setObject(3, data.getPlaca().toUpperCase());
             sentenciaSqlPreparada.setObject(4, data.getEmpleado().getId());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
 

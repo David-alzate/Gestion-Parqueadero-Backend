@@ -14,6 +14,7 @@ import co.com.park.gp.entity.clientes.ClienteEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.planes.TipoPlanEntity;
+import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.time.LocalDate;
@@ -35,6 +36,9 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
     @Override
     public void execute(PlanDomain data) {
 
+        validarMismaPlacaMismaSede(data.getVehiculo().getPlaca(), data.getSede().getId());
+        validarSesionActiva(data.getVehiculo().getPlaca());
+
         var planEntity = PlanEntity.build().setId(generarIdentificadorPlan())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setVehiculo(VehiculoAssemblerEntity.getInstance().toEntity(data.getVehiculo())).
                 setCliente(ClienteAssemblerEntity.getInstance().toEntity(data.getCliente())).
@@ -55,5 +59,27 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
             existeId = !resultados.isEmpty();
         }
         return id;
+    }
+
+    private void validarSesionActiva(String placa){
+        var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa);
+
+        var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
+
+        if (!resultados.isEmpty()){
+            var mensajeUsuario = "El vehiculo tiene una Sesion de parqueo Activa, Finalice la sesion antes de Crear el plan";
+            throw new BusinessGPException(mensajeUsuario);
+        }
+    }
+
+    private void validarMismaPlacaMismaSede(String placa, UUID idSede){
+        var planEntity = PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca(placa)).setSede(SedeEntity.build().setId(idSede));
+
+        var resultados = factory.getPlanDAO().consultar(planEntity);
+
+        if(!resultados.isEmpty()){
+            var mensajeUsuario = "El vehiculo ya tiene un plan activo en esta sede";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 }
