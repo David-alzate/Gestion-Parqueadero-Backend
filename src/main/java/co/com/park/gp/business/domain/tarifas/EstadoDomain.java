@@ -27,7 +27,7 @@ public final class EstadoDomain {
         return new EstadoDomain(UUIDHelper.getDefault(), TextHelper.EMPTY);
     }
 
-    private void setId(final UUID id) {
+    public void setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 

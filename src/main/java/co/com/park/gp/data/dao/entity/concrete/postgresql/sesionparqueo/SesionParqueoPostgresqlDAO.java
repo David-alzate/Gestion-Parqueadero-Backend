@@ -57,6 +57,27 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
 
     @Override
     public void salidaVehiculo(SesionParqueoEntity data) {
+        final StringBuilder sentenciaSql = new StringBuilder();
+
+        sentenciaSql.append("UPDATE sesionparqueo SET fechahorasalida=?, estado_id=? WHERE id=?");
+
+        try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
+
+            sentenciaSqlPreparada.setObject(1, data.getFechaHoraSalida());
+            sentenciaSqlPreparada.setObject(2, data.getEstado().getId());
+            sentenciaSqlPreparada.setObject(3, data.getId());
+            sentenciaSqlPreparada.executeUpdate();
+
+        } catch (final SQLException excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de realizar la salida del vehiculo...";
+            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el Update de salida de la sesionParqueo en la tabla \"sesionParqueo\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+
+        } catch (final Exception excepcion) {
+            var mensajeUsuario = "Se ha presentado un problema tratando de realizar la salida del vehiculo";
+            var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update de salida de la sesionParqueo en la tabla \"sesionParqueo\" de la base de datos.";
+            throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
+        }
 
     }
 
