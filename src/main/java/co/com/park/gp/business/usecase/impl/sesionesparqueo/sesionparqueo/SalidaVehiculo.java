@@ -1,8 +1,6 @@
 package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 
-import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
-import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
@@ -30,17 +28,36 @@ public class SalidaVehiculo implements UseCaseWithoutReturn<SesionParqueoDomain>
     @Override
     public void execute(SesionParqueoDomain data) {
 
-        var idSesion = SesionParqueoEntity.build().setPlaca(data.getPlaca()).setEstado(EstadoEntity.build()
-                .setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+        validarSesionExiste(data.getPlaca());
 
-        var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
-        UUID id = null;
-        id = resultados.getFirst().getId();
-        var sesionParqueoEntity = SesionParqueoEntity.build().setId(id)
+        var sesionParqueoEntity = SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()))
                 .setFechaHoraSalida(LocalDateTime.now().withSecond(0).withNano(0))
                 .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("b266b1d6-e5e7-438d-ada6-e269fa896b94")));
 
         factory.getSesionParqueoDAO().salidaVehiculo(sesionParqueoEntity);
+
+    }
+
+    private UUID idSesionParqueo(String placa) {
+
+        var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
+                .setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+
+        var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
+        return resultados.getFirst().getId();
+    }
+
+    private void validarSesionExiste(String placa){
+
+        var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
+                .setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+
+        var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
+
+        if (resultados.isEmpty()){
+            var mensajeUsuario = "El vehiculo no cuenta con una sesion de parqueo Activa";
+            throw new BusinessGPException(mensajeUsuario);
+        }
 
     }
 }
