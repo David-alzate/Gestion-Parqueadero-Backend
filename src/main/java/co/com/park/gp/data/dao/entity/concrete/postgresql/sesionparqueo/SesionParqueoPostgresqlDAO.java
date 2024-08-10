@@ -6,6 +6,7 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
@@ -29,8 +30,8 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
     public void ingresarVehiculo(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, placa, empleado_id, fechahoraingreso, estado_id)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
+        sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, placa, empleado_id, fechahoraingreso,tipovehiculo_id, estado_id)");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ? , '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -39,6 +40,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             sentenciaSqlPreparada.setObject(3, data.getPlaca().toUpperCase());
             sentenciaSqlPreparada.setObject(4, data.getEmpleado().getId());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
+            sentenciaSqlPreparada.setObject(6, data.getTipoVehiculo().getId());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -110,11 +112,12 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
         sentenciaSql.append("SELECT s.id, se.id as idSede, se.nombresede as nombreSede, ");
         sentenciaSql.append("em.id as idEmpleado, em.numeroidentificacion as numeroIdentificacion, ");
         sentenciaSql.append("es.id as idEstado, es.estado, ");
-        sentenciaSql.append("s.fechahoraingreso, s.fechahorasalida, s.placa ");
+        sentenciaSql.append("s.fechahoraingreso, s.fechahorasalida, s.placa, tv.tipovehiculo as tipoVehiculo, tv.id as idTipoVehiculo ");
         sentenciaSql.append("FROM sesionparqueo s ");
         sentenciaSql.append("INNER JOIN sede se ON se.id = s.sede_id ");
         sentenciaSql.append("INNER JOIN empleado em ON em.id = s.empleado_id ");
         sentenciaSql.append("INNER JOIN estado es ON es.id = s.estado_id ");
+        sentenciaSql.append("INNER JOIN tipovehiculo tv ON tv.id = s.tipovehiculo_id ");
         sentenciaSql.append("WHERE 1=1 ");
 
         final List<Object> parametros = new ArrayList<>();
@@ -171,6 +174,11 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
                     estado.setEstado(resultado.getString("estado"));
                     sesion.setEstado(estado);
 
+                    TipoVehiculoEntity tipoVehiculo = TipoVehiculoEntity.build();
+                    tipoVehiculo.setId(UUIDHelper.convertToUUID(resultado.getString("idTipoVehiculo")));
+                    tipoVehiculo.setTipoVehiculo(resultado.getString("tipoVehiculo"));
+                    sesion.setTipoVehiculo(tipoVehiculo);
+
                     java.sql.Timestamp sqlFechaHoraIngreso = resultado.getTimestamp("fechahoraingreso");
                     if (sqlFechaHoraIngreso != null) {
                         sesion.setFechaHoraIngreso(sqlFechaHoraIngreso.toLocalDateTime());
@@ -207,7 +215,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("UPDATE sesionparqueo SET sede_id=?, placa=?, empleado_id=?,  ");
-        sentenciaSql.append("fechahoraingreso=?, fechahorasalida=? WHERE id=? ");
+        sentenciaSql.append("fechahoraingreso=?, fechahorasalida=?, tipovehiculo_id=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -216,7 +224,8 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             sentenciaSqlPreparada.setObject(3, data.getEmpleado().getId());
             sentenciaSqlPreparada.setObject(4, data.getFechaHoraIngreso());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraSalida());
-            sentenciaSqlPreparada.setObject(6, data.getId());
+            sentenciaSqlPreparada.setObject(6, data.getTipoVehiculo().getId());
+            sentenciaSqlPreparada.setObject(7, data.getId());
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {

@@ -3,6 +3,7 @@ package co.com.park.gp.dto.sesionesparqueo;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
+import co.com.park.gp.dto.comunes.TipoVehiculoDTO;
 import co.com.park.gp.dto.empleados.EmpleadoDTO;
 import co.com.park.gp.dto.parqueaderos.SedeDTO;
 import co.com.park.gp.dto.tarifas.EstadoDTO;
@@ -15,6 +16,7 @@ public final class SesionParqueoDTO {
     private UUID id;
     private SedeDTO sede;
     private String placa;
+    private TipoVehiculoDTO tipoVehiculo;
     private EmpleadoDTO empleado;
     private EstadoDTO estado;
     private LocalDateTime fechaHoraIngreso;
@@ -24,16 +26,18 @@ public final class SesionParqueoDTO {
         setId(UUIDHelper.getDefault());
         setSede(SedeDTO.build());
         setPlaca(TextHelper.EMPTY);
+        setTipoVehiculo(TipoVehiculoDTO.build());
         setEmpleado(EmpleadoDTO.build());
         setEstado(EstadoDTO.build());
         setFechaHoraIngreso(LocalDateTime.now().withSecond(0).withNano(0));
         setFechaHoraSalida(LocalDateTime.of(0, 1, 1, 0, 0));
     }
 
-    public SesionParqueoDTO(UUID id, SedeDTO sede, String placa, EmpleadoDTO empleado, EstadoDTO estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
+    public SesionParqueoDTO(UUID id, SedeDTO sede, String placa,TipoVehiculoDTO tipoVehiculo,  EmpleadoDTO empleado, EstadoDTO estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
         setId(id);
         setSede(sede);
         setPlaca(placa);
+        setTipoVehiculo(tipoVehiculo);
         setEmpleado(empleado);
         setEstado(estado);
         setFechaHoraIngreso(fechaHoraIngreso);
@@ -64,6 +68,15 @@ public final class SesionParqueoDTO {
 
     public String getPlaca() {
         return placa;
+    }
+
+    public TipoVehiculoDTO getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public SesionParqueoDTO setTipoVehiculo(TipoVehiculoDTO tipoVehiculoDTO) {
+        this.tipoVehiculo = ObjectHelper.getObjectHelper().getDefaultValue(tipoVehiculoDTO, TipoVehiculoDTO.build());
+        return this;
     }
 
     public SesionParqueoDTO setPlaca(String placa) {

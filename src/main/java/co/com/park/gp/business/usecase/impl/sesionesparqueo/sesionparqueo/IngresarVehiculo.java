@@ -1,5 +1,6 @@
 package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 
+import co.com.park.gp.business.assembler.entity.impl.comunes.TipoVehiculoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.empleados.EmpleadoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
@@ -39,7 +40,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(generarIdentificadorSesionParqueo())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setEmpleado(EmpleadoAssemblerEntity.getInstance().toEntity(data.getEmpleado()))
-                .setPlaca(data.getPlaca())
+                .setPlaca(data.getPlaca()).setTipoVehiculo(TipoVehiculoAssemblerEntity.getInstance().toEntity(data.getTipoVehiculo()))
                 .setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
                 .setFechaHoraIngreso(data.getFechaHoraIngreso());
 

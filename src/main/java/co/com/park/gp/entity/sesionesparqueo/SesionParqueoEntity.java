@@ -3,6 +3,7 @@ package co.com.park.gp.entity.sesionesparqueo;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
@@ -15,6 +16,7 @@ public final class SesionParqueoEntity {
     private UUID id;
     private SedeEntity sede;
     private String placa;
+    private TipoVehiculoEntity tipoVehiculo;
     private EmpleadoEntity empleado;
     private EstadoEntity estado;
     private LocalDateTime fechaHoraIngreso;
@@ -24,16 +26,18 @@ public final class SesionParqueoEntity {
         setId(UUIDHelper.getDefault());
         setSede(SedeEntity.build());
         setPlaca(TextHelper.EMPTY);
+        setTipoVehiculo(TipoVehiculoEntity.build());
         setEmpleado(EmpleadoEntity.build());
         setEstado(EstadoEntity.build());
         setFechaHoraIngreso(LocalDateTime.now().withSecond(0).withNano(0));
         setFechaHoraSalida(LocalDateTime.of(0, 1, 1, 0, 0));
     }
 
-    public SesionParqueoEntity(UUID id, SedeEntity sede, String placa, EmpleadoEntity empleado, EstadoEntity estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
+    public SesionParqueoEntity(UUID id, SedeEntity sede, String placa, TipoVehiculoEntity tipoVehiculo, EmpleadoEntity empleado, EstadoEntity estado, LocalDateTime fechaHoraIngreso, LocalDateTime fechaHoraSalida) {
         setId(id);
         setSede(sede);
         setPlaca(placa);
+        setTipoVehiculo(tipoVehiculo);
         setEmpleado(empleado);
         setEstado(estado);
         setFechaHoraIngreso(fechaHoraIngreso);
@@ -64,6 +68,15 @@ public final class SesionParqueoEntity {
 
     public String getPlaca() {
         return placa;
+    }
+
+    public TipoVehiculoEntity getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public SesionParqueoEntity setTipoVehiculo(TipoVehiculoEntity tipoVehiculoEntity) {
+        this.tipoVehiculo = ObjectHelper.getObjectHelper().getDefaultValue(tipoVehiculoEntity, TipoVehiculoEntity.build());
+        return this;
     }
 
     public SesionParqueoEntity setPlaca(String placa) {

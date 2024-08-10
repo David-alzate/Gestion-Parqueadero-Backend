@@ -140,6 +140,7 @@ public class SesionParqueoController {
 
             var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la sesion de parqueo";
             sesionParqueoResponse.getMensajes().add(mensajeUsuario);
+
         }
         return new ResponseEntity<>(sesionParqueoResponse, httpStatusCode);
     }

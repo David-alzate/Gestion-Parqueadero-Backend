@@ -1,14 +1,17 @@
 package co.com.park.gp.business.assembler.dto.impl.sesionparqueo;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
+import co.com.park.gp.business.assembler.dto.impl.comunes.TipoVehiculoAssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.empleados.EmpleadoAssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.parqueaderos.SedeAssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.tarifas.EstadoAssemblerDTO;
+import co.com.park.gp.business.domain.comunes.TipoVehiculoDomain;
 import co.com.park.gp.business.domain.empleados.EmpleadoDomain;
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.dto.comunes.TipoVehiculoDTO;
 import co.com.park.gp.dto.empleados.EmpleadoDTO;
 import co.com.park.gp.dto.parqueaderos.SedeDTO;
 import co.com.park.gp.dto.sesionesparqueo.SesionParqueoDTO;
@@ -25,7 +28,10 @@ public class SesionParqueoAssemblerDTO implements AssemblerDTO<SesionParqueoDoma
 
     private static final AssemblerDTO<EstadoDomain, EstadoDTO> estadoAssembler = EstadoAssemblerDTO.getInstance();
 
+    private static final AssemblerDTO<TipoVehiculoDomain, TipoVehiculoDTO> tipoVehiculoAssembler = TipoVehiculoAssemblerDTO.getInstance();
+
     private static final AssemblerDTO<SesionParqueoDomain, SesionParqueoDTO> instance = new SesionParqueoAssemblerDTO();
+
 
     private SesionParqueoAssemblerDTO() {
         super();
@@ -43,7 +49,9 @@ public class SesionParqueoAssemblerDTO implements AssemblerDTO<SesionParqueoDoma
         var sedeDto = sedeAssembler.toDto(sesionParqueoDomainTmp.getSede());
         var empleadoDto = empleadoAssembler.toDto(sesionParqueoDomainTmp.getEmpleado());
         var estadoDto = estadoAssembler.toDto(sesionParqueoDomainTmp.getEstado());
-        return SesionParqueoDTO.build().setId(sesionParqueoDomainTmp.getId()).setSede(sedeDto).setPlaca(sesionParqueoDomainTmp.getPlaca()).setEmpleado(empleadoDto).setEstado(estadoDto).
+        var tipoVehiculoDto = tipoVehiculoAssembler.toDto(sesionParqueoDomainTmp.getTipoVehiculo());
+        return SesionParqueoDTO.build().setId(sesionParqueoDomainTmp.getId()).setSede(sedeDto).setPlaca(sesionParqueoDomainTmp.getPlaca())
+                .setTipoVehiculo(tipoVehiculoDto).setEmpleado(empleadoDto).setEstado(estadoDto).
                 setFechaHoraIngreso(sesionParqueoDomainTmp.getFechaHoraIngreso()).setFechaHoraSalida(sesionParqueoDomainTmp.getFechaHoraSalida());
     }
 
@@ -59,7 +67,9 @@ public class SesionParqueoAssemblerDTO implements AssemblerDTO<SesionParqueoDoma
         var sedeDomain = sedeAssembler.toDomain(sesionParqueoDtoTmp.getSede());
         var empleadoDomain = empleadoAssembler.toDomain(sesionParqueoDtoTmp.getEmpleado());
         var estadoDomain = estadoAssembler.toDomain(sesionParqueoDtoTmp.getEstado());
-        return SesionParqueoDomain.build(sesionParqueoDtoTmp.getId(), sedeDomain, sesionParqueoDtoTmp.getPlaca(), empleadoDomain, estadoDomain,
+        var tipoVehiculoDomain = tipoVehiculoAssembler.toDomain(sesionParqueoDtoTmp.getTipoVehiculo());
+        return SesionParqueoDomain.build(sesionParqueoDtoTmp.getId(), sedeDomain, sesionParqueoDtoTmp.getPlaca()
+                ,tipoVehiculoDomain, empleadoDomain, estadoDomain,
                 sesionParqueoDtoTmp.getFechaHoraIngreso(), sesionParqueoDtoTmp.getFechaHoraSalida());
     }
 

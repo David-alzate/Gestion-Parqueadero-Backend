@@ -1,14 +1,17 @@
 package co.com.park.gp.business.assembler.entity.impl.sesionparqueo;
 
 import co.com.park.gp.business.assembler.entity.AssemblerEntity;
+import co.com.park.gp.business.assembler.entity.impl.comunes.TipoVehiculoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.empleados.EmpleadoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
+import co.com.park.gp.business.domain.comunes.TipoVehiculoDomain;
 import co.com.park.gp.business.domain.empleados.EmpleadoDomain;
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
@@ -27,6 +30,8 @@ public class SesionParqueoAssemblerEntity implements AssemblerEntity<SesionParqu
 
     private static final AssemblerEntity<EstadoDomain, EstadoEntity> estadoAssembler = EstadoAssemblerEntity.getInstance();
 
+    private static final AssemblerEntity<TipoVehiculoDomain, TipoVehiculoEntity> tipoVehiculoAssembler = TipoVehiculoAssemblerEntity.getInstance();
+
     private SesionParqueoAssemblerEntity() {
         super();
     }
@@ -42,7 +47,9 @@ public class SesionParqueoAssemblerEntity implements AssemblerEntity<SesionParqu
         var sedeEntity = sedeAssembler.toEntity(domainTmp.getSede());
         var empleadoEntity = empleadoAssembler.toEntity(domainTmp.getEmpleado());
         var estadoEntity = estadoAssembler.toEntity(domainTmp.getEstado());
-        return SesionParqueoEntity.build().setId(domainTmp.getId()).setSede(sedeEntity).setPlaca(domainTmp.getPlaca()).setEmpleado(empleadoEntity)
+        var tipoVehiculoEntity = tipoVehiculoAssembler.toEntity(domainTmp.getTipoVehiculo());
+        return SesionParqueoEntity.build().setId(domainTmp.getId()).setSede(sedeEntity).setPlaca(domainTmp.getPlaca())
+                .setTipoVehiculo(tipoVehiculoEntity).setEmpleado(empleadoEntity)
                 .setEstado(estadoEntity).setFechaHoraIngreso(domainTmp.getFechaHoraIngreso()).setFechaHoraSalida(domainTmp.getFechaHoraSalida());
     }
 
@@ -58,7 +65,8 @@ public class SesionParqueoAssemblerEntity implements AssemblerEntity<SesionParqu
         var sedeDomain = sedeAssembler.toDomain(entityTmp.getSede());
         var empleadoDomain = empleadoAssembler.toDomain(entityTmp.getEmpleado());
         var estadoDomain = estadoAssembler.toDomain(entityTmp.getEstado());
-        return SesionParqueoDomain.build(entityTmp.getId(), sedeDomain, entityTmp.getPlaca(), empleadoDomain, estadoDomain, entityTmp.getFechaHoraIngreso(), entityTmp.getFechaHoraSalida());
+        var tipoVehiculoDomain = tipoVehiculoAssembler.toDomain(entityTmp.getTipoVehiculo());
+        return SesionParqueoDomain.build(entityTmp.getId(), sedeDomain, entityTmp.getPlaca(),tipoVehiculoDomain, empleadoDomain, estadoDomain, entityTmp.getFechaHoraIngreso(), entityTmp.getFechaHoraSalida());
     }
 
     @Override

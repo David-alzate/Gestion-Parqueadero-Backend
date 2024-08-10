@@ -1,9 +1,9 @@
 package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 
+import co.com.park.gp.business.assembler.entity.impl.comunes.TipoVehiculoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.empleados.EmpleadoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
-import co.com.park.gp.business.assembler.entity.impl.vehiculos.VehiculoAssemblerEntity;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
@@ -30,7 +30,7 @@ public class ModificarSesionParqueo implements UseCaseWithoutReturn<SesionParque
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(data.getId())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setEmpleado(EmpleadoAssemblerEntity.getInstance().toEntity(data.getEmpleado()))
-                .setPlaca(data.getPlaca())
+                .setPlaca(data.getPlaca()).setTipoVehiculo(TipoVehiculoAssemblerEntity.getInstance().toEntity(data.getTipoVehiculo()))
                 .setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
                 .setFechaHoraIngreso(data.getFechaHoraIngreso())
                 .setFechaHoraSalida(data.getFechaHoraSalida());
