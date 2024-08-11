@@ -3,17 +3,20 @@ package co.com.park.gp.business.assembler.dto.impl.planes;
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.clientes.ClienteAssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.parqueaderos.SedeAssemblerDTO;
+import co.com.park.gp.business.assembler.dto.impl.tarifas.EstadoAssemblerDTO;
 import co.com.park.gp.business.assembler.dto.impl.vehiculos.VehiculoAssemblerDTO;
 import co.com.park.gp.business.domain.clientes.ClienteDomain;
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
 import co.com.park.gp.business.domain.planes.PlanDomain;
 import co.com.park.gp.business.domain.planes.TipoPlanDomain;
+import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.business.domain.vehiculos.VehiculoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.dto.clientes.ClienteDTO;
 import co.com.park.gp.dto.parqueaderos.SedeDTO;
 import co.com.park.gp.dto.planes.PlanDTO;
 import co.com.park.gp.dto.planes.TipoPlanDTO;
+import co.com.park.gp.dto.tarifas.EstadoDTO;
 import co.com.park.gp.dto.vehiculos.VehiculoDTO;
 
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class PlanAssemblerDTO implements AssemblerDTO<PlanDomain, PlanDTO> {
 
     private static final AssemblerDTO<ClienteDomain, ClienteDTO> clienteInstance = ClienteAssemblerDTO.getInstance();
 
+    private static final AssemblerDTO<EstadoDomain, EstadoDTO> estadoInstance = EstadoAssemblerDTO.getInstance();
+
 
     private PlanAssemblerDTO() {
         super();
@@ -47,8 +52,10 @@ public class PlanAssemblerDTO implements AssemblerDTO<PlanDomain, PlanDTO> {
         var vehiculoDTO = vehiculoInstance.toDto(planDomainTmp.getVehiculo());
         var clienteDTO = clienteInstance.toDto(planDomainTmp.getCliente());
         var tipoPlanDTO = tipoPlanInstance.toDto(planDomainTmp.getTipoPlan());
+        var estadoDTO = estadoInstance.toDto(planDomainTmp.getEstado());
         return PlanDTO.build().setId(planDomainTmp.getId()).setSede(sedeDTO).setVehiculo(vehiculoDTO).setCliente(clienteDTO)
-                .setTipoPlan(tipoPlanDTO).setFechaInicio(planDomainTmp.getFechaInicio()).setFechaFin(planDomainTmp.getFechaFin());
+                .setTipoPlan(tipoPlanDTO).setEstado(estadoDTO)
+                .setFechaInicio(planDomainTmp.getFechaInicio()).setFechaFin(planDomainTmp.getFechaFin());
 
     }
 
@@ -65,7 +72,8 @@ public class PlanAssemblerDTO implements AssemblerDTO<PlanDomain, PlanDTO> {
         var vehiculoDomain = vehiculoInstance.toDomain(planDtoTmp.getVehiculo());
         var clienteDomain = clienteInstance.toDomain(planDtoTmp.getCliente());
         var tipoPlanDomain = tipoPlanInstance.toDomain(planDtoTmp.getTipoPlan());
-        return PlanDomain.build(planDtoTmp.getId(), sedeDomain, vehiculoDomain, clienteDomain, tipoPlanDomain,
+        var estadoDomain = estadoInstance.toDomain(planDtoTmp.getEstado());
+        return PlanDomain.build(planDtoTmp.getId(), sedeDomain, vehiculoDomain, clienteDomain, tipoPlanDomain, estadoDomain,
                 planDtoTmp.getFechaInicio(), planDtoTmp.getFechaFin());
     }
 

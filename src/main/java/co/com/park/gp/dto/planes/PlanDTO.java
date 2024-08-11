@@ -4,6 +4,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.dto.clientes.ClienteDTO;
 import co.com.park.gp.dto.parqueaderos.SedeDTO;
+import co.com.park.gp.dto.tarifas.EstadoDTO;
 import co.com.park.gp.dto.vehiculos.VehiculoDTO;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public final class PlanDTO {
     private VehiculoDTO vehiculo;
     private ClienteDTO cliente;
     private TipoPlanDTO tipoPlan;
+    private EstadoDTO estado;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
@@ -25,16 +27,18 @@ public final class PlanDTO {
         setVehiculo(VehiculoDTO.build());
         setCliente(ClienteDTO.build());
         setTipoPlan(TipoPlanDTO.build());
+        setEstado(EstadoDTO.build());
         setFechaInicio(LocalDate.now());
         setFechaFin(LocalDate.now());
     }
 
-    public PlanDTO(UUID id, SedeDTO sede, VehiculoDTO vehiculo, ClienteDTO cliente, TipoPlanDTO tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
+    public PlanDTO(UUID id, SedeDTO sede, VehiculoDTO vehiculo, ClienteDTO cliente, TipoPlanDTO tipoPlan,EstadoDTO estado, LocalDate fechaInicio, LocalDate fechaFin) {
         setId(id);
         setSede(sede);
         setVehiculo(vehiculo);
         setCliente(cliente);
         setTipoPlan(tipoPlan);
+        setEstado(estado);
         setFechaInicio(fechaInicio);
         setFechaFin(fechaFin);
     }
@@ -75,6 +79,15 @@ public final class PlanDTO {
 
     public PlanDTO setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+        return this;
+    }
+
+    public EstadoDTO getEstado() {
+        return estado;
+    }
+
+    public PlanDTO setEstado(EstadoDTO estado) {
+        this.estado = ObjectHelper.getObjectHelper().getDefaultValue(estado, EstadoDTO.build());
         return this;
     }
 

@@ -15,6 +15,7 @@ import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.planes.TipoPlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.time.LocalDate;
@@ -62,7 +63,8 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
     }
 
     private void validarSesionActiva(String placa){
-        var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa);
+        var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa)
+                .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 

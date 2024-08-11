@@ -4,6 +4,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.entity.clientes.ClienteEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public final class PlanEntity {
     private VehiculoEntity vehiculo;
     private ClienteEntity cliente;
     private TipoPlanEntity tipoPlan;
+    private EstadoEntity estado;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
@@ -25,16 +27,18 @@ public final class PlanEntity {
         setVehiculo(VehiculoEntity.build());
         setCliente(ClienteEntity.build());
         setTipoPlan(TipoPlanEntity.build());
+        setEstado(EstadoEntity.build());
         setFechaInicio(LocalDate.now());
         setFechaFin(LocalDate.now());
     }
 
-    public PlanEntity(UUID id, SedeEntity sede, VehiculoEntity vehiculo, ClienteEntity cliente, TipoPlanEntity tipoPlan, LocalDate fechaInicio, LocalDate fechaFin) {
+    public PlanEntity(UUID id, SedeEntity sede, VehiculoEntity vehiculo, ClienteEntity cliente, TipoPlanEntity tipoPlan,EstadoEntity estado, LocalDate fechaInicio, LocalDate fechaFin) {
         setId(id);
         setSede(sede);
         setVehiculo(vehiculo);
         setCliente(cliente);
         setTipoPlan(tipoPlan);
+        setEstado(estado);
         setFechaInicio(fechaInicio);
         setFechaFin(fechaFin);
     }
@@ -75,6 +79,15 @@ public final class PlanEntity {
 
     public PlanEntity setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+        return this;
+    }
+
+    public EstadoEntity getEstado() {
+        return estado;
+    }
+
+    public PlanEntity setEstado(EstadoEntity estado) {
+        this.estado = ObjectHelper.getObjectHelper().getDefaultValue(estado, EstadoEntity.build());
         return this;
     }
 
