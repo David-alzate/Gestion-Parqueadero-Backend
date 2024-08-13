@@ -10,8 +10,8 @@ import co.com.park.gp.business.assembler.entity.impl.parqueaderos.TipoSedeAssemb
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;

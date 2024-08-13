@@ -7,8 +7,8 @@ import co.com.park.gp.business.facade.FacadeWhitReturn;
 import co.com.park.gp.business.usecase.impl.parqueaderos.departamento.ConsultarDepartamentos;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.dto.parqueaderos.DepartamentoDTO;
 

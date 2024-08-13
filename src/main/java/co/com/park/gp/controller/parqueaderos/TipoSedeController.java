@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.park.gp.business.facade.impl.parqueaderos.tiposede.ConsultarTipoSedeFacade;
 import co.com.park.gp.controller.response.parqueaderos.TipoSedeResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.parqueaderos.TipoSedeDTO;
 @RestController
 @RequestMapping("/tipoSedes/")

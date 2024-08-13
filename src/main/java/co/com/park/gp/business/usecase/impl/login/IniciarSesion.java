@@ -4,8 +4,8 @@ import co.com.park.gp.business.assembler.entity.impl.empleados.TipoEmpleadoAssem
 import co.com.park.gp.business.domain.login.LoginDomain;
 import co.com.park.gp.business.usecase.UseCaseWithReturn;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;

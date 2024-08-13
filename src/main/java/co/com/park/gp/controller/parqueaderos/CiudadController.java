@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.park.gp.controller.response.parqueaderos.CiudadResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.parqueaderos.CiudadDTO;
 import co.com.park.gp.dto.parqueaderos.DepartamentoDTO;
 import co.com.park.gp.business.facade.impl.parqueaderos.ciudad.ConsultarCiudadesFacade;

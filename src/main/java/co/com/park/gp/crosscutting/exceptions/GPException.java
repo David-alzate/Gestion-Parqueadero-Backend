@@ -1,6 +1,6 @@
 package co.com.park.gp.crosscutting.exceptions;
 
-import co.com.park.gp.crosscutting.exceptions.enums.Lugar;
+import co.com.park.gp.crosscutting.enums.Lugar;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 

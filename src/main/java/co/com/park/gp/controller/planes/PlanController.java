@@ -1,9 +1,7 @@
 package co.com.park.gp.controller.planes;
 
-import co.com.park.gp.business.facade.impl.planes.plan.ConsultarPlanFacade;
-import co.com.park.gp.business.facade.impl.planes.plan.EliminarPlanFacade;
-import co.com.park.gp.business.facade.impl.planes.plan.ModificarPlanFacade;
-import co.com.park.gp.business.facade.impl.planes.plan.RegistrarPlanFacade;
+import co.com.park.gp.business.facade.impl.planes.plan.*;
+import co.com.park.gp.business.usecase.impl.planes.plan.ConsultarPlanActivo;
 import co.com.park.gp.controller.response.planes.PlanResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.planes.PlanDTO;
@@ -38,6 +36,33 @@ public class PlanController {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
             var mensajeUsuario = "se ha presentado un problema tratando de consultar el Plan";
+            planResponse.getMensajes().add(mensajeUsuario);
+        }
+
+        return new ResponseEntity<>(planResponse, httpStatusCode);
+    }
+
+    @GetMapping("/activos")
+    public ResponseEntity<PlanResponse> consultarActivos() {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var planResponse = new PlanResponse();
+
+        try {
+            var planDto = PlanDTO.build();
+            var facade = new ConsultarPlanActivoFacade();
+
+            planResponse.setDatos(facade.execute(planDto));
+            planResponse.getMensajes().add("Planes Activos Consultado exitosamente");
+
+        } catch (final GPException excepcion) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            planResponse.getMensajes().add(excepcion.getMensajeUsuario());
+
+        } catch (final Exception excepcion) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "se ha presentado un problema tratando de consultar los Planes Activos";
             planResponse.getMensajes().add(mensajeUsuario);
         }
 

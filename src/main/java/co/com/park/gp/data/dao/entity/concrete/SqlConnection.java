@@ -3,8 +3,8 @@ package co.com.park.gp.data.dao.entity.concrete;
 import java.sql.Connection;
 
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.SQLHelper;
 
 public class SqlConnection {

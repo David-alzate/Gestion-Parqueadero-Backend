@@ -9,8 +9,8 @@ import co.com.park.gp.business.facade.impl.empleados.empleado.ConsultarEmpleadoF
 import co.com.park.gp.business.facade.impl.empleados.empleado.RegistrarEmpleadoFacade;
 import co.com.park.gp.controller.response.empleados.EmpleadoResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.empleados.EmpleadoDTO;
 
 import java.util.UUID;

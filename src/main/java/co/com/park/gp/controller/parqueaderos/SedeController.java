@@ -10,8 +10,8 @@ import co.com.park.gp.business.facade.impl.parqueaderos.sede.ConsultarSedeFacade
 import co.com.park.gp.business.facade.impl.parqueaderos.sede.RegistrarSedeFacade;
 import co.com.park.gp.controller.response.parqueaderos.SedeResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.dto.parqueaderos.SedeDTO;
 
 import java.util.UUID;

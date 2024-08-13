@@ -1,10 +1,10 @@
-package co.com.park.gp.crosscutting.exceptions.messagecatalog;
+package co.com.park.gp.crosscutting.messagecatalog;
 
 import co.com.park.gp.crosscutting.exceptions.custom.CroscuttingGPException;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.data.Mensaje;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.impl.MessageCatalogBase;
-import co.com.park.gp.crosscutting.exceptions.messagecatalog.impl.MessageCatalogExternalService;
+import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
+import co.com.park.gp.crosscutting.messagecatalog.data.Mensaje;
+import co.com.park.gp.crosscutting.messagecatalog.impl.MessageCatalogBase;
+import co.com.park.gp.crosscutting.messagecatalog.impl.MessageCatalogExternalService;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 
 public class MessageCatalogStrategy {
