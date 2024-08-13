@@ -3,6 +3,7 @@ package co.com.park.gp.business.usecase.impl.planes.plan;
 import co.com.park.gp.business.assembler.entity.impl.clientes.ClienteAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.planes.TipoPlanAssemblerEntity;
+import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
 import co.com.park.gp.business.assembler.entity.impl.vehiculos.VehiculoAssemblerEntity;
 import co.com.park.gp.business.domain.planes.PlanDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
@@ -43,8 +44,8 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
         var planEntity = PlanEntity.build().setId(generarIdentificadorPlan())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setVehiculo(VehiculoAssemblerEntity.getInstance().toEntity(data.getVehiculo())).
                 setCliente(ClienteAssemblerEntity.getInstance().toEntity(data.getCliente())).
-                setTipoPlan(TipoPlanAssemblerEntity.getInstance().toEntity(data.getTipoPlan())).setFechaInicio(LocalDate.now())
-                .setFechaFin(LocalDate.now());
+                setTipoPlan(TipoPlanAssemblerEntity.getInstance().toEntity(data.getTipoPlan())).setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
+                .setFechaInicio(LocalDate.now()).setFechaFin(LocalDate.now());
 
         factory.getPlanDAO().crear(planEntity);
     }

@@ -10,6 +10,7 @@ import co.com.park.gp.entity.clientes.ClienteEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.planes.TipoPlanEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.sql.Connection;
@@ -31,8 +32,8 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("INSERT INTO plan (id, sede_id, vehiculo_id, cliente_id, ");
-        sentenciaSql.append("tipoplan_id, fechainicio, fechafin)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
+        sentenciaSql.append("tipoplan_id, fechainicio, fechafin, estado_id)");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -88,12 +89,14 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, ");
         sentenciaSql.append("c.id as idCliente, c.nombre as nombreCliente, c.numeroidentificacion as numeroIdentificacionCliente, ");
         sentenciaSql.append("tp.id as idTipoPlan, tp.nombre as tipoPlanNombre, ");
-        sentenciaSql.append("p.fechainicio, p.fechafin ");
+        sentenciaSql.append("p.fechainicio, p.fechafin, ");
+        sentenciaSql.append("es.id as idEstado, es.estado as Estado ");
         sentenciaSql.append("FROM plan p ");
         sentenciaSql.append("INNER JOIN sede s ON s.id = p.sede_id ");
         sentenciaSql.append("INNER JOIN vehiculo v ON v.id = p.vehiculo_id ");
         sentenciaSql.append("INNER JOIN cliente c ON c.id = p.cliente_id ");
         sentenciaSql.append("INNER JOIN tipoplan tp ON tp.id = p.tipoplan_id ");
+        sentenciaSql.append("INNER JOIN estado es ON es.id = p.estado_id ");
         sentenciaSql.append("WHERE 1=1 ");
 
         final List<Object> parametros = new ArrayList<>();
@@ -128,14 +131,9 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
             parametros.add(data.getTipoPlan().getId());
         }
 
-        if (!ObjectHelper.getObjectHelper().isNull(data.getFechaInicio())) {
-            sentenciaSql.append(" AND p.fechainicio = ?");
-            parametros.add(data.getFechaInicio());
-        }
-
-        if (!ObjectHelper.getObjectHelper().isNull(data.getFechaFin())) {
-            sentenciaSql.append(" AND p.fechafin = ?");
-            parametros.add(data.getFechaFin());
+        if (!ObjectHelper.getObjectHelper().isNull(data.getEstado()) && !ObjectHelper.getObjectHelper().isNull(data.getEstado().getId()) && !data.getEstado().getId().equals(UUIDHelper.getDefault())) {
+            sentenciaSql.append(" AND es.id = ?");
+            parametros.add(data.getEstado().getId());
         }
 
         final List<PlanEntity> planes = new ArrayList<>();
@@ -170,6 +168,11 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
                     tipoPlan.setId(UUIDHelper.convertToUUID(resultado.getString("idTipoPlan")));
                     tipoPlan.setNombre(resultado.getString("tipoPlanNombre"));
                     plan.setTipoPlan(tipoPlan);
+
+                    EstadoEntity estado = EstadoEntity.build();
+                    estado.setId(UUIDHelper.convertToUUID(resultado.getString("idEstado")));
+                    estado.setEstado(resultado.getString("Estado"));
+                    plan.setEstado(estado);
 
                     java.sql.Date sqlFechaInicio = resultado.getDate("fechainicio");
                     if (sqlFechaInicio != null) {
