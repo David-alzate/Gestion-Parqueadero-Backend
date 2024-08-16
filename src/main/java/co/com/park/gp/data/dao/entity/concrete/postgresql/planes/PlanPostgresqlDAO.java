@@ -217,8 +217,8 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
             sentenciaSqlPreparada.setObject(3, data.getCliente().getId());
             sentenciaSqlPreparada.setObject(4, data.getTipoPlan().getId());
             sentenciaSqlPreparada.setObject(5, data.getFechaInicio());
-            sentenciaSqlPreparada.setObject(5, data.getFechaFin());
-            sentenciaSqlPreparada.setObject(6, data.getId());
+            sentenciaSqlPreparada.setObject(6, data.getFechaFin());
+            sentenciaSqlPreparada.setObject(7, data.getId());
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {

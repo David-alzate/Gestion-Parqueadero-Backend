@@ -6,7 +6,6 @@ import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.business.domain.vehiculos.VehiculoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
-import co.com.park.gp.dto.tarifas.EstadoDTO;
 
 import java.time.LocalDate;
 import java.util.UUID;

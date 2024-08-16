@@ -1,7 +1,6 @@
 package co.com.park.gp.controller.planes;
 
 import co.com.park.gp.business.facade.impl.planes.plan.*;
-import co.com.park.gp.business.usecase.impl.planes.plan.ConsultarPlanActivo;
 import co.com.park.gp.controller.response.planes.PlanResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.planes.PlanDTO;
