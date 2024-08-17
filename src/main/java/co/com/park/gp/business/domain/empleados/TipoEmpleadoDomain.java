@@ -15,15 +15,15 @@ public class TipoEmpleadoDomain {
         setNombre(nombre);
     }
 
-    public static final TipoEmpleadoDomain build(final UUID id, final String nombre) {
+    public static TipoEmpleadoDomain build(final UUID id, final String nombre) {
         return new TipoEmpleadoDomain(id, nombre);
     }
 
-    public static final TipoEmpleadoDomain build(final UUID id) {
+    public static TipoEmpleadoDomain build(final UUID id) {
         return new TipoEmpleadoDomain(id, TextHelper.EMPTY);
     }
 
-    public static final TipoEmpleadoDomain build() {
+    public static TipoEmpleadoDomain build() {
         return new TipoEmpleadoDomain(UUIDHelper.getDefault(), TextHelper.EMPTY);
     }
 
