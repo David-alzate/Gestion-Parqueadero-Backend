@@ -59,111 +59,111 @@ public final class SedeDTO {
         return new SedeDTO();
     }
 
-    public final SedeDTO setId(final UUID id) {
+    public SedeDTO setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final SedeDTO setParqueadero(final ParqueaderoDTO parqueadero) {
+    public SedeDTO setParqueadero(final ParqueaderoDTO parqueadero) {
         this.parqueadero = ObjectHelper.getObjectHelper().getDefaultValue(parqueadero, new ParqueaderoDTO());
         return this;
     }
 
-    public final SedeDTO setNombre(final String nombre) {
+    public SedeDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final SedeDTO setCiudad(final CiudadDTO ciudad) {
+    public SedeDTO setCiudad(final CiudadDTO ciudad) {
         this.ciudad = ObjectHelper.getObjectHelper().getDefaultValue(ciudad, new CiudadDTO());
         return this;
     }
 
-    public final SedeDTO setDireccion(final String direccion) {
+    public SedeDTO setDireccion(final String direccion) {
         this.direccion = TextHelper.applyTrim(direccion);
         return this;
     }
 
-    public final SedeDTO setCorreoElectronico(final String correoElectronico) {
+    public SedeDTO setCorreoElectronico(final String correoElectronico) {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
         return this;
     }
 
-    public final SedeDTO setCeldasCarro(final int celdasCarro) {
+    public SedeDTO setCeldasCarro(final int celdasCarro) {
         this.celdasCarro = celdasCarro;
         return this;
     }
 
-    public final SedeDTO setCeldasMoto(final int celdasMoto) {
+    public SedeDTO setCeldasMoto(final int celdasMoto) {
         this.celdasMoto = celdasMoto;
         return this;
     }
 
-    public final SedeDTO setCeldascamion(final int celdascamion) {
+    public SedeDTO setCeldascamion(final int celdascamion) {
         this.celdascamion = celdascamion;
         return this;
     }
 
-    public final SedeDTO setTipoSede(final TipoSedeDTO tipoSede) {
+    public SedeDTO setTipoSede(final TipoSedeDTO tipoSede) {
         this.tipoSede = ObjectHelper.getObjectHelper().getDefaultValue(tipoSede, new TipoSedeDTO());
         return this;
     }
 
-    public final SedeDTO setPais(final PaisDTO pais) {
+    public SedeDTO setPais(final PaisDTO pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, new PaisDTO());
         return this;
     }
 
-    public final SedeDTO setDepartamento(final DepartamentoDTO departamento) {
+    public SedeDTO setDepartamento(final DepartamentoDTO departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoDTO());
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final ParqueaderoDTO getParqueadero() {
+    public ParqueaderoDTO getParqueadero() {
         return parqueadero;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final CiudadDTO getCiudad() {
+    public CiudadDTO getCiudad() {
         return ciudad;
     }
 
-    public final String getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public final String getCorreoElectronico() {
+    public String getCorreoElectronico() {
         return correoElectronico;
     }
 
-    public final int getCeldasCarro() {
+    public int getCeldasCarro() {
         return celdasCarro;
     }
 
-    public final int getCeldasMoto() {
+    public int getCeldasMoto() {
         return celdasMoto;
     }
 
-    public final int getCeldascamion() {
+    public int getCeldascamion() {
         return celdascamion;
     }
 
-    public final TipoSedeDTO getTipoSede() {
+    public TipoSedeDTO getTipoSede() {
         return tipoSede;
     }
 
-    public final PaisDTO getPais() {
+    public PaisDTO getPais() {
         return pais;
     }
 
-    public final DepartamentoDTO getDepartamento() {
+    public DepartamentoDTO getDepartamento() {
         return departamento;
     }
 

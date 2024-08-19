@@ -29,30 +29,30 @@ public final class CiudadDTO {
         return new CiudadDTO();
     }
 
-    public final CiudadDTO setId(UUID id) {
+    public CiudadDTO setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final CiudadDTO setNombre(final String nombre) {
+    public CiudadDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final CiudadDTO setDepartamento(final DepartamentoDTO departamento) {
+    public CiudadDTO setDepartamento(final DepartamentoDTO departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoDTO());
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final DepartamentoDTO getDepartamento() {
+    public DepartamentoDTO getDepartamento() {
         return departamento;
     }
 

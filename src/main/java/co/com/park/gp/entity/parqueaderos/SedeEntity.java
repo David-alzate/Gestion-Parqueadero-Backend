@@ -58,111 +58,111 @@ public final class SedeEntity {
         return new SedeEntity();
     }
 
-    public final SedeEntity setId(final UUID id) {
+    public SedeEntity setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final SedeEntity setParqueadero(final ParqueaderoEntity parqueadero) {
+    public SedeEntity setParqueadero(final ParqueaderoEntity parqueadero) {
         this.parqueadero = ObjectHelper.getObjectHelper().getDefaultValue(parqueadero, new ParqueaderoEntity());
         return this;
     }
 
-    public final SedeEntity setNombre(final String nombre) {
+    public SedeEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final SedeEntity setCiudad(final CiudadEntity ciudad) {
+    public SedeEntity setCiudad(final CiudadEntity ciudad) {
         this.ciudad = ObjectHelper.getObjectHelper().getDefaultValue(ciudad, new CiudadEntity());
         return this;
     }
 
-    public final SedeEntity setDireccion(final String direccion) {
+    public SedeEntity setDireccion(final String direccion) {
         this.direccion = TextHelper.applyTrim(direccion);
         return this;
     }
 
-    public final SedeEntity setCorreoElectronico(final String correoElectronico) {
+    public SedeEntity setCorreoElectronico(final String correoElectronico) {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
         return this;
     }
 
-    public final SedeEntity setCeldasCarro(final int celdasCarro) {
+    public SedeEntity setCeldasCarro(final int celdasCarro) {
         this.celdasCarro = celdasCarro;
         return this;
     }
 
-    public final SedeEntity setCeldasMoto(final int celdasMoto) {
+    public SedeEntity setCeldasMoto(final int celdasMoto) {
         this.celdasMoto = celdasMoto;
         return this;
     }
 
-    public final SedeEntity setCeldascamion(final int celdascamion) {
+    public SedeEntity setCeldascamion(final int celdascamion) {
         this.celdascamion = celdascamion;
         return this;
     }
 
-    public final SedeEntity setTipoSede(final TipoSedeEntity tipoSede) {
+    public SedeEntity setTipoSede(final TipoSedeEntity tipoSede) {
         this.tipoSede = ObjectHelper.getObjectHelper().getDefaultValue(tipoSede, new TipoSedeEntity());
         return this;
     }
 
-    public final SedeEntity setPais(final PaisEntity pais) {
+    public SedeEntity setPais(final PaisEntity pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, new PaisEntity());
         return this;
     }
 
-    public final SedeEntity setDepartamento(final DepartamentoEntity departamento) {
+    public SedeEntity setDepartamento(final DepartamentoEntity departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoEntity());
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final ParqueaderoEntity getParqueadero() {
+    public ParqueaderoEntity getParqueadero() {
         return parqueadero;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final CiudadEntity getCiudad() {
+    public CiudadEntity getCiudad() {
         return ciudad;
     }
 
-    public final String getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public final String getCorreoElectronico() {
+    public String getCorreoElectronico() {
         return correoElectronico;
     }
 
-    public final int getCeldasCarro() {
+    public int getCeldasCarro() {
         return celdasCarro;
     }
 
-    public final int getCeldasMoto() {
+    public int getCeldasMoto() {
         return celdasMoto;
     }
 
-    public final int getCeldascamion() {
+    public int getCeldascamion() {
         return celdascamion;
     }
 
-    public final TipoSedeEntity getTipoSede() {
+    public TipoSedeEntity getTipoSede() {
         return tipoSede;
     }
 
-    public final PaisEntity getPais() {
+    public PaisEntity getPais() {
         return pais;
     }
 
-    public final DepartamentoEntity getDepartamento() {
+    public DepartamentoEntity getDepartamento() {
         return departamento;
     }
 

@@ -25,21 +25,21 @@ public final class ParqueaderoDTO {
         return new ParqueaderoDTO();
     }
 
-    public final ParqueaderoDTO setId(final UUID id) {
+    public ParqueaderoDTO setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final ParqueaderoDTO setNombre(final String nombre) {
+    public ParqueaderoDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 

@@ -25,21 +25,21 @@ public final class TipoSedeDTO {
         return new TipoSedeDTO();
     }
 
-    public final TipoSedeDTO setId(final UUID id) {
+    public TipoSedeDTO setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final TipoSedeDTO setNombre(final String nombre) {
+    public TipoSedeDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 

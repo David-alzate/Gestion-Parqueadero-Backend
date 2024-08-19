@@ -28,30 +28,30 @@ public final class CiudadEntity {
         return new CiudadEntity();
     }
 
-    public final CiudadEntity setId(final UUID id) {
+    public CiudadEntity setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final CiudadEntity setNombre(final String nombre) {
+    public CiudadEntity setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final CiudadEntity setDepartamento(final DepartamentoEntity departamento) {
+    public CiudadEntity setDepartamento(final DepartamentoEntity departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoEntity());
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final DepartamentoEntity getDepartamento() {
+    public DepartamentoEntity getDepartamento() {
         return departamento;
     }
 

@@ -29,30 +29,30 @@ public final class DepartamentoDTO {
         return new DepartamentoDTO();
     }
 
-    public final DepartamentoDTO setId(final UUID id) {
+    public DepartamentoDTO setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final DepartamentoDTO setNombre(final String nombre) {
+    public DepartamentoDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final DepartamentoDTO setPais(final PaisDTO pais) {
+    public DepartamentoDTO setPais(final PaisDTO pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, new PaisDTO());
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final PaisDTO getPais() {
+    public PaisDTO getPais() {
         return pais;
     }
 

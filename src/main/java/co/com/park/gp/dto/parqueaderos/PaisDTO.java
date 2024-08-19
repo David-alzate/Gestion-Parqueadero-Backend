@@ -27,21 +27,21 @@ public final class PaisDTO {
 
     }
 
-    public final PaisDTO setId(final UUID id) {
+    public PaisDTO setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
         return this;
     }
 
-    public final PaisDTO setNombre(final String nombre) {
+    public PaisDTO setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
         return this;
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
