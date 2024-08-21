@@ -33,27 +33,27 @@ public final class DepartamentoDomain {
 
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    private final void setId(UUID id) {
+    private void setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 
-    private final void setPais(PaisDomain pais) {
+    private void setPais(PaisDomain pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, PaisDomain.build());
     }
 
-    private final void setNombre(String nombre) {
+    private void setNombre(String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
     }
 
-    public final PaisDomain getPais() {
+    public PaisDomain getPais() {
         return pais;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 

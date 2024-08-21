@@ -6,7 +6,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 
-public class SedeDomain {
+public final class SedeDomain {
     private UUID id;
     private ParqueaderoDomain parqueadero;
     private String nombre;
@@ -60,99 +60,99 @@ public class SedeDomain {
                 TextHelper.EMPTY, 0, 0, 0, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
     }
 
-    private final void setId(final UUID id) {
+    private void setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 
-    private final void setParqueadero(final ParqueaderoDomain parqueadero) {
+    private void setParqueadero(final ParqueaderoDomain parqueadero) {
         this.parqueadero = ObjectHelper.getObjectHelper().getDefaultValue(parqueadero, ParqueaderoDomain.build());
     }
 
-    private final void setNombre(final String nombre) {
+    private void setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
     }
 
-    private final void setCiudad(final CiudadDomain ciudad) {
+    private void setCiudad(final CiudadDomain ciudad) {
         this.ciudad = ObjectHelper.getObjectHelper().getDefaultValue(ciudad, CiudadDomain.build());
     }
 
-    private final void setDireccion(final String direccion) {
+    private void setDireccion(final String direccion) {
         this.direccion = TextHelper.applyTrim(direccion);
     }
 
-    private final void setCorreoElectronico(final String correoElectronico) {
+    private void setCorreoElectronico(final String correoElectronico) {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
     }
 
-    private final void setCeldasCarro(final int celdasCarro) {
+    private void setCeldasCarro(final int celdasCarro) {
         this.celdasCarro = celdasCarro;
     }
 
-    private final void setCeldasMoto(final int celdasMoto) {
+    private void setCeldasMoto(final int celdasMoto) {
         this.celdasMoto = celdasMoto;
     }
 
-    private final void setCeldascamion(final int celdascamion) {
+    private void setCeldascamion(final int celdascamion) {
         this.celdascamion = celdascamion;
     }
 
-    private final void setTipoSede(final TipoSedeDomain tipoSede) {
+    private void setTipoSede(final TipoSedeDomain tipoSede) {
         this.tipoSede = ObjectHelper.getObjectHelper().getDefaultValue(tipoSede, TipoSedeDomain.build());
     }
 
-    private final void setPais(final PaisDomain pais) {
+    private void setPais(final PaisDomain pais) {
         this.pais = ObjectHelper.getObjectHelper().getDefaultValue(pais, PaisDomain.build());
     }
 
-    private final void setDepartamento(final DepartamentoDomain departamento) {
+    private void setDepartamento(final DepartamentoDomain departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, DepartamentoDomain.build());
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final ParqueaderoDomain getParqueadero() {
+    public ParqueaderoDomain getParqueadero() {
         return parqueadero;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final CiudadDomain getCiudad() {
+    public CiudadDomain getCiudad() {
         return ciudad;
     }
 
-    public final String getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public final String getCorreoElectronico() {
+    public String getCorreoElectronico() {
         return correoElectronico;
     }
 
-    public final int getCeldasCarro() {
+    public int getCeldasCarro() {
         return celdasCarro;
     }
 
-    public final int getCeldasMoto() {
+    public int getCeldasMoto() {
         return celdasMoto;
     }
 
-    public final int getCeldascamion() {
+    public int getCeldascamion() {
         return celdascamion;
     }
 
-    public final TipoSedeDomain getTipoSede() {
+    public TipoSedeDomain getTipoSede() {
         return tipoSede;
     }
 
-    public final PaisDomain getPais() {
+    public PaisDomain getPais() {
         return pais;
     }
 
-    public final DepartamentoDomain getDepartamento() {
+    public DepartamentoDomain getDepartamento() {
         return departamento;
     }
 

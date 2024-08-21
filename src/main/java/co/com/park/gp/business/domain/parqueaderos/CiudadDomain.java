@@ -6,7 +6,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 
-public class CiudadDomain {
+public final class CiudadDomain {
 
     private UUID id;
     private String nombre;
@@ -34,27 +34,27 @@ public class CiudadDomain {
 
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    private final void setId(UUID id) {
+    private void setId(UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 
-    private final void setNombre(String nombre) {
+    private void setNombre(String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
     }
 
-    private final void setDepartamento(DepartamentoDomain departamento) {
+    private void setDepartamento(DepartamentoDomain departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, DepartamentoDomain.build());
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public final DepartamentoDomain getDepartamento() {
+    public DepartamentoDomain getDepartamento() {
         return departamento;
     }
 }

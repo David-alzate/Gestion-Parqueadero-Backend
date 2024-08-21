@@ -27,19 +27,19 @@ public final class TipoSedeDomain {
         return new TipoSedeDomain(UUIDHelper.getDefault(), TextHelper.EMPTY);
     }
 
-    private final void setId(final UUID id) {
+    private void setId(final UUID id) {
         this.id = UUIDHelper.getDefault(id, UUIDHelper.getDefault());
     }
 
-    private final void setNombre(final String nombre) {
+    private void setNombre(final String nombre) {
         this.nombre = TextHelper.applyTrim(nombre);
     }
 
-    public final UUID getId() {
+    public UUID getId() {
         return id;
     }
 
-    public final String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
