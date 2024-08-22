@@ -2,15 +2,10 @@ package co.com.park.gp.data.dao.factory;
 
 import co.com.park.gp.data.dao.entity.clientes.ClienteDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.CiudadDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.DepartamentoDAO;
+import co.com.park.gp.data.dao.entity.parqueaderos.*;
 import co.com.park.gp.data.dao.entity.empleados.EmpleadoDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.PaisDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.ParqueaderoDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.SedeDAO;
 import co.com.park.gp.data.dao.entity.empleados.TipoEmpleadoDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoIdentificacionDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.TipoSedeDAO;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
 import co.com.park.gp.data.dao.entity.planes.TipoPlanDAO;
 import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
@@ -69,4 +64,6 @@ public interface DAOFactory {
 	PlanDAO getPlanDAO();
 
 	SesionParqueoDAO getSesionParqueoDAO();
+
+	CeldaDAO getCeldaDao();
 }

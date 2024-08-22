@@ -10,6 +10,7 @@ import co.com.park.gp.data.dao.entity.clientes.ClienteDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.clientes.ClientePostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.comunes.TipoVehiculoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.*;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.PlanPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.TipoPlanPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.sesionparqueo.SesionParqueoPostgresqlDAO;
@@ -17,6 +18,7 @@ import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.EstadoPostgres
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TipoTarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.vehiculos.VehiculoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.parqueaderos.*;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
 import co.com.park.gp.data.dao.entity.planes.TipoPlanDAO;
 import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
@@ -33,25 +35,13 @@ import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
 import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
 import co.com.park.gp.crosscutting.helpers.SQLHelper;
-import co.com.park.gp.data.dao.entity.parqueaderos.CiudadDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.DepartamentoDAO;
 import co.com.park.gp.data.dao.entity.empleados.EmpleadoDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.PaisDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.ParqueaderoDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.SedeDAO;
 import co.com.park.gp.data.dao.entity.empleados.TipoEmpleadoDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoIdentificacionDAO;
-import co.com.park.gp.data.dao.entity.parqueaderos.TipoSedeDAO;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.CiudadPostgresqlDAO;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.DepartamentoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.empleados.EmpleadoPostgresqlDAO;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.PaisPostgresqlDAO;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.ParqueaderoPostgresqlDAO;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.SedePostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.empleados.TipoEmpleadoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.comunes.TipoIdentificacionPostgresqlDAO;
-import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.TipoSedePostgresqlDAO;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 
 
@@ -215,6 +205,11 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
     @Override
     public SesionParqueoDAO getSesionParqueoDAO() {
         return new SesionParqueoPostgresqlDAO(getConexion());
+    }
+
+    @Override
+    public CeldaDAO getCeldaDao() {
+        return new CeldaPostgresqlDAO(getConexion());
     }
 
 
