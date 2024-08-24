@@ -22,7 +22,6 @@ public class ConsultarParqueaderosFacade implements FacadeWhitReturn<Parqueadero
 
     @Override
     public List<ParqueaderoDTO> execute(final ParqueaderoDTO dto) {
-
         try {
 
             var useCase = new ConsultarParqueaderos(daoFactory);
