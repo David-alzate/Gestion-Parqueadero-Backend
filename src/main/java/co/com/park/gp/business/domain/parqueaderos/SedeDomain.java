@@ -13,9 +13,6 @@ public final class SedeDomain {
     private CiudadDomain ciudad;
     private String direccion;
     private String correoElectronico;
-    private int celdasCarro;
-    private int celdasMoto;
-    private int celdascamion;
     private TipoSedeDomain tipoSede;
     private PaisDomain pais;
     private DepartamentoDomain departamento;
@@ -25,8 +22,7 @@ public final class SedeDomain {
     }
 
     public SedeDomain(final UUID id, final ParqueaderoDomain parqueadero, final String nombre,
-                      final CiudadDomain ciudad, final String direccion, final String correoElectronico, final int celdasCarro,
-                      final int celdasMoto, final int celdascamion, final TipoSedeDomain tipoSede, final PaisDomain pais,
+                      final CiudadDomain ciudad, final String direccion, final String correoElectronico, final TipoSedeDomain tipoSede, final PaisDomain pais,
                       final DepartamentoDomain departamento) {
         setId(id);
         setParqueadero(parqueadero);
@@ -34,30 +30,25 @@ public final class SedeDomain {
         setCiudad(ciudad);
         setDireccion(direccion);
         setCorreoElectronico(correoElectronico);
-        setCeldasCarro(celdasCarro);
-        setCeldasMoto(celdasMoto);
-        setCeldascamion(celdascamion);
         setTipoSede(tipoSede);
         setPais(pais);
         setDepartamento(departamento);
     }
 
     public static SedeDomain build(final UUID id, final ParqueaderoDomain parqueadero, final String nombre,
-                                   final CiudadDomain ciudad, final String direccion, final String correoElectronico, final int celdasCarro,
-                                   final int celdasMoto, final int celdascamion, final TipoSedeDomain tipoSede, final PaisDomain pais,
+                                   final CiudadDomain ciudad, final String direccion, final String correoElectronico, final TipoSedeDomain tipoSede, final PaisDomain pais,
                                    final DepartamentoDomain departamento) {
-        return new SedeDomain(id, parqueadero, nombre, ciudad, direccion, correoElectronico, celdasCarro, celdasMoto,
-                celdascamion, tipoSede, pais, departamento);
+        return new SedeDomain(id, parqueadero, nombre, ciudad, direccion, correoElectronico,tipoSede, pais, departamento);
     }
 
     public static SedeDomain build(final UUID id) {
         return new SedeDomain(id, ParqueaderoDomain.build(), TextHelper.EMPTY, CiudadDomain.build(), TextHelper.EMPTY,
-                TextHelper.EMPTY, 0, 0, 0, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
+                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
     }
 
     public static SedeDomain build() {
         return new SedeDomain(UUIDHelper.getDefault(), ParqueaderoDomain.build(), TextHelper.EMPTY, CiudadDomain.build(), TextHelper.EMPTY,
-                TextHelper.EMPTY, 0, 0, 0, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
+                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
     }
 
     private void setId(final UUID id) {
@@ -82,18 +73,6 @@ public final class SedeDomain {
 
     private void setCorreoElectronico(final String correoElectronico) {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
-    }
-
-    private void setCeldasCarro(final int celdasCarro) {
-        this.celdasCarro = celdasCarro;
-    }
-
-    private void setCeldasMoto(final int celdasMoto) {
-        this.celdasMoto = celdasMoto;
-    }
-
-    private void setCeldascamion(final int celdascamion) {
-        this.celdascamion = celdascamion;
     }
 
     private void setTipoSede(final TipoSedeDomain tipoSede) {
@@ -130,18 +109,6 @@ public final class SedeDomain {
 
     public String getCorreoElectronico() {
         return correoElectronico;
-    }
-
-    public int getCeldasCarro() {
-        return celdasCarro;
-    }
-
-    public int getCeldasMoto() {
-        return celdasMoto;
-    }
-
-    public int getCeldascamion() {
-        return celdascamion;
     }
 
     public TipoSedeDomain getTipoSede() {

@@ -14,9 +14,6 @@ public final class SedeDTO {
     private CiudadDTO ciudad;
     private String direccion;
     private String correoElectronico;
-    private int celdasCarro;
-    private int celdasMoto;
-    private int celdascamion;
     private TipoSedeDTO tipoSede;
     private PaisDTO pais;
     private DepartamentoDTO departamento;
@@ -29,17 +26,13 @@ public final class SedeDTO {
         setCiudad(CiudadDTO.build());
         setDireccion(TextHelper.EMPTY);
         setCorreoElectronico(TextHelper.EMPTY);
-        setCeldasCarro(0);
-        setCeldasMoto(0);
-        setCeldascamion(0);
         setTipoSede(TipoSedeDTO.build());
         setPais(PaisDTO.build());
         setDepartamento(DepartamentoDTO.build());
     }
 
     public SedeDTO(final UUID id, final ParqueaderoDTO parqueadero, final String nombre, final CiudadDTO ciudad,
-                   final String direccion, final String correoElectronico, final int celdasCarro, final int celdasMoto,
-                   final int celdascamion, final TipoSedeDTO tipoSede, final PaisDTO pais,
+                   final String direccion, final String correoElectronico, final TipoSedeDTO tipoSede, final PaisDTO pais,
                    final DepartamentoDTO departamento) {
         setId(id);
         setParqueadero(parqueadero);
@@ -47,9 +40,6 @@ public final class SedeDTO {
         setCiudad(ciudad);
         setDireccion(direccion);
         setCorreoElectronico(correoElectronico);
-        setCeldasCarro(celdasCarro);
-        setCeldasMoto(celdasMoto);
-        setCeldascamion(celdascamion);
         setTipoSede(tipoSede);
         setPais(pais);
         setDepartamento(departamento);
@@ -86,21 +76,6 @@ public final class SedeDTO {
 
     public SedeDTO setCorreoElectronico(final String correoElectronico) {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
-        return this;
-    }
-
-    public SedeDTO setCeldasCarro(final int celdasCarro) {
-        this.celdasCarro = celdasCarro;
-        return this;
-    }
-
-    public SedeDTO setCeldasMoto(final int celdasMoto) {
-        this.celdasMoto = celdasMoto;
-        return this;
-    }
-
-    public SedeDTO setCeldascamion(final int celdascamion) {
-        this.celdascamion = celdascamion;
         return this;
     }
 
@@ -141,18 +116,6 @@ public final class SedeDTO {
 
     public String getCorreoElectronico() {
         return correoElectronico;
-    }
-
-    public int getCeldasCarro() {
-        return celdasCarro;
-    }
-
-    public int getCeldasMoto() {
-        return celdasMoto;
-    }
-
-    public int getCeldascamion() {
-        return celdascamion;
     }
 
     public TipoSedeDTO getTipoSede() {

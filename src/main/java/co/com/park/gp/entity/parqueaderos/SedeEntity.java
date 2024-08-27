@@ -14,9 +14,6 @@ public final class SedeEntity {
     private CiudadEntity ciudad;
     private String direccion;
     private String correoElectronico;
-    private int celdasCarro;
-    private int celdasMoto;
-    private int celdascamion;
     private TipoSedeEntity tipoSede;
     private PaisEntity pais;
     private DepartamentoEntity departamento;
@@ -28,17 +25,13 @@ public final class SedeEntity {
         setCiudad(CiudadEntity.build());
         setDireccion(TextHelper.EMPTY);
         setCorreoElectronico(TextHelper.EMPTY);
-        setCeldasCarro(0);
-        setCeldasMoto(0);
-        setCeldascamion(0);
         setTipoSede(TipoSedeEntity.build());
         setPais(PaisEntity.build());
         setDepartamento(DepartamentoEntity.build());
     }
 
     public SedeEntity(final UUID id, final ParqueaderoEntity parqueadero, final String nombre,
-                      final CiudadEntity ciudad, final String direccion, final String correoElectronico, final int celdasCarro,
-                      final int celdasMoto, final int celdascamion, final TipoSedeEntity tipoSede, final PaisEntity pais,
+                      final CiudadEntity ciudad, final String direccion, final String correoElectronico, final TipoSedeEntity tipoSede, final PaisEntity pais,
                       final DepartamentoEntity departamento) {
         setId(id);
         setParqueadero(parqueadero);
@@ -46,9 +39,6 @@ public final class SedeEntity {
         setCiudad(ciudad);
         setDireccion(direccion);
         setCorreoElectronico(correoElectronico);
-        setCeldasCarro(celdasCarro);
-        setCeldasMoto(celdasMoto);
-        setCeldascamion(celdascamion);
         setTipoSede(tipoSede);
         setPais(pais);
         setDepartamento(departamento);
@@ -87,22 +77,6 @@ public final class SedeEntity {
         this.correoElectronico = TextHelper.applyTrim(correoElectronico);
         return this;
     }
-
-    public SedeEntity setCeldasCarro(final int celdasCarro) {
-        this.celdasCarro = celdasCarro;
-        return this;
-    }
-
-    public SedeEntity setCeldasMoto(final int celdasMoto) {
-        this.celdasMoto = celdasMoto;
-        return this;
-    }
-
-    public SedeEntity setCeldascamion(final int celdascamion) {
-        this.celdascamion = celdascamion;
-        return this;
-    }
-
     public SedeEntity setTipoSede(final TipoSedeEntity tipoSede) {
         this.tipoSede = ObjectHelper.getObjectHelper().getDefaultValue(tipoSede, new TipoSedeEntity());
         return this;
@@ -140,18 +114,6 @@ public final class SedeEntity {
 
     public String getCorreoElectronico() {
         return correoElectronico;
-    }
-
-    public int getCeldasCarro() {
-        return celdasCarro;
-    }
-
-    public int getCeldasMoto() {
-        return celdasMoto;
-    }
-
-    public int getCeldascamion() {
-        return celdascamion;
     }
 
     public TipoSedeEntity getTipoSede() {
