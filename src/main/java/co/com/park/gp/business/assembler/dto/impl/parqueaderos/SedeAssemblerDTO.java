@@ -48,8 +48,7 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         var paisDomain = paisAssembler.toDomain(sedeDtoTmp.getPais());
         var departamentoDomain = departamentoAssembler.toDomain(sedeDtoTmp.getDepartamento());
         return SedeDomain.build(sedeDtoTmp.getId(), parqueaderoDomain, sedeDtoTmp.getNombre(), ciudadDomain,
-                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(), sedeDtoTmp.getCeldasCarro(),
-                sedeDtoTmp.getCeldasMoto(), sedeDtoTmp.getCeldascamion(), tipoSedeDomain, paisDomain,
+                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(),tipoSedeDomain, paisDomain,
                 departamentoDomain);
     }
 
@@ -64,8 +63,7 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         return SedeDTO.build().setId(sedeDomainTmp.getId()).setParqueadero(parqueaderoDto)
                 .setNombre(sedeDomainTmp.getNombre()).setCiudad(ciudadDto).setDireccion(sedeDomainTmp.getDireccion())
                 .setCorreoElectronico(sedeDomainTmp.getCorreoElectronico())
-                .setCeldasCarro(sedeDomainTmp.getCeldasCarro()).setCeldasMoto(sedeDomainTmp.getCeldasMoto())
-                .setCeldascamion(sedeDomainTmp.getCeldascamion()).setTipoSede(tipoSedeDto).setPais(paisDto)
+                .setTipoSede(tipoSedeDto).setPais(paisDto)
                 .setDepartamento(departamentoDto);
     }
 

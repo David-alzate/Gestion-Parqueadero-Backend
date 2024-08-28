@@ -33,25 +33,22 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
     public void crear(SedeEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("INSERT INTO Sede (id, nombresede, celdascarro, celdamoto, caldascamion, ");
-        sentenciaSql.append("correoelectronico, direccion, ciudad_id, departamento_id, pais_id, ");
+        sentenciaSql.append("INSERT INTO Sede (id, nombresede, correoelectronico, ");
+        sentenciaSql.append("direccion, ciudad_id, departamento_id, pais_id, ");
         sentenciaSql.append("parqueadero_id, tiposede_id) ");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setObject(1, data.getId());
             sentenciaSqlPreparada.setString(2, data.getNombre());
-            sentenciaSqlPreparada.setInt(3, data.getCeldasCarro());
-            sentenciaSqlPreparada.setInt(4, data.getCeldasMoto());
-            sentenciaSqlPreparada.setInt(5, data.getCeldascamion());
-            sentenciaSqlPreparada.setString(6, data.getCorreoElectronico());
-            sentenciaSqlPreparada.setString(7, data.getDireccion());
-            sentenciaSqlPreparada.setObject(8, data.getCiudad().getId());
-            sentenciaSqlPreparada.setObject(9, data.getDepartamento().getId());
-            sentenciaSqlPreparada.setObject(10, data.getPais().getId());
-            sentenciaSqlPreparada.setObject(11, data.getParqueadero().getId());
-            sentenciaSqlPreparada.setObject(12, data.getTipoSede().getId());
+            sentenciaSqlPreparada.setString(3, data.getCorreoElectronico());
+            sentenciaSqlPreparada.setString(4, data.getDireccion());
+            sentenciaSqlPreparada.setObject(5, data.getCiudad().getId());
+            sentenciaSqlPreparada.setObject(6, data.getDepartamento().getId());
+            sentenciaSqlPreparada.setObject(7, data.getPais().getId());
+            sentenciaSqlPreparada.setObject(8, data.getParqueadero().getId());
+            sentenciaSqlPreparada.setObject(9, data.getTipoSede().getId());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -125,9 +122,6 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
                     sede.setNombre(resultado.getString("nombresede"));
                     sede.setDireccion(resultado.getString("direccion"));
                     sede.setCorreoElectronico(resultado.getString("correoelectronico"));
-                    sede.setCeldasCarro(resultado.getInt("celdascarro"));
-                    sede.setCeldasMoto(resultado.getInt("celdamoto"));
-                    sede.setCeldascamion(resultado.getInt("caldascamion"));
 
                     CiudadEntity ciudad = CiudadEntity.build();
                     ciudad.setId(UUIDHelper.convertToUUID(resultado.getString("idCiudad")));
@@ -199,23 +193,20 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
     public void modificar(SedeEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("UPDATE sede SET nombresede=?, celdascarro=?, celdamoto=?, caldascamion=?, correoelectronico=?, ");
+        sentenciaSql.append("UPDATE sede SET nombresede=?, correoelectronico=?, ");
         sentenciaSql.append("direccion=?, ciudad_id=?, departamento_id=?, pais_id=?, parqueadero_id=?, tiposede_id=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setString(1, data.getNombre());
-            sentenciaSqlPreparada.setInt(2, data.getCeldasCarro());
-            sentenciaSqlPreparada.setInt(3, data.getCeldasMoto());
-            sentenciaSqlPreparada.setInt(4, data.getCeldascamion());
-            sentenciaSqlPreparada.setString(5, data.getCorreoElectronico());
-            sentenciaSqlPreparada.setString(6, data.getDireccion());
-            sentenciaSqlPreparada.setObject(7, data.getCiudad().getId());
-            sentenciaSqlPreparada.setObject(8, data.getDepartamento().getId());
-            sentenciaSqlPreparada.setObject(9, data.getPais().getId());
-            sentenciaSqlPreparada.setObject(10, data.getParqueadero().getId());
-            sentenciaSqlPreparada.setObject(11, data.getTipoSede().getId());
-            sentenciaSqlPreparada.setObject(12, data.getId());
+            sentenciaSqlPreparada.setString(2, data.getCorreoElectronico());
+            sentenciaSqlPreparada.setString(3, data.getDireccion());
+            sentenciaSqlPreparada.setObject(4, data.getCiudad().getId());
+            sentenciaSqlPreparada.setObject(5, data.getDepartamento().getId());
+            sentenciaSqlPreparada.setObject(6, data.getPais().getId());
+            sentenciaSqlPreparada.setObject(7, data.getParqueadero().getId());
+            sentenciaSqlPreparada.setObject(8, data.getTipoSede().getId());
+            sentenciaSqlPreparada.setObject(9, data.getId());
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {

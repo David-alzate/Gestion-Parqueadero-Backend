@@ -48,14 +48,10 @@ public final class RegistrarSede implements UseCaseWithoutReturn<SedeDomain> {
 
         validarSedeMismaDireccionMismoParqueadero(data.getDireccion(), data.getParqueadero().getId());
 
-        validarCantidadCeldas(data.getCeldasCarro(), data.getCeldasMoto(), data.getCeldascamion());
-
         var sedeEntity = SedeEntity.build().setId(generarIdentificadorSede())
                 .setParqueadero(ParqueaderoAssemblerEntity.getInstance().toEntity(data.getParqueadero()))
                 .setNombre(data.getNombre()).setCiudad(CiudadAssemblerEntity.getInstance().toEntity(data.getCiudad()))
                 .setDireccion(data.getDireccion()).setCorreoElectronico(data.getCorreoElectronico())
-                .setCeldasCarro(data.getCeldasCarro()).setCeldasMoto(data.getCeldasMoto())
-                .setCeldascamion(data.getCeldascamion())
                 .setTipoSede(TipoSedeAssemblerEntity.getInstance().toEntity(data.getTipoSede()))
                 .setPais(PaisAssemblerEntity.getInstance().toEntity(data.getPais()))
                 .setDepartamento(DepartamentoAssemblerEntity.getInstance().toEntity(data.getDepartamento()));
@@ -122,33 +118,6 @@ public final class RegistrarSede implements UseCaseWithoutReturn<SedeDomain> {
 
         if (direccion.length() > 100) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00068);
-            throw new BusinessGPException(mensajeUsuario);
-        }
-    }
-
-    private void validarCantidadCeldas(final int celdasCarro, final int celdasMoto, final int celdasCamion) {
-        if (celdasCarro < 0) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00063), "celdasCarro");
-            throw new BusinessGPException(mensajeUsuario);
-        }
-
-        if (celdasMoto < 0) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00063), "celdasMoto");
-            throw new BusinessGPException(mensajeUsuario);
-        }
-
-        if (celdasCamion < 0) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00063), "celdasCamion");
-            throw new BusinessGPException(mensajeUsuario);
-        }
-
-        if (celdasCarro + celdasMoto + celdasCamion == 0) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00064), "celdasCarro", "celdasMoto",
-                    "celdasCamion");
             throw new BusinessGPException(mensajeUsuario);
         }
     }

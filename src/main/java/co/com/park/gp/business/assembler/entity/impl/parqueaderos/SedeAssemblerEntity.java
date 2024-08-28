@@ -49,8 +49,7 @@ public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, Se
 		var paisDomain = paisAssembler.toDomain(sedeEntityTmp.getPais());
 		var departamentoDomain = departamentoAssembler.toDomain(sedeEntityTmp.getDepartamento());
 		return SedeDomain.build(sedeEntityTmp.getId(), parqueaderoDomain, sedeEntityTmp.getNombre(), ciudadDomain,
-				sedeEntityTmp.getDireccion(), sedeEntityTmp.getCorreoElectronico(), sedeEntityTmp.getCeldasCarro(),
-				sedeEntityTmp.getCeldasMoto(), sedeEntityTmp.getCeldascamion(), tipoSedeDomain, paisDomain,
+				sedeEntityTmp.getDireccion(), sedeEntityTmp.getCorreoElectronico(), tipoSedeDomain, paisDomain,
 				departamentoDomain);
 	}
 
@@ -65,8 +64,7 @@ public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, Se
 		return SedeEntity.build().setId(sedeDomainTmp.getId()).setParqueadero(parqueaderoEntity)
 				.setNombre(sedeDomainTmp.getNombre()).setCiudad(ciudadEntity).setDireccion(sedeDomainTmp.getDireccion())
 				.setCorreoElectronico(sedeDomainTmp.getCorreoElectronico())
-				.setCeldasCarro(sedeDomainTmp.getCeldasCarro()).setCeldasMoto(sedeDomainTmp.getCeldasMoto())
-				.setCeldascamion(sedeDomainTmp.getCeldascamion()).setTipoSede(tipoSedeEntity).setPais(paisEntity)
+				.setTipoSede(tipoSedeEntity).setPais(paisEntity)
 				.setDepartamento(departamentoEntity);
 	}
 
