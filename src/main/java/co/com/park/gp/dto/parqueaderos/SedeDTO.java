@@ -16,6 +16,7 @@ public final class SedeDTO {
     private String correoElectronico;
     private TipoSedeDTO tipoSede;
     private PaisDTO pais;
+    private CeldaDTO celda;
     private DepartamentoDTO departamento;
 
     public SedeDTO() {
@@ -28,12 +29,13 @@ public final class SedeDTO {
         setCorreoElectronico(TextHelper.EMPTY);
         setTipoSede(TipoSedeDTO.build());
         setPais(PaisDTO.build());
+        setCelda(CeldaDTO.build());
         setDepartamento(DepartamentoDTO.build());
     }
 
     public SedeDTO(final UUID id, final ParqueaderoDTO parqueadero, final String nombre, final CiudadDTO ciudad,
                    final String direccion, final String correoElectronico, final TipoSedeDTO tipoSede, final PaisDTO pais,
-                   final DepartamentoDTO departamento) {
+                   final CeldaDTO celda, final DepartamentoDTO departamento) {
         setId(id);
         setParqueadero(parqueadero);
         setNombre(nombre);
@@ -42,6 +44,7 @@ public final class SedeDTO {
         setCorreoElectronico(correoElectronico);
         setTipoSede(tipoSede);
         setPais(pais);
+        setCelda(celda);
         setDepartamento(departamento);
     }
 
@@ -91,6 +94,15 @@ public final class SedeDTO {
 
     public SedeDTO setDepartamento(final DepartamentoDTO departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoDTO());
+        return this;
+    }
+
+    public CeldaDTO getCelda() {
+        return celda;
+    }
+
+    public SedeDTO setCelda(CeldaDTO celda) {
+        this.celda = ObjectHelper.getObjectHelper().getDefaultValue(celda, CeldaDTO.build());
         return this;
     }
 

@@ -15,6 +15,7 @@ public final class SedeDomain {
     private String correoElectronico;
     private TipoSedeDomain tipoSede;
     private PaisDomain pais;
+    private CeldaDomain celda;
     private DepartamentoDomain departamento;
 
     public SedeDomain() {
@@ -23,7 +24,7 @@ public final class SedeDomain {
 
     public SedeDomain(final UUID id, final ParqueaderoDomain parqueadero, final String nombre,
                       final CiudadDomain ciudad, final String direccion, final String correoElectronico, final TipoSedeDomain tipoSede, final PaisDomain pais,
-                      final DepartamentoDomain departamento) {
+                      final CeldaDomain celda, final DepartamentoDomain departamento) {
         setId(id);
         setParqueadero(parqueadero);
         setNombre(nombre);
@@ -32,23 +33,24 @@ public final class SedeDomain {
         setCorreoElectronico(correoElectronico);
         setTipoSede(tipoSede);
         setPais(pais);
+        setCelda(celda);
         setDepartamento(departamento);
     }
 
     public static SedeDomain build(final UUID id, final ParqueaderoDomain parqueadero, final String nombre,
                                    final CiudadDomain ciudad, final String direccion, final String correoElectronico, final TipoSedeDomain tipoSede, final PaisDomain pais,
-                                   final DepartamentoDomain departamento) {
-        return new SedeDomain(id, parqueadero, nombre, ciudad, direccion, correoElectronico,tipoSede, pais, departamento);
+                                   final CeldaDomain celda, final DepartamentoDomain departamento) {
+        return new SedeDomain(id, parqueadero, nombre, ciudad, direccion, correoElectronico,tipoSede, pais, celda, departamento);
     }
 
     public static SedeDomain build(final UUID id) {
         return new SedeDomain(id, ParqueaderoDomain.build(), TextHelper.EMPTY, CiudadDomain.build(), TextHelper.EMPTY,
-                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
+                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), CeldaDomain.build(), DepartamentoDomain.build());
     }
 
     public static SedeDomain build() {
         return new SedeDomain(UUIDHelper.getDefault(), ParqueaderoDomain.build(), TextHelper.EMPTY, CiudadDomain.build(), TextHelper.EMPTY,
-                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), DepartamentoDomain.build());
+                TextHelper.EMPTY, TipoSedeDomain.build(), PaisDomain.build(), CeldaDomain.build(), DepartamentoDomain.build());
     }
 
     private void setId(final UUID id) {
@@ -85,6 +87,14 @@ public final class SedeDomain {
 
     private void setDepartamento(final DepartamentoDomain departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, DepartamentoDomain.build());
+    }
+
+    public CeldaDomain getCelda() {
+        return celda;
+    }
+
+    public void setCelda(CeldaDomain celda) {
+        this.celda = ObjectHelper.getObjectHelper().getDefaultValue(celda, CeldaDomain.build());
     }
 
     public UUID getId() {
