@@ -4,19 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.park.gp.business.assembler.entity.AssemblerEntity;
-import co.com.park.gp.business.domain.parqueaderos.CiudadDomain;
-import co.com.park.gp.business.domain.parqueaderos.DepartamentoDomain;
-import co.com.park.gp.business.domain.parqueaderos.PaisDomain;
-import co.com.park.gp.business.domain.parqueaderos.ParqueaderoDomain;
-import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
-import co.com.park.gp.business.domain.parqueaderos.TipoSedeDomain;
+import co.com.park.gp.business.domain.parqueaderos.*;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
-import co.com.park.gp.entity.parqueaderos.CiudadEntity;
-import co.com.park.gp.entity.parqueaderos.DepartamentoEntity;
-import co.com.park.gp.entity.parqueaderos.PaisEntity;
-import co.com.park.gp.entity.parqueaderos.ParqueaderoEntity;
-import co.com.park.gp.entity.parqueaderos.SedeEntity;
-import co.com.park.gp.entity.parqueaderos.TipoSedeEntity;
+import co.com.park.gp.entity.parqueaderos.*;
 
 public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, SedeEntity> {
 
@@ -29,6 +19,8 @@ public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, Se
 	private static final AssemblerEntity<PaisDomain, PaisEntity> paisAssembler = PaisAssemblerEntity.getInstance();
 	private static final AssemblerEntity<DepartamentoDomain, DepartamentoEntity> departamentoAssembler = DepartamentoAssemblerEntity
 			.getInstance();
+
+	private static final AssemblerEntity<CeldaDomain, CeldaEntity> celdaAssembler = CeldaAssemblerEntity.getInstance();
 
 	private static final AssemblerEntity<SedeDomain, SedeEntity> INSTANCE = new SedeAssemblerEntity();
 
@@ -48,8 +40,9 @@ public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, Se
 		var tipoSedeDomain = tipoSedeAssembler.toDomain(sedeEntityTmp.getTipoSede());
 		var paisDomain = paisAssembler.toDomain(sedeEntityTmp.getPais());
 		var departamentoDomain = departamentoAssembler.toDomain(sedeEntityTmp.getDepartamento());
+		var celdaDomain = celdaAssembler.toDomain(sedeEntityTmp.getCelda());
 		return SedeDomain.build(sedeEntityTmp.getId(), parqueaderoDomain, sedeEntityTmp.getNombre(), ciudadDomain,
-				sedeEntityTmp.getDireccion(), sedeEntityTmp.getCorreoElectronico(), tipoSedeDomain, paisDomain,
+				sedeEntityTmp.getDireccion(), sedeEntityTmp.getCorreoElectronico(), tipoSedeDomain, paisDomain, celdaDomain,
 				departamentoDomain);
 	}
 
@@ -61,10 +54,12 @@ public final class SedeAssemblerEntity implements AssemblerEntity<SedeDomain, Se
 		var tipoSedeEntity = tipoSedeAssembler.toEntity(sedeDomainTmp.getTipoSede());
 		var paisEntity = paisAssembler.toEntity(sedeDomainTmp.getPais());
 		var departamentoEntity = departamentoAssembler.toEntity(sedeDomainTmp.getDepartamento());
+		var celdaEntity = celdaAssembler.toEntity(sedeDomainTmp.getCelda());
 		return SedeEntity.build().setId(sedeDomainTmp.getId()).setParqueadero(parqueaderoEntity)
 				.setNombre(sedeDomainTmp.getNombre()).setCiudad(ciudadEntity).setDireccion(sedeDomainTmp.getDireccion())
 				.setCorreoElectronico(sedeDomainTmp.getCorreoElectronico())
 				.setTipoSede(tipoSedeEntity).setPais(paisEntity)
+				.setCelda(celdaEntity)
 				.setDepartamento(departamentoEntity);
 	}
 

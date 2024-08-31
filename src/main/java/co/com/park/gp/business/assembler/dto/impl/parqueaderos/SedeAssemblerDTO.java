@@ -4,19 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.park.gp.business.assembler.dto.AssemblerDTO;
-import co.com.park.gp.business.domain.parqueaderos.CiudadDomain;
-import co.com.park.gp.business.domain.parqueaderos.DepartamentoDomain;
-import co.com.park.gp.business.domain.parqueaderos.PaisDomain;
-import co.com.park.gp.business.domain.parqueaderos.ParqueaderoDomain;
-import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
-import co.com.park.gp.business.domain.parqueaderos.TipoSedeDomain;
+import co.com.park.gp.business.domain.parqueaderos.*;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
-import co.com.park.gp.dto.parqueaderos.CiudadDTO;
-import co.com.park.gp.dto.parqueaderos.DepartamentoDTO;
-import co.com.park.gp.dto.parqueaderos.PaisDTO;
-import co.com.park.gp.dto.parqueaderos.ParqueaderoDTO;
-import co.com.park.gp.dto.parqueaderos.SedeDTO;
-import co.com.park.gp.dto.parqueaderos.TipoSedeDTO;
+import co.com.park.gp.dto.parqueaderos.*;
 
 public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO> {
 
@@ -28,6 +18,8 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
     private static final AssemblerDTO<PaisDomain, PaisDTO> paisAssembler = PaisAssemblerDTO.getInstance();
     private static final AssemblerDTO<DepartamentoDomain, DepartamentoDTO> departamentoAssembler = DepartamentoAssemblerDTO
             .getInstance();
+
+    private static final AssemblerDTO<CeldaDomain, CeldaDTO> celdaAssembler = CeldaAssemblerDTO.getInstance();
 
     private static final AssemblerDTO<SedeDomain, SedeDTO> instance = new SedeAssemblerDTO();
 
@@ -47,8 +39,9 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         var tipoSedeDomain = tipoSedeAssembler.toDomain(sedeDtoTmp.getTipoSede());
         var paisDomain = paisAssembler.toDomain(sedeDtoTmp.getPais());
         var departamentoDomain = departamentoAssembler.toDomain(sedeDtoTmp.getDepartamento());
+        var celdaDomain = celdaAssembler.toDomain(sedeDtoTmp.getCelda());
         return SedeDomain.build(sedeDtoTmp.getId(), parqueaderoDomain, sedeDtoTmp.getNombre(), ciudadDomain,
-                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(),tipoSedeDomain, paisDomain,
+                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(),tipoSedeDomain, paisDomain, celdaDomain,
                 departamentoDomain);
     }
 
@@ -60,10 +53,12 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         var tipoSedeDto = tipoSedeAssembler.toDto(sedeDomainTmp.getTipoSede());
         var paisDto = paisAssembler.toDto(sedeDomainTmp.getPais());
         var departamentoDto = departamentoAssembler.toDto(sedeDomainTmp.getDepartamento());
+        var celdaDto = celdaAssembler.toDto(sedeDomainTmp.getCelda());
         return SedeDTO.build().setId(sedeDomainTmp.getId()).setParqueadero(parqueaderoDto)
                 .setNombre(sedeDomainTmp.getNombre()).setCiudad(ciudadDto).setDireccion(sedeDomainTmp.getDireccion())
                 .setCorreoElectronico(sedeDomainTmp.getCorreoElectronico())
                 .setTipoSede(tipoSedeDto).setPais(paisDto)
+                .setCelda(celdaDto)
                 .setDepartamento(departamentoDto);
     }
 
