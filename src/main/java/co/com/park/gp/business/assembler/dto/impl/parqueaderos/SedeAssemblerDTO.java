@@ -19,8 +19,6 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
     private static final AssemblerDTO<DepartamentoDomain, DepartamentoDTO> departamentoAssembler = DepartamentoAssemblerDTO
             .getInstance();
 
-    private static final AssemblerDTO<CeldaDomain, CeldaDTO> celdaAssembler = CeldaAssemblerDTO.getInstance();
-
     private static final AssemblerDTO<SedeDomain, SedeDTO> instance = new SedeAssemblerDTO();
 
     private SedeAssemblerDTO() {
@@ -39,9 +37,8 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         var tipoSedeDomain = tipoSedeAssembler.toDomain(sedeDtoTmp.getTipoSede());
         var paisDomain = paisAssembler.toDomain(sedeDtoTmp.getPais());
         var departamentoDomain = departamentoAssembler.toDomain(sedeDtoTmp.getDepartamento());
-        var celdaDomain = celdaAssembler.toDomain(sedeDtoTmp.getCelda());
         return SedeDomain.build(sedeDtoTmp.getId(), parqueaderoDomain, sedeDtoTmp.getNombre(), ciudadDomain,
-                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(),tipoSedeDomain, paisDomain, celdaDomain,
+                sedeDtoTmp.getDireccion(), sedeDtoTmp.getCorreoElectronico(),tipoSedeDomain, paisDomain,
                 departamentoDomain);
     }
 
@@ -53,12 +50,10 @@ public final class SedeAssemblerDTO implements AssemblerDTO<SedeDomain, SedeDTO>
         var tipoSedeDto = tipoSedeAssembler.toDto(sedeDomainTmp.getTipoSede());
         var paisDto = paisAssembler.toDto(sedeDomainTmp.getPais());
         var departamentoDto = departamentoAssembler.toDto(sedeDomainTmp.getDepartamento());
-        var celdaDto = celdaAssembler.toDto(sedeDomainTmp.getCelda());
         return SedeDTO.build().setId(sedeDomainTmp.getId()).setParqueadero(parqueaderoDto)
                 .setNombre(sedeDomainTmp.getNombre()).setCiudad(ciudadDto).setDireccion(sedeDomainTmp.getDireccion())
                 .setCorreoElectronico(sedeDomainTmp.getCorreoElectronico())
                 .setTipoSede(tipoSedeDto).setPais(paisDto)
-                .setCelda(celdaDto)
                 .setDepartamento(departamentoDto);
     }
 

@@ -16,7 +16,6 @@ public final class SedeEntity {
     private String correoElectronico;
     private TipoSedeEntity tipoSede;
     private PaisEntity pais;
-    private CeldaEntity celda;
     private DepartamentoEntity departamento;
 
     public SedeEntity() {
@@ -28,13 +27,11 @@ public final class SedeEntity {
         setCorreoElectronico(TextHelper.EMPTY);
         setTipoSede(TipoSedeEntity.build());
         setPais(PaisEntity.build());
-        setCelda(CeldaEntity.build());
         setDepartamento(DepartamentoEntity.build());
     }
 
     public SedeEntity(final UUID id, final ParqueaderoEntity parqueadero, final String nombre,
-                      final CiudadEntity ciudad, final String direccion, final String correoElectronico, final TipoSedeEntity tipoSede, final PaisEntity pais,
-                      final CeldaEntity celda, final DepartamentoEntity departamento) {
+                      final CiudadEntity ciudad, final String direccion, final String correoElectronico, final TipoSedeEntity tipoSede, final PaisEntity pais, final DepartamentoEntity departamento) {
         setId(id);
         setParqueadero(parqueadero);
         setNombre(nombre);
@@ -43,7 +40,6 @@ public final class SedeEntity {
         setCorreoElectronico(correoElectronico);
         setTipoSede(tipoSede);
         setPais(pais);
-        setCelda(celda);
         setDepartamento(departamento);
     }
 
@@ -92,15 +88,6 @@ public final class SedeEntity {
 
     public SedeEntity setDepartamento(final DepartamentoEntity departamento) {
         this.departamento = ObjectHelper.getObjectHelper().getDefaultValue(departamento, new DepartamentoEntity());
-        return this;
-    }
-
-    public CeldaEntity getCelda() {
-        return celda;
-    }
-
-    public SedeEntity setCelda(CeldaEntity celda) {
-        this.celda = ObjectHelper.getObjectHelper().getDefaultValue(celda, CeldaEntity.build());
         return this;
     }
 
