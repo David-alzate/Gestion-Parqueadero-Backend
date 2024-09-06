@@ -10,6 +10,8 @@ import co.com.park.gp.data.dao.entity.clientes.ClienteDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.clientes.ClientePostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.comunes.TipoVehiculoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.facturacion.FacturacionPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.concrete.postgresql.facturacion.MetodoPagoPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.parqueaderos.*;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.PlanPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.planes.TipoPlanPostgresqlDAO;
@@ -18,6 +20,8 @@ import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.EstadoPostgres
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.tarifas.TipoTarifaPostgresqlDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.vehiculos.VehiculoPostgresqlDAO;
+import co.com.park.gp.data.dao.entity.facturacion.FacturacionDAO;
+import co.com.park.gp.data.dao.entity.facturacion.MetodoPagoDAO;
 import co.com.park.gp.data.dao.entity.parqueaderos.*;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
 import co.com.park.gp.data.dao.entity.planes.TipoPlanDAO;
@@ -212,19 +216,29 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
         return new CeldaPostgresqlDAO(getConexion());
     }
 
+    @Override
+    public FacturacionDAO getFacturacionDao() {
+        return new FacturacionPostgresqlDAO(getConexion());
+    }
 
-    public static void main(String[] args) {
-        DAOFactory factory = DAOFactory.getFactory();
-        System.out.println("Iniciando transacción...");
-        factory.iniciarTransaccion();
+    @Override
+    public MetodoPagoDAO getMetodoPagoDao() {
+        return new MetodoPagoPostgresqlDAO(getConexion());
+    }
 
 
-        System.out.println("Consultar planes");
-        var resultadosPlanes = factory.getPlanDAO().consultar(PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca("UZM06F")));
-
-        for (PlanEntity planEntity : resultadosPlanes) {
-            System.out.println("idPlan : " + planEntity.getId() + ", Placa: " + planEntity.getVehiculo().getPlaca());
-        }
+//    public static void main(String[] args) {
+//        DAOFactory factory = DAOFactory.getFactory();
+//        System.out.println("Iniciando transacción...");
+//        factory.iniciarTransaccion();
+//
+//
+//        System.out.println("Consultar planes");
+//        var resultadosPlanes = factory.getPlanDAO().consultar(PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca("UZM06F")));
+//
+//        for (PlanEntity planEntity : resultadosPlanes) {
+//            System.out.println("idPlan : " + planEntity.getId() + ", Placa: " + planEntity.getVehiculo().getPlaca());
+//        }
 
 //        System.out.println("Consultar Tarifas");
 //        var resultadosTarifa = factory.getTarifaDAO().consultar(TarifaEntity.build());
@@ -244,14 +258,14 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //                    + ", idCiudad: " + sedeEntity.getCiudad().getId() + ", idParqueadero: " + sedeEntity.getParqueadero().getId() + ", idTipoSede: " + sedeEntity.getTipoSede().getId());
 //		}
 
-
-        System.out.println("Confirmar transacción...");
-        factory.confirmarTransaccion();
-
-        System.out.println("Cerrando conexión...");
-        factory.cerrarConexion();
-
-    }
+//
+//        System.out.println("Confirmar transacción...");
+//        factory.confirmarTransaccion();
+//
+//        System.out.println("Cerrando conexión...");
+//        factory.cerrarConexion();
+//
+//    }
 
 
 }
