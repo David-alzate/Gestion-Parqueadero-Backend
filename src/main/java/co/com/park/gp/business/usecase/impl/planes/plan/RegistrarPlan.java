@@ -43,7 +43,7 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setVehiculo(VehiculoAssemblerEntity.getInstance().toEntity(data.getVehiculo())).
                 setCliente(ClienteAssemblerEntity.getInstance().toEntity(data.getCliente())).
                 setTipoPlan(TipoPlanAssemblerEntity.getInstance().toEntity(data.getTipoPlan())).setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
-                .setFechaInicio(LocalDate.now()).setFechaFin(LocalDate.now());
+                .setFechaInicio(data.getFechaInicio()).setFechaFin(data.getFechaFin());
 
         factory.getPlanDAO().crear(planEntity);
     }

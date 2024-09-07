@@ -37,11 +37,11 @@ public final class PlanDomain {
     }
 
     public static PlanDomain build(UUID id) {
-        return new PlanDomain(id, SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), EstadoDomain.build(), LocalDate.now(), LocalDate.now());
+        return new PlanDomain(id, SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), EstadoDomain.build(), LocalDate.now(), LocalDate.of(0, 1, 1));
     }
 
     public static PlanDomain build() {
-        return new PlanDomain(UUIDHelper.getDefault(), SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), EstadoDomain.build(), LocalDate.now(), LocalDate.now());
+        return new PlanDomain(UUIDHelper.getDefault(), SedeDomain.build(), VehiculoDomain.build(), ClienteDomain.build(), TipoPlanDomain.build(), EstadoDomain.build(), LocalDate.now(), LocalDate.of(0, 1, 1));
     }
 
     public void setId(UUID id) {

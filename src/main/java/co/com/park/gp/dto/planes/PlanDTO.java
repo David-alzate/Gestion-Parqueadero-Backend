@@ -29,7 +29,7 @@ public final class PlanDTO {
         setTipoPlan(TipoPlanDTO.build());
         setEstado(EstadoDTO.build());
         setFechaInicio(LocalDate.now());
-        setFechaFin(LocalDate.now());
+        setFechaFin(LocalDate.of(0, 1, 1));
     }
 
     public PlanDTO(UUID id, SedeDTO sede, VehiculoDTO vehiculo, ClienteDTO cliente, TipoPlanDTO tipoPlan,EstadoDTO estado, LocalDate fechaInicio, LocalDate fechaFin) {

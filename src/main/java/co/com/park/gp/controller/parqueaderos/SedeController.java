@@ -61,13 +61,11 @@ public final class SedeController {
         } catch (final GPException excepcion) {
             httpStatusCode = HttpStatus.BAD_REQUEST;
             sedeResponse.getMensajes().add(excepcion.getMensajeUsuario());
-
         } catch (final Exception excepcion) {
             httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
             var mensajeUsuario = "se ha presentado un prblema tratando de registar la nueva Sede";
             sedeResponse.getMensajes().add(mensajeUsuario);
-
         }
 
         return new ResponseEntity<>(sedeResponse, httpStatusCode);

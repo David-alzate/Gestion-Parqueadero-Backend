@@ -27,7 +27,7 @@ public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
     public void crear(CeldaEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("INSERT INTO celda (id, sede_id, tipovehiculo_id, cantidadceldas");
+        sentenciaSql.append("INSERT INTO celda (id, sede_id, tipovehiculo_id, cantidadceldas )");
         sentenciaSql.append("VALUES (?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
@@ -77,8 +77,8 @@ public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
     @Override
     public List<CeldaEntity> consultar(CeldaEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
-        sentenciaSql.append("SELECT c.id, s.id as idSede, s.nombre as sedeNombre, ");
-        sentenciaSql.append("tv.id as idTipoVehiculo, tv.nombre as tipoVehiculoNombre, ");
+        sentenciaSql.append("SELECT c.id, s.id as idSede, s.nombresede as sedeNombre, ");
+        sentenciaSql.append("tv.id as idTipoVehiculo, tv.tipovehiculo as tipoVehiculoNombre, ");
         sentenciaSql.append("c.cantidadceldas ");
         sentenciaSql.append("FROM celda c ");
         sentenciaSql.append("INNER JOIN sede s ON s.id = c.sede_id ");

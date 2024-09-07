@@ -67,8 +67,8 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
     @Override
     public List<SedeEntity> consultar(SedeEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
-        sentenciaSql.append("select s.id, s.nombresede, s.direccion, s.correoelectronico, s.celdascarro,");
-        sentenciaSql.append(" s.celdamoto, s.caldascamion, c.id as idCiudad,");
+        sentenciaSql.append("select s.id, s.nombresede, s.direccion, s.correoelectronico, ");
+        sentenciaSql.append("c.id as idCiudad,");
         sentenciaSql.append(" c.nombre as nombreciudad, d.id as idDepartamento,");
         sentenciaSql.append(" d.nombre as nombredepartamento, p.id as idPais,");
         sentenciaSql.append(" p.nombre as nombrepais, par.id as idParqueadero, ");

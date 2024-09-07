@@ -29,7 +29,7 @@ public final class PlanEntity {
         setTipoPlan(TipoPlanEntity.build());
         setEstado(EstadoEntity.build());
         setFechaInicio(LocalDate.now());
-        setFechaFin(LocalDate.now());
+        setFechaFin(LocalDate.of(0, 1, 1));
     }
 
     public PlanEntity(UUID id, SedeEntity sede, VehiculoEntity vehiculo, ClienteEntity cliente, TipoPlanEntity tipoPlan,EstadoEntity estado, LocalDate fechaInicio, LocalDate fechaFin) {
