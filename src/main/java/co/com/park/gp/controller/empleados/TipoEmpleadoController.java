@@ -33,12 +33,14 @@ public final class TipoEmpleadoController {
 		} catch (final GPException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
 			tipoEmpleadoResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			excepcion.printStackTrace();
 
 		} catch (final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
 			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00096);
 			tipoEmpleadoResponse.getMensajes().add(mensajeUsuario);
+			excepcion.printStackTrace();
 
 		}
 

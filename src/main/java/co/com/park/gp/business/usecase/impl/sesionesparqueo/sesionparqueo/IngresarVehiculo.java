@@ -10,6 +10,8 @@ import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
+import co.com.park.gp.entity.parqueaderos.CeldaEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
@@ -34,6 +36,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
     @Override
     public void execute(SesionParqueoDomain data) {
 
+        validarConfiguracionSedeCelda(data.getSede().getId(), data.getTipoVehiculo().getId());
         validarVehiculoConPlan(data.getPlaca(), data.getSede().getId());
         validarMismoVehiculoEstadoActivo(data.getPlaca());
 
@@ -82,5 +85,17 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             var mensajeUsuario = "El vehiculo Cuenta con un plan activo detro de la sede";
             throw new BusinessGPException(mensajeUsuario);
         }
+    }
+
+    private void validarConfiguracionSedeCelda(UUID idSede, UUID idTipoVehiculo) {
+        var celdaEntity = CeldaEntity.build().setSede(SedeEntity.build().setId(idSede)).setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo));
+
+        var resultados = factory.getCeldaDao().consultar(celdaEntity);
+
+        if(resultados.isEmpty()){
+            var mensajeUsuario = "Antes de ingresar el vehiculo, configure la cantidad de celdas para este sede y este tipo de vehiculo";
+            throw new BusinessGPException(mensajeUsuario);
+        }
+
     }
 }
