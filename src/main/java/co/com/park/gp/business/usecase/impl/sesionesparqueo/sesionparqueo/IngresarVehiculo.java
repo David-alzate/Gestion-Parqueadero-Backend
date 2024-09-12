@@ -6,6 +6,7 @@ import co.com.park.gp.business.assembler.entity.impl.parqueaderos.SedeAssemblerE
 import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEntity;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -15,7 +16,6 @@ import co.com.park.gp.entity.parqueaderos.CeldaEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
-import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.util.UUID;
@@ -65,7 +65,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
     }
 
     private void validarMismoVehiculoEstadoActivo(String placa){
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var sesionParqueoEntity = SesionParqueoEntity.build()
                 .setPlaca(placa)

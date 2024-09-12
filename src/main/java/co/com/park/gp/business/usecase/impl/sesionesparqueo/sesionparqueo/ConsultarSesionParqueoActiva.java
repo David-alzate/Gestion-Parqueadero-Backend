@@ -3,6 +3,7 @@ package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 import co.com.park.gp.business.assembler.entity.impl.sesionparqueo.SesionParqueoAssemblerEntity;
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -26,7 +27,7 @@ public class ConsultarSesionParqueoActiva implements UseCaseWithReturn<SesionPar
 
     @Override
     public List<SesionParqueoDomain> execute(SesionParqueoDomain data) {
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var sesionParqueoFilter = SesionParqueoAssemblerEntity.getInstance().toEntity(data);
         var sesionActiva = sesionParqueoFilter.setEstado(EstadoEntity.build().setId(estadoActivo.getId()));

@@ -1,5 +1,6 @@
 package co.com.park.gp.data.dao.entity.concrete.postgresql.sesionparqueo;
 
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
@@ -34,7 +35,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
     public void ingresarVehiculo(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, placa, empleado_id, fechahoraingreso,tipovehiculo_id, estado_id)");
         sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
