@@ -65,8 +65,11 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
     }
 
     private void validarMismoVehiculoEstadoActivo(String placa){
-        var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa)
-                .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+
+        var sesionParqueoEntity = SesionParqueoEntity.build()
+                .setPlaca(placa)
+                .setEstado(estadoActivo);
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 
@@ -75,6 +78,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             throw new BusinessGPException(mensajeUsuario);
         }
     }
+
 
     private void validarVehiculoConPlan(String placa, UUID idSede) {
         var planEntity = PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca(placa.toUpperCase())).setSede(SedeEntity.build().setId(idSede));

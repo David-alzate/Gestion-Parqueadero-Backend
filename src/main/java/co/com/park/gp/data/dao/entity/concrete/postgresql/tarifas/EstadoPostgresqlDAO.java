@@ -69,4 +69,14 @@ public class EstadoPostgresqlDAO extends SqlConnection implements EstadoDAO {
 
         return estados;
     }
+
+    public EstadoEntity consultarPorDescripcion(String descripcion) {
+
+        EstadoEntity estadoEntity = EstadoEntity.build().setEstado(descripcion);
+        List<EstadoEntity> resultados = consultar(estadoEntity);
+        if (resultados.isEmpty()) {
+            throw new DataGPException("Estado no encontrado");
+        }
+        return resultados.get(0);
+    }
 }

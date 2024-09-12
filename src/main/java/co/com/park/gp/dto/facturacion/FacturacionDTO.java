@@ -18,7 +18,7 @@ public final class FacturacionDTO {
     private BigDecimal valorPagar;
     private MetodoPagoDTO metodoPago;
 
-    public FacturacionDTO() {
+    public FacturacionDTO() {   
         setId(UUIDHelper.getDefault());
         setSesionParqueo(SesionParqueoDTO.build());
         setDuracion(Duration.ZERO);

@@ -26,8 +26,10 @@ public class ConsultarSesionParqueoActiva implements UseCaseWithReturn<SesionPar
 
     @Override
     public List<SesionParqueoDomain> execute(SesionParqueoDomain data) {
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+
         var sesionParqueoFilter = SesionParqueoAssemblerEntity.getInstance().toEntity(data);
-        var sesionActiva = sesionParqueoFilter.setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+        var sesionActiva = sesionParqueoFilter.setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
         var resultadosEntity = factory.getSesionParqueoDAO().consultar(sesionActiva);
 
         return SesionParqueoAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);

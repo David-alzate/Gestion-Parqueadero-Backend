@@ -208,7 +208,7 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 
     @Override
     public SesionParqueoDAO getSesionParqueoDAO() {
-        return new SesionParqueoPostgresqlDAO(getConexion());
+        return new SesionParqueoPostgresqlDAO(getConexion(), this);
     }
 
     @Override

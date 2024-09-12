@@ -6,6 +6,7 @@ import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.sesionparqueo.SesionParqueoDAO;
+import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
@@ -22,16 +23,21 @@ import java.util.UUID;
 
 public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionParqueoDAO {
 
-    public SesionParqueoPostgresqlDAO(final Connection conexion) {
+    private final DAOFactory factory;
+
+    public SesionParqueoPostgresqlDAO(final Connection conexion, final DAOFactory factory) {
         super(conexion);
+        this.factory = factory;
     }
 
     @Override
     public void ingresarVehiculo(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion("Activa");
+
         sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, placa, empleado_id, fechahoraingreso,tipovehiculo_id, estado_id)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ? , '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -41,6 +47,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             sentenciaSqlPreparada.setObject(4, data.getEmpleado().getId());
             sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
             sentenciaSqlPreparada.setObject(6, data.getTipoVehiculo().getId());
+            sentenciaSqlPreparada.setObject(7, estadoActivo.getId());
 
             sentenciaSqlPreparada.executeUpdate();
 
