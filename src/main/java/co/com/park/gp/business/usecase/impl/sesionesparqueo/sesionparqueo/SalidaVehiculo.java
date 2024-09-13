@@ -2,9 +2,9 @@ package co.com.park.gp.business.usecase.impl.sesionesparqueo.sesionparqueo;
 
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
-import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
@@ -30,9 +30,11 @@ public class SalidaVehiculo implements UseCaseWithoutReturn<SesionParqueoDomain>
 
         validarSesionExiste(data.getPlaca());
 
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.INACTIVO.getNombre());
+
         var sesionParqueoEntity = SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()))
                 .setFechaHoraSalida(LocalDateTime.now().withSecond(0).withNano(0))
-                .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("b266b1d6-e5e7-438d-ada6-e269fa896b94")));
+                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
 
         factory.getSesionParqueoDAO().salidaVehiculo(sesionParqueoEntity);
 
@@ -40,8 +42,10 @@ public class SalidaVehiculo implements UseCaseWithoutReturn<SesionParqueoDomain>
 
     private UUID idSesionParqueo(String placa) {
 
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+
         var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
-                .setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+                .setId(estadoActivo.getId()));
 
         var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
         return resultados.getFirst().getId();
@@ -49,8 +53,10 @@ public class SalidaVehiculo implements UseCaseWithoutReturn<SesionParqueoDomain>
 
     private void validarSesionExiste(String placa){
 
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+
         var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
-                .setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+                .setId(estadoActivo.getId()));
 
         var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
 

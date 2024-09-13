@@ -1,11 +1,13 @@
 package co.com.park.gp.data.dao.entity.concrete.postgresql.planes;
 
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
+import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.clientes.ClienteEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
@@ -23,17 +25,22 @@ import java.util.UUID;
 
 public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
 
-    public PlanPostgresqlDAO(final Connection conexion) {
+    private final DAOFactory factory;
+
+    public PlanPostgresqlDAO(final Connection conexion, final DAOFactory factory) {
         super(conexion);
+        this.factory = factory;
     }
 
     @Override
     public void crear(PlanEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+
         sentenciaSql.append("INSERT INTO plan (id, sede_id, vehiculo_id, cliente_id, ");
         sentenciaSql.append("tipoplan_id, fechainicio, fechafin, estado_id)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, '22f1f1ea-e5a6-4a57-9912-ada1b7372657')");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?,? )");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -44,6 +51,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
             sentenciaSqlPreparada.setObject(5, data.getTipoPlan().getId());
             sentenciaSqlPreparada.setObject(6, data.getFechaInicio());
             sentenciaSqlPreparada.setObject(7, data.getFechaFin());
+            sentenciaSqlPreparada.setObject(8, estadoActivo.getId());
 
             sentenciaSqlPreparada.executeUpdate();
 

@@ -3,6 +3,7 @@ package co.com.park.gp.business.usecase.impl.planes.plan;
 import co.com.park.gp.business.assembler.entity.impl.planes.PlanAssemblerEntity;
 import co.com.park.gp.business.domain.planes.PlanDomain;
 import co.com.park.gp.business.usecase.UseCaseWithReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -27,8 +28,10 @@ public class ConsultarPlanActivo implements UseCaseWithReturn<PlanDomain, List<P
 
     @Override
     public List<PlanDomain> execute(PlanDomain data) {
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+
         var planFilter = PlanAssemblerEntity.getInstance().toEntity(data);
-        var planActivo = planFilter.setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+        var planActivo = planFilter.setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
         var resultadosEntity = factory.getPlanDAO().consultar(planActivo);
         return PlanAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);
     }

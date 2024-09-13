@@ -16,6 +16,7 @@ import co.com.park.gp.entity.parqueaderos.CeldaEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
 
         var sesionParqueoEntity = SesionParqueoEntity.build()
                 .setPlaca(placa)
-                .setEstado(estadoActivo);
+                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 

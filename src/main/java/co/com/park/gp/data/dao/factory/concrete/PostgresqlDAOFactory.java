@@ -203,7 +203,7 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 
     @Override
     public PlanDAO getPlanDAO() {
-        return new PlanPostgresqlDAO(getConexion());
+        return new PlanPostgresqlDAO(getConexion(), this);
     }
 
     @Override

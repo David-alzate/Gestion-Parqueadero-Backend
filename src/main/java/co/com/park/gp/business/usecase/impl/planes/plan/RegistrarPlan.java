@@ -7,6 +7,7 @@ import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEnti
 import co.com.park.gp.business.assembler.entity.impl.vehiculos.VehiculoAssemblerEntity;
 import co.com.park.gp.business.domain.planes.PlanDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -62,8 +63,10 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
     }
 
     private void validarSesionActiva(String placa){
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+
         var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa)
-                .setEstado(EstadoEntity.build().setId(UUIDHelper.convertToUUID("22f1f1ea-e5a6-4a57-9912-ada1b7372657")));
+                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 
