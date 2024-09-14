@@ -80,7 +80,6 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         }
     }
 
-
     private void validarVehiculoConPlan(String placa, UUID idSede) {
         var planEntity = PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca(placa.toUpperCase())).setSede(SedeEntity.build().setId(idSede));
 

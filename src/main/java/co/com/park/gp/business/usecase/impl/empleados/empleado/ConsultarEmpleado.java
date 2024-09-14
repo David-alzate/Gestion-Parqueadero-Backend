@@ -21,7 +21,6 @@ public class ConsultarEmpleado implements UseCaseWithReturn<EmpleadoDomain, List
             var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00036);
             throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
         }
-
         this.factory = factory;
     }
 
