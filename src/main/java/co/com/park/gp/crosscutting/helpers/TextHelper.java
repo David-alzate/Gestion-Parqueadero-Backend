@@ -7,6 +7,8 @@ public class TextHelper {
     public static final String EMPTY = "";
     public static final String UNDERLINE = "_";
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    private static final Pattern PLACA_CARRO_PATTERN = Pattern.compile("^[A-Z]{3}[0-9]{3}$");
+    private static final Pattern PLACA_MOTO_PATTERN = Pattern.compile("^[A-Z]{3}[0-9]{2}[A-Z]$");
 
     private TextHelper() {
         super();
@@ -40,7 +42,6 @@ public class TextHelper {
                 sb.append(applyTrim(string));
             }
         }
-
         return sb.toString();
     }
 
@@ -55,6 +56,14 @@ public class TextHelper {
 
     public static boolean emailValido(final String email) {
         return !isNullOrEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    public static boolean placaCarroValida(final String placa) {
+        return !isNullOrEmpty(placa) && PLACA_CARRO_PATTERN.matcher(placa).matches();
+    }
+
+    public static boolean placaMotoValida(final String placa) {
+        return !isNullOrEmpty(placa) && PLACA_MOTO_PATTERN.matcher(placa).matches();
     }
 
     public static String convertToLowercase(String string) {
