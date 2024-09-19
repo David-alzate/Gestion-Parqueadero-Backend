@@ -8,7 +8,9 @@ import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.parqueaderos.CeldaEntity;
+import co.com.park.gp.entity.parqueaderos.SedeEntity;
 
 import java.util.UUID;
 
@@ -28,6 +30,9 @@ public class RegistrarCelda implements UseCaseWithoutReturn<CeldaDomain> {
 
     @Override
     public void execute(CeldaDomain data) {
+
+        verificarCeldaExiste(data.getSede().getId(), data.getTipoVehiculo().getId());
+        
         var celdaEntity = CeldaEntity.build().setId(generarIdentificadorCelda()).setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setTipoVehiculo(TipoVehiculoAssemblerEntity.getInstance().toEntity(data.getTipoVehiculo()))
                 .setCantidadCeldas(data.getCantidadCeldas());
@@ -46,5 +51,16 @@ public class RegistrarCelda implements UseCaseWithoutReturn<CeldaDomain> {
             existeId = !resultados.isEmpty();
         }
         return id;
+    }
+
+    private void verificarCeldaExiste(UUID idSede, UUID idTipoVehiculo){
+        var celdaEntity = CeldaEntity.build().setSede(SedeEntity.build().setId(idSede)).setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo));
+
+        var resultadosEntity = factory.getCeldaDao().consultar(celdaEntity);
+
+        if(!resultadosEntity.isEmpty()){
+            var mensajeUsuario = "La cantidad de celdas para esta sede y tipo de vehiculo ya fue asignada";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 }
