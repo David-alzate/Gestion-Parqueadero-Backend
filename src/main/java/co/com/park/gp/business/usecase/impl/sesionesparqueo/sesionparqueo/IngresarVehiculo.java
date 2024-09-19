@@ -9,6 +9,7 @@ import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
+import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
@@ -41,6 +42,14 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         validarVehiculoConPlan(data.getPlaca(), data.getSede().getId());
         validarMismoVehiculoEstadoActivo(data.getPlaca());
 
+        if (data.getTipoVehiculo().getTipoVehiculo().equals("Carro") || data.getTipoVehiculo().getTipoVehiculo().equals("Camion")){
+            validarFormatoPlacaCarro(data.getPlaca().toUpperCase());
+        }
+
+        if (data.getTipoVehiculo().getTipoVehiculo().equals("Moto")){
+            validarFormatoPlacaMoto(data.getPlaca().toUpperCase());
+        }
+
         var sesionParqueoEnity = SesionParqueoEntity.build().setId(generarIdentificadorSesionParqueo())
                 .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede()))
                 .setEmpleado(EmpleadoAssemblerEntity.getInstance().toEntity(data.getEmpleado()))
@@ -51,6 +60,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         factory.getSesionParqueoDAO().ingresarVehiculo(sesionParqueoEnity);
 
     }
+
 
     private UUID generarIdentificadorSesionParqueo() {
         UUID id = UUIDHelper.generate();
@@ -101,5 +111,19 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             throw new BusinessGPException(mensajeUsuario);
         }
 
+    }
+
+    private void validarFormatoPlacaCarro(String placa){
+        if(!TextHelper.placaCarroValida(placa)){
+            var mensajeUsuario = "El formato de la placa para este tipo de vehiculo es incorrecta";
+            throw new BusinessGPException(mensajeUsuario);
+        }
+    }
+
+    private void validarFormatoPlacaMoto(String placa){
+        if(!TextHelper.placaMotoValida(placa)){
+            var mensajeUsuario = "El formato de la placa para este tipo de vehiculo es incorrecta";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 }
