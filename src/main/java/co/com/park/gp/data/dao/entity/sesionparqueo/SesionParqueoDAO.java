@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface SesionParqueoDAO extends IngresarVehiculoDAO<SesionParqueoEntity>, SalidaVehiculoDAO<SesionParqueoEntity>,
         RetriveDAO<SesionParqueoEntity>, DeleteDAO<UUID>, UpdateDAO<SesionParqueoEntity> {
+    int consultaCeldasOcupadas(UUID idSede, UUID idTipoVehiculo);
 }

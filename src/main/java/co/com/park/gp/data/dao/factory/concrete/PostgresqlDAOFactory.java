@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.clientes.ClienteDAO;
 import co.com.park.gp.data.dao.entity.comunes.TipoVehiculoDAO;
 import co.com.park.gp.data.dao.entity.concrete.postgresql.clientes.ClientePostgresqlDAO;
@@ -30,7 +31,9 @@ import co.com.park.gp.data.dao.entity.tarifas.EstadoDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TarifaDAO;
 import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.entity.vehiculos.VehiculoDAO;
+import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
+import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -231,15 +234,12 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //        DAOFactory factory = DAOFactory.getFactory();
 //        System.out.println("Iniciando transacción...");
 //        factory.iniciarTransaccion();
-//
-//
-//        System.out.println("Consultar planes");
-//        var resultadosPlanes = factory.getPlanDAO().consultar(PlanEntity.build().setVehiculo(VehiculoEntity.build().setPlaca("UZM06F")));
-//
-//        for (PlanEntity planEntity : resultadosPlanes) {
-//            System.out.println("idPlan : " + planEntity.getId() + ", Placa: " + planEntity.getVehiculo().getPlaca());
-//        }
 
+
+//        System.out.println("Consultar Celdas Ocupadas");
+//        var resultadosCeldasOcupadas = factory.getSesionParqueoDAO().consultaCeldasOcupadas(UUIDHelper.convertToUUID("25eb6b44-3950-46fe-bc81-fc8c01610413"), UUIDHelper.convertToUUID("ccc3c63c-37a3-441f-88b1-467a2070eaa4"));
+//
+//            System.out.println(resultadosCeldasOcupadas);
 //        System.out.println("Consultar Tarifas");
 //        var resultadosTarifa = factory.getTarifaDAO().consultar(TarifaEntity.build());
 //

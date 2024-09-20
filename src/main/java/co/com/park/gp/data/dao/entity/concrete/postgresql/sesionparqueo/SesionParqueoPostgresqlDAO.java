@@ -24,18 +24,16 @@ import java.util.UUID;
 
 public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionParqueoDAO {
 
-    private final DAOFactory factory;
+    private final EstadoEntity estadoActivo;
 
     public SesionParqueoPostgresqlDAO(final Connection conexion, final DAOFactory factory) {
         super(conexion);
-        this.factory = factory;
+        this.estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
     }
 
     @Override
     public void ingresarVehiculo(SesionParqueoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
-
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         sentenciaSql.append("INSERT INTO sesionparqueo (id, sede_id, placa, empleado_id, fechahoraingreso,tipovehiculo_id, estado_id)");
         sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -246,5 +244,18 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update de la sesionParqueo en la tabla \"sesionParqueo\" de la base de datos.";
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
+    }
+
+    @Override
+    public int consultaCeldasOcupadas(UUID idSede, UUID idTipoVehiculo) {
+        SesionParqueoEntity sesionParqueoEntity = SesionParqueoEntity.build()
+                .setSede(SedeEntity.build().setId(idSede))
+                .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo))
+                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+        List<SesionParqueoEntity> resultados = consultar(sesionParqueoEntity);
+        if (resultados.isEmpty()) {
+            return 0;
+        }
+        return resultados.size();
     }
 }
