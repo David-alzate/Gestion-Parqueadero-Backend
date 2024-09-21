@@ -1,8 +1,6 @@
 package co.com.park.gp.controller.empleados;
 
 import co.com.park.gp.business.facade.impl.empleados.empleado.*;
-import co.com.park.gp.business.facade.impl.sesionesparqueo.ConsultarSesionParqueoActivaFacade;
-import co.com.park.gp.dto.sesionesparqueo.SesionParqueoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

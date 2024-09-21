@@ -30,15 +30,22 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
     public void crear(FacturacionEntitiy data) {
         final StringBuilder sentenciaSql = new StringBuilder();
 
-        sentenciaSql.append("INSERT INTO facturacion (id, sesionparqueo_id, duracion, tarifa_id, ");
-        sentenciaSql.append("valorPagar, metodoPago_id)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?)");
+        sentenciaSql.append("INSERT INTO facturacion (id, sesion_parqueo_id, duracion, tarifa_id, ");
+        sentenciaSql.append("valor_Pagar, metodo_pago_id) VALUES (?, ?, ?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
             sentenciaSqlPreparada.setObject(1, data.getId());
             sentenciaSqlPreparada.setObject(2, data.getSesionParqueo().getId());
-            sentenciaSqlPreparada.setObject(3, data.getDuracion());
+
+            // Convertir Duration a INTERVAL en formato string
+            long horas = data.getDuracion().toHours();
+            long minutos = data.getDuracion().toMinutes() % 60;
+            long segundos = data.getDuracion().getSeconds() % 60;
+            String intervalo = String.format("'%d hours %d minutes %d seconds'", horas, minutos, segundos);
+
+            sentenciaSqlPreparada.setObject(3, intervalo, java.sql.Types.OTHER); // Cambia aquí
+
             sentenciaSqlPreparada.setObject(4, data.getTarifa().getId());
             sentenciaSqlPreparada.setObject(5, data.getValorPagar());
             sentenciaSqlPreparada.setObject(6, data.getMetodoPago().getId());
@@ -46,13 +53,12 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00087);
-            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00088);
+            var mensajeUsuario = "Error crear la factura";
+            var mensajeTecnico = "Error en la base de datos creando la factura";
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
-
         } catch (final Exception excepcion) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00087);
-            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00088);
+            var mensajeUsuario = "Error crear la factura";
+            var mensajeTecnico = "Error en la base de datos creando la factura";
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
     }
@@ -84,11 +90,11 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
     public List<FacturacionEntitiy> consultar(FacturacionEntitiy data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT f.id, sp.id AS idSesionParqueo, sp.fechaHoraIngreso, sp.fechaHoraSalida, ");
-        sentenciaSql.append("t.id AS idTarifa, t.nombre AS tarifa, f.valorPagar, mp.id AS idMetodoPago, mp.nombre AS metodoPago ");
+        sentenciaSql.append("t.id AS idTarifa, t.tarifa AS tarifa, f.valor_pagar, mp.id AS idMetodoPago, mp.nombre AS metodoPago ");
         sentenciaSql.append("FROM facturacion f ");
-        sentenciaSql.append("INNER JOIN sesion_parqueo sp ON sp.id = f.sesion_parqueo_id ");
+        sentenciaSql.append("INNER JOIN sesionparqueo sp ON sp.id = f.sesion_parqueo_id ");
         sentenciaSql.append("INNER JOIN tarifa t ON t.id = f.tarifa_id ");
-        sentenciaSql.append("INNER JOIN metodo_pago mp ON mp.id = f.metodo_pago_id ");
+        sentenciaSql.append("INNER JOIN metodopago mp ON mp.id = f.metodo_pago_id ");
         sentenciaSql.append("WHERE 1=1 ");
 
         final List<Object> parametros = new ArrayList<>();
@@ -106,7 +112,7 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
         }
 
         if (!ObjectHelper.getObjectHelper().isNull(data.getDuracion())) {
-            sentenciaSql.append(" AND sp.fechaHoraSalida - sp.fechaHoraIngreso = ?");
+            sentenciaSql.append(" AND EXTRACT(EPOCH FROM (sp.fechaHoraSalida - sp.fechaHoraIngreso)) * 1000 = ?");
             parametros.add(data.getDuracion().toMillis()); // Convertimos la duración a milisegundos
         }
 
@@ -118,7 +124,7 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
         }
 
         if (data.getValorPagar() != null) {
-            sentenciaSql.append(" AND f.valorPagar = ?");
+            sentenciaSql.append(" AND f.valor_pagar = ?");
             parametros.add(data.getValorPagar());
         }
 
@@ -140,7 +146,7 @@ public class FacturacionPostgresqlDAO extends SqlConnection implements Facturaci
                 while (resultado.next()) {
                     FacturacionEntitiy facturacion = new FacturacionEntitiy();
                     facturacion.setId(UUIDHelper.convertToUUID(resultado.getString("id")));
-                    facturacion.setValorPagar(resultado.getBigDecimal("valorPagar"));
+                    facturacion.setValorPagar(resultado.getBigDecimal("valor_pagar"));
 
                     SesionParqueoEntity sesionParqueo = SesionParqueoEntity.build();
                     sesionParqueo.setId(UUIDHelper.convertToUUID(resultado.getString("idSesionParqueo")));

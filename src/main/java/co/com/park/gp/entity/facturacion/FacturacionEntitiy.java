@@ -2,9 +2,6 @@ package co.com.park.gp.entity.facturacion;
 
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
-import co.com.park.gp.dto.facturacion.MetodoPagoDTO;
-import co.com.park.gp.dto.sesionesparqueo.SesionParqueoDTO;
-import co.com.park.gp.dto.tarifas.TarifaDTO;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.TarifaEntity;
 

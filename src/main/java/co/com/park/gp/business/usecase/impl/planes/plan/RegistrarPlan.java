@@ -17,8 +17,6 @@ import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
-
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {

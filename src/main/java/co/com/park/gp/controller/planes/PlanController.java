@@ -14,11 +14,6 @@ import java.util.UUID;
 @RequestMapping("/planes/")
 public class PlanController {
 
-    @GetMapping("/dummy")
-    public PlanDTO dummy(){
-        return new PlanDTO().build();
-    }
-
     @GetMapping
     public ResponseEntity<PlanResponse> consultar() {
 

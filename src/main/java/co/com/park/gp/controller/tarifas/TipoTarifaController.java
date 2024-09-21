@@ -1,10 +1,8 @@
 package co.com.park.gp.controller.tarifas;
 
-import co.com.park.gp.business.facade.impl.comunes.tipovehiculo.ConsutarTipoVehiculoFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tipotarifa.ConsultarTipoTarifaFacade;
 import co.com.park.gp.controller.response.tarifa.TipoTarifaResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.dto.comunes.TipoVehiculoDTO;
 import co.com.park.gp.dto.tarifas.TipoTarifaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

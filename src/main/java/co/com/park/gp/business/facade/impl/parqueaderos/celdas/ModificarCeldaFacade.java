@@ -1,7 +1,6 @@
 package co.com.park.gp.business.facade.impl.parqueaderos.celdas;
 
 import co.com.park.gp.business.assembler.dto.impl.parqueaderos.CeldaAssemblerDTO;
-import co.com.park.gp.business.assembler.dto.impl.sesionparqueo.SesionParqueoAssemblerDTO;
 import co.com.park.gp.business.facade.FacadeWhitoutReturn;
 import co.com.park.gp.business.usecase.impl.parqueaderos.celdas.ModificarCelda;
 import co.com.park.gp.crosscutting.exceptions.GPException;
