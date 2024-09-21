@@ -5,6 +5,7 @@ import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.parqueaderos.CeldaDAO;
+import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.parqueaderos.CeldaEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
@@ -19,8 +20,11 @@ import java.util.UUID;
 
 public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
 
-    public CeldaPostgresqlDAO(final Connection conexion) {
+    private final DAOFactory factory;
+
+    public CeldaPostgresqlDAO(final Connection conexion, DAOFactory factory) {
         super(conexion);
+        this.factory = factory;
     }
 
     @Override
@@ -177,5 +181,16 @@ public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
             var mensajeTecnico = "Se ha presentado una INESPERADO tratando de realizar el Update de la celda en la tabla \"celda\" de la base de datos.";
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
+    }
+
+    @Override
+    public int celdasDisponibles(UUID idSede, UUID idTipoVehiculo) {
+        var celdasOcupadas = factory.getSesionParqueoDAO().consultaCeldasOcupadas(idSede, idTipoVehiculo);
+        var resultadoCeldas = factory.getCeldaDao().consultar(CeldaEntity.build()
+                .setSede(SedeEntity.build().setId(idSede))
+                .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo)));
+
+        var totalCeldas = resultadoCeldas.get(0).getCantidadCeldas();
+        return totalCeldas - celdasOcupadas;
     }
 }

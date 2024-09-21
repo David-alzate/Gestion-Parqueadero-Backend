@@ -138,6 +138,11 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
             parametros.add(data.getSede().getId());
         }
 
+        if (!ObjectHelper.getObjectHelper().isNull(data.getTipoVehiculo()) && !ObjectHelper.getObjectHelper().isNull(data.getTipoVehiculo().getId()) && !data.getTipoVehiculo().getId().equals(UUIDHelper.getDefault())) {
+            sentenciaSql.append(" AND tv.id = ?");
+            parametros.add(data.getTipoVehiculo().getId());
+        }
+
         if (!ObjectHelper.getObjectHelper().isNull(data.getEmpleado()) && !ObjectHelper.getObjectHelper().isNull(data.getEmpleado().getId()) && !data.getEmpleado().getId().equals(UUIDHelper.getDefault())) {
             sentenciaSql.append(" AND em.id = ?");
             parametros.add(data.getEmpleado().getId());

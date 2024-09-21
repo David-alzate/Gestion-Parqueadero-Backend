@@ -9,4 +9,5 @@ import co.com.park.gp.entity.parqueaderos.CeldaEntity;
 import java.util.UUID;
 
 public interface CeldaDAO extends RetriveDAO<CeldaEntity>, CreateDAO<CeldaEntity>, UpdateDAO<CeldaEntity>, DeleteDAO<UUID> {
+    int celdasDisponibles(UUID idSede, UUID idTipoVehiculo);
 }
