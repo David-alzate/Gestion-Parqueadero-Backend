@@ -18,6 +18,7 @@ import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.sesionesparqueo.SesionParqueoEntity;
 import co.com.park.gp.entity.tarifas.EstadoEntity;
+import co.com.park.gp.entity.tarifas.TarifaEntity;
 import co.com.park.gp.entity.vehiculos.VehiculoEntity;
 
 import java.util.UUID;
@@ -39,6 +40,8 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
     public void execute(SesionParqueoDomain data) {
 
         validarConfiguracionSedeCelda(data.getSede().getId(), data.getTipoVehiculo().getId());
+        validarConfiguracionSedeTarifa(data.getSede().getId(), data.getTipoVehiculo().getId());
+        validarCeldasDisponibles(data.getSede().getId(), data.getTipoVehiculo().getId());
         validarVehiculoConPlan(data.getPlaca(), data.getSede().getId());
         validarMismoVehiculoEstadoActivo(data.getPlaca());
 
@@ -111,6 +114,30 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             throw new BusinessGPException(mensajeUsuario);
         }
 
+    }
+
+    private void validarConfiguracionSedeTarifa(UUID idSede, UUID idTipoVehicul) {
+
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+        var tarifaEntity = TarifaEntity.build().setSede(SedeEntity.build().setId(idSede))
+                .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehicul))
+                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+
+        var resultadosTarifa = factory.getTarifaDAO().consultar(tarifaEntity);
+
+        if(resultadosTarifa.isEmpty()) {
+            var mensajeUsuario = "Antes de Ingresar el vehiculo, Configure la tarifa para esta sede y este tipo de vehiculo";
+            throw new BusinessGPException(mensajeUsuario);
+        }
+    }
+
+    private void validarCeldasDisponibles(UUID idSede, UUID idTipoVehiculo) {
+        var celdasDisponibles = factory.getCeldaDao().celdasDisponibles(idSede, idTipoVehiculo);
+
+        if (celdasDisponibles < 1) {
+            var mensajeUsuario = "No hay celdas disponibles para esta sede y este tipo de vehiculo";
+            throw new BusinessGPException(mensajeUsuario);
+        }
     }
 
     private void validarFormatoPlacaCarro(String placa){
