@@ -47,7 +47,7 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
                 .setNumeroIdentificacion(data.getNumeroIdentificacion()).setNombre(data.getNombre())
                 .setApellido(data.getApellido()).setCorreoElectronico(data.getCorreoElectronico())
                 .setTipoEmpleado(TipoEmpleadoAssemblerEntity.getInstance().toEntity(data.getTipoEmpleado()))
-                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setPassword(data.getPassword());
+                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setPassword(TextHelper.hashPassword(data.getPassword()));
 
         factory.getEmpleadoDAO().crear(empleadoEntity);
 

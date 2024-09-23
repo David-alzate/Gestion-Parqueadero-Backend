@@ -29,23 +29,44 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, LoginDomain
     public LoginDomain execute(LoginDomain data) {
         validarPassword(data.getPassword());
         validarNumeroIdentificacion(data.getNumeroIdentificacion());
+
         var empleado = validarUsuario(data.getNumeroIdentificacion(), data.getPassword(), data.getTipoEmpleado().getNombre());
+        
         var tipoEmpleado = TipoEmpleadoAssemblerEntity.getInstance().toDomain(empleado.getTipoEmpleado());
         data.setTipoEmpleado(tipoEmpleado);
+        
         return data;
     }
 
     private EmpleadoEntity validarUsuario(final Long numeroIdentificacion, final String password, String tipoEmpleado) {
-        var empleadoEntity = EmpleadoEntity.build().setNumeroIdentificacion(numeroIdentificacion)
-                .setPassword(password).setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
-
+        var empleadoEntity = EmpleadoEntity.build()
+            .setNumeroIdentificacion(numeroIdentificacion)
+            .setTipoEmpleado(TipoEmpleadoEntity.build().setNombre(tipoEmpleado));
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
 
         if (resultados.isEmpty()) {
             var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00080);
             throw new BusinessGPException(mensajeUsuario);
         }
-        return resultados.getFirst();
+
+        var empleado = resultados.getFirst();
+        var storedPassword = empleado.getPassword();
+
+        boolean esHash = storedPassword.length() > 30;
+
+        if (esHash) {
+            if (!TextHelper.checkPassword(password, storedPassword)) {
+                var mensajeUsuario = "Contraseña incorrecta";
+                throw new BusinessGPException(mensajeUsuario);
+            }
+        } else {
+            if (!password.equals(storedPassword)) {
+                var mensajeUsuario = "Contraseña incorrecta";
+                throw new BusinessGPException(mensajeUsuario);
+            }
+        }
+
+        return empleado;
     }
 
     private void validarNumeroIdentificacion(final Long numeroIdentificacion){

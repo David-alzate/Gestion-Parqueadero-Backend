@@ -1,5 +1,6 @@
 package co.com.park.gp.crosscutting.helpers;
 
+import org.mindrot.jbcrypt.BCrypt;
 import java.util.regex.Pattern;
 
 public class TextHelper {
@@ -68,5 +69,15 @@ public class TextHelper {
 
     public static String convertToLowercase(String string) {
         return string.toLowerCase();
+    }
+    
+    // Método para hashear la contraseña
+    public static String hashPassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    }
+
+    // Método para verificar la contraseña
+    public static boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }
