@@ -7,6 +7,7 @@ import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEnti
 import co.com.park.gp.business.domain.sesionparqueo.SesionParqueoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
 import co.com.park.gp.crosscutting.enums.EstadoEnum;
+import co.com.park.gp.crosscutting.enums.VehiculoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
@@ -45,11 +46,11 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
         validarVehiculoConPlan(data.getPlaca(), data.getSede().getId());
         validarMismoVehiculoEstadoActivo(data.getPlaca());
 
-        if (data.getTipoVehiculo().getTipoVehiculo().equals("Carro") || data.getTipoVehiculo().getTipoVehiculo().equals("Camion")){
+        if (data.getTipoVehiculo().getTipoVehiculo().equals(VehiculoEnum.CARRO.getNombre()) || data.getTipoVehiculo().getTipoVehiculo().equals(VehiculoEnum.CAMION.getNombre())){
             validarFormatoPlacaCarro(data.getPlaca().toUpperCase());
         }
 
-        if (data.getTipoVehiculo().getTipoVehiculo().equals("Moto")){
+        if (data.getTipoVehiculo().getTipoVehiculo().equals(VehiculoEnum.MOTO.getNombre())){
             validarFormatoPlacaMoto(data.getPlaca().toUpperCase());
         }
 
@@ -146,6 +147,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
             throw new BusinessGPException(mensajeUsuario);
         }
     }
+    
 
     private void validarFormatoPlacaMoto(String placa){
         if(!TextHelper.placaMotoValida(placa)){
