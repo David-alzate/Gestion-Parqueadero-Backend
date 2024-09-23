@@ -9,6 +9,7 @@ import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.data.dao.entity.planes.PlanDAO;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.clientes.ClienteEntity;
+import co.com.park.gp.entity.comunes.TipoVehiculoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
 import co.com.park.gp.entity.planes.PlanEntity;
 import co.com.park.gp.entity.planes.TipoPlanEntity;
@@ -94,7 +95,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
     public List<PlanEntity> consultar(PlanEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT p.id, s.id as idSede, s.nombresede as nombreSede, ");
-        sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, ");
+        sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, v.tipovehiculo_id as idTipoVehiculo, ");
         sentenciaSql.append("c.id as idCliente, c.nombre as nombreCliente, c.numeroidentificacion as numeroIdentificacionCliente, ");
         sentenciaSql.append("tp.id as idTipoPlan, tp.nombre as tipoPlanNombre, ");
         sentenciaSql.append("p.fechainicio, p.fechafin, ");
@@ -164,6 +165,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
                     VehiculoEntity vehiculo = VehiculoEntity.build();
                     vehiculo.setId(UUIDHelper.convertToUUID(resultado.getString("idVehiculo")));
                     vehiculo.setPlaca(resultado.getString("placaVehiculo"));
+                    vehiculo.setTipoVehiculo(TipoVehiculoEntity.build().setId(UUIDHelper.convertToUUID(resultado.getString("idTipoVehiculo"))));
                     plan.setVehiculo(vehiculo);
 
                     ClienteEntity cliente = ClienteEntity.build();
