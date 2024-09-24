@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import co.com.park.gp.business.domain.comunes.TipoIdentificacionDomain;
 import co.com.park.gp.business.domain.parqueaderos.SedeDomain;
+import co.com.park.gp.business.domain.tarifas.EstadoDomain;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.TextHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -18,11 +19,12 @@ public final class EmpleadoDomain {
 	private String correoElectronico;
 	private TipoEmpleadoDomain tipoEmpleado;
 	private SedeDomain sede;
+	private EstadoDomain estado;
 	private String password;
 
 	public EmpleadoDomain(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
 			final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
-			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final String password) {
+			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final EstadoDomain estado, final String password) {
 		setId(id);
 		setTipoIdentificacion(tipoIdentificacion);
 		setNumeroIdentificacion(numeroIdentificacion);
@@ -31,24 +33,25 @@ public final class EmpleadoDomain {
 		setCorreoElectronico(correoElectronico);
 		setTipoEmpleado(tipoEmpleado);
 		setSede(sede);
+		setEstado(estado);
 		setPassword(password);
 	}
 
 	public static EmpleadoDomain build(final UUID id, final TipoIdentificacionDomain tipoIdentificacion,
 			final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
-			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final String password) {
+			final TipoEmpleadoDomain tipoEmpleado, final SedeDomain sede, final EstadoDomain estado, final String password) {
 		return new EmpleadoDomain(id, tipoIdentificacion, numeroIdentificacion, nombre, apellido, correoElectronico,
-				tipoEmpleado, sede, password);
+				tipoEmpleado, sede, estado, password);
 	}
 
 	public static EmpleadoDomain build(final UUID id) {
 		return new EmpleadoDomain(id, TipoIdentificacionDomain.build(), 0L, TextHelper.EMPTY, TextHelper.EMPTY,
-				TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
+				TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), EstadoDomain.build(), TextHelper.EMPTY);
 	}
 
 	public static EmpleadoDomain build() {
 		return new EmpleadoDomain(UUIDHelper.getDefault(), TipoIdentificacionDomain.build(), 0L, TextHelper.EMPTY,
-				TextHelper.EMPTY, TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), TextHelper.EMPTY);
+				TextHelper.EMPTY, TextHelper.EMPTY, TipoEmpleadoDomain.build(), SedeDomain.build(), EstadoDomain.build(), TextHelper.EMPTY);
 	}
 
 	public final void setId(UUID id) {
@@ -86,6 +89,14 @@ public final class EmpleadoDomain {
 
 	public final void setPassword(String password) {
 		this.password = TextHelper.applyTrim(password);
+	}
+
+	public final EstadoDomain getEstado() {
+		return estado;
+	}
+
+	public final void setEstado(EstadoDomain estado) {
+		this.estado = ObjectHelper.getObjectHelper().getDefaultValue(estado, EstadoDomain.build());
 	}
 
 	public final UUID getId() {
