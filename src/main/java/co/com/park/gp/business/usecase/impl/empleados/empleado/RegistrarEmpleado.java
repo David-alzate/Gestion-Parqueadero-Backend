@@ -7,6 +7,7 @@ import co.com.park.gp.business.assembler.entity.impl.empleados.TipoEmpleadoAssem
 import co.com.park.gp.business.assembler.entity.impl.comunes.TipoIdentificacionAssemblerEntity;
 import co.com.park.gp.business.domain.empleados.EmpleadoDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
 import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
@@ -16,6 +17,7 @@ import co.com.park.gp.crosscutting.helpers.UUIDHelper;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 
 public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
 
@@ -40,6 +42,8 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         validarEmail(data.getCorreoElectronico());
         validarMismoNumeroIdentificacionMismoTipoEmpleado(data.getNumeroIdentificacion(), data.getTipoEmpleado().getNombre());
         validarMismoCorreoMismoTipoEmpleado(data.getCorreoElectronico(), data.getTipoEmpleado().getNombre());
+        
+        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var empleadoEntity = EmpleadoEntity.build().setId(generarIdentificadorEmpleado())
                 .setTipoIdentificacion(
@@ -47,7 +51,8 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
                 .setNumeroIdentificacion(data.getNumeroIdentificacion()).setNombre(data.getNombre())
                 .setApellido(data.getApellido()).setCorreoElectronico(data.getCorreoElectronico())
                 .setTipoEmpleado(TipoEmpleadoAssemblerEntity.getInstance().toEntity(data.getTipoEmpleado()))
-                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setPassword(TextHelper.hashPassword(data.getPassword()));
+                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setEstado(EstadoEntity.build().setId(estadoActivo.getId()))
+                .setPassword(TextHelper.hashPassword(data.getPassword()));
 
         factory.getEmpleadoDAO().crear(empleadoEntity);
 

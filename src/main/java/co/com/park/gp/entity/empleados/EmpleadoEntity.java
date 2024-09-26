@@ -37,7 +37,8 @@ public final class EmpleadoEntity {
 
 	public EmpleadoEntity(final UUID id, final TipoIdentificacionEntity tipoIdentificacion,
 			final Long numeroIdentificacion, final String nombre, final String apellido, final String correoElectronico,
-			final TipoEmpleadoEntity tipoEmpleado, final SedeEntity sede, final EstadoEntity estado, final String password) {
+			final TipoEmpleadoEntity tipoEmpleado, final SedeEntity sede, final EstadoEntity estado,
+			final String password) {
 		setId(id);
 		setTipoIdentificacion(tipoIdentificacion);
 		setNumeroIdentificacion(numeroIdentificacion);

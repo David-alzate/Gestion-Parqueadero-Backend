@@ -45,7 +45,7 @@ public class IniciarSesion implements UseCaseWithReturn<LoginDomain, LoginDomain
         var resultados = factory.getEmpleadoDAO().consultar(empleadoEntity);
 
         if (resultados.isEmpty()) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00080);
+            var mensajeUsuario = "No se encontraron resultados ";
             throw new BusinessGPException(mensajeUsuario);
         }
 

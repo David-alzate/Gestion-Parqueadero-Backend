@@ -18,6 +18,7 @@ import co.com.park.gp.data.dao.entity.empleados.EmpleadoDAO;
 import co.com.park.gp.data.dao.entity.concrete.SqlConnection;
 import co.com.park.gp.entity.empleados.EmpleadoEntity;
 import co.com.park.gp.entity.parqueaderos.SedeEntity;
+import co.com.park.gp.entity.tarifas.EstadoEntity;
 import co.com.park.gp.entity.empleados.TipoEmpleadoEntity;
 import co.com.park.gp.entity.comunes.TipoIdentificacionEntity;
 
@@ -32,8 +33,8 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("INSERT INTO empleado (id, nombre, apellido, correoelectronico, ");
-        sentenciaSql.append("sede_id, tipoidentificacion_id, tipoempleado_id, password, numeroidentificacion)");
-        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        sentenciaSql.append("sede_id, tipoidentificacion_id, tipoempleado_id, password, numeroidentificacion, estado_id)");
+        sentenciaSql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -46,6 +47,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             sentenciaSqlPreparada.setObject(7, data.getTipoEmpleado().getId());
             sentenciaSqlPreparada.setString(8, data.getPassword());
             sentenciaSqlPreparada.setLong(9, data.getNumeroIdentificacion());
+            sentenciaSqlPreparada.setObject(10, data.getEstado().getId());
 
             sentenciaSqlPreparada.executeUpdate();
 
@@ -202,7 +204,7 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
         final StringBuilder sentenciaSql = new StringBuilder();
 
         sentenciaSql.append("UPDATE empleado SET nombre=?, apellido=?, correoelectronico=?, sede_id=?, tipoidentificacion_id=?,  ");
-        sentenciaSql.append("tipoempleado_id=?, password=?, numeroidentificacion=? WHERE id=? ");
+        sentenciaSql.append("tipoempleado_id=?, password=?, numeroidentificacion=?, estado_id=? WHERE id=? ");
 
         try (final PreparedStatement sentenciaSqlPreparada = getConexion().prepareStatement(sentenciaSql.toString())) {
 
@@ -214,7 +216,8 @@ public class EmpleadoPostgresqlDAO extends SqlConnection implements EmpleadoDAO 
             sentenciaSqlPreparada.setObject(6, data.getTipoEmpleado().getId());
             sentenciaSqlPreparada.setString(7, data.getPassword());
             sentenciaSqlPreparada.setLong(8, data.getNumeroIdentificacion());
-            sentenciaSqlPreparada.setObject(9, data.getId());
+            sentenciaSqlPreparada.setObject(9, data.getEstado().getId());
+            sentenciaSqlPreparada.setObject(10, data.getId());
             sentenciaSqlPreparada.executeUpdate();
 
         } catch (final SQLException excepcion) {
