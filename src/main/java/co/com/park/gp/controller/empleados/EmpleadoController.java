@@ -84,13 +84,11 @@ public final class EmpleadoController {
 		} catch (final GPException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
 			empleadoResponse.getMensajes().add(excepcion.getMensajeUsuario());
-			excepcion.printStackTrace();
 		} catch (final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
 			var mensajeUsuario = "se ha presentado un prblema tratando de registar el nuevo empleado";
 			empleadoResponse.getMensajes().add(mensajeUsuario);
-			excepcion.printStackTrace();
 
 		}
 
