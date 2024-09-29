@@ -23,95 +23,90 @@ import java.util.UUID;
 
 public class SalidaVehiculo implements UseCaseWithoutReturn<SesionParqueoDomain> {
 
-    private final DAOFactory factory;
+	private final DAOFactory factory;
 
-    public SalidaVehiculo(final DAOFactory factory) {
-        if (ObjectHelper.getObjectHelper().isNull(factory)) {
-            var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo la salida del vehiculo...";
-            var mensajeTecnico = "El dao factory para la salida del vehiculo llegó nulo...";
-            throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
-        }
-        this.factory = factory;
-    }
+	public SalidaVehiculo(final DAOFactory factory) {
+		if (ObjectHelper.getObjectHelper().isNull(factory)) {
+			var mensajeUsuario = "Se ha presentado un problema tratando de llevar a cabo la salida del vehiculo...";
+			var mensajeTecnico = "El dao factory para la salida del vehiculo llegó nulo...";
+			throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
+		}
+		this.factory = factory;
+	}
 
-    @Override
-    public void execute(SesionParqueoDomain data) {
+	@Override
+	public void execute(SesionParqueoDomain data) {
 
-        validarSesionExiste(data.getPlaca());
+		validarSesionExiste(data.getPlaca());
 
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.INACTIVO.getNombre());
+		var sesionParqueoEntity = SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()).getId())
+				.setFechaHoraSalida(LocalDateTime.now().withSecond(0).withNano(0))
+				.setEstado(EstadoEntity.build().setId(EstadoEnum.INACTIVO.getId(factory)));
 
-        var sesionParqueoEntity = SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()).getId())
-                .setFechaHoraSalida(LocalDateTime.now().withSecond(0).withNano(0))
-                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+		// Obtener Datos para la facturacion
+		BigDecimal tarifa = BigDecimal.valueOf(objetenerTarifa(idSesionParqueo(data.getPlaca()).getSede().getId(),
+				idSesionParqueo(data.getPlaca()).getTipoVehiculo().getId()).getTarifa());
+		var fechaHoraIngreso = idSesionParqueo(data.getPlaca()).getFechaHoraIngreso();
+		var duracionSesion = Duration.between(fechaHoraIngreso, LocalDateTime.now().withSecond(0).withNano(0));
+		long minutosTotales = duracionSesion.toMinutes();
+		BigDecimal horasProporcionales = BigDecimal.valueOf(minutosTotales).divide(BigDecimal.valueOf(60), 2,
+				RoundingMode.HALF_UP);
+		BigDecimal valorPagar = tarifa.multiply(horasProporcionales);
 
+		var facturacionEntity = FacturacionEntitiy.build().setId(generarIdentificadorFactura())
+				.setSesionParqueo(SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()).getId()))
+				.setTarifa(TarifaEntity.build()
+						.setId(objetenerTarifa(data.getSede().getId(), data.getTipoVehiculo().getId()).getId()))
+				.setMetodoPago(MetodoPagoEntity.build()
+						.setId(UUIDHelper.convertToUUID("f47ac10b-58cc-4372-a567-0e02b2c3d479")))
+				.setDuracion(duracionSesion).setValorPagar(valorPagar);
 
-        // Obtener Datos para la facturacion
-        BigDecimal tarifa = BigDecimal.valueOf(objetenerTarifa(idSesionParqueo(data.getPlaca()).getSede().getId(), idSesionParqueo(data.getPlaca()).getTipoVehiculo().getId()).getTarifa());
-        var fechaHoraIngreso = idSesionParqueo(data.getPlaca()).getFechaHoraIngreso();
-        var duracionSesion = Duration.between(fechaHoraIngreso, LocalDateTime.now().withSecond(0).withNano(0));
-        long minutosTotales = duracionSesion.toMinutes();
-        BigDecimal horasProporcionales = BigDecimal.valueOf(minutosTotales).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
-        BigDecimal valorPagar = tarifa.multiply(horasProporcionales);
+		factory.getSesionParqueoDAO().salidaVehiculo(sesionParqueoEntity);
+		factory.getFacturacionDao().crear(facturacionEntity);
+	}
 
-        var facturacionEntity = FacturacionEntitiy.build().setId(generarIdentificadorFactura())
-                .setSesionParqueo(SesionParqueoEntity.build().setId(idSesionParqueo(data.getPlaca()).getId()))
-                .setTarifa(TarifaEntity.build().setId(objetenerTarifa(data.getSede().getId(), data.getTipoVehiculo().getId()).getId()))
-                .setMetodoPago(MetodoPagoEntity.build().setId(UUIDHelper.convertToUUID("f47ac10b-58cc-4372-a567-0e02b2c3d479")))
-                .setDuracion(duracionSesion)
-                .setValorPagar(valorPagar);
+	private SesionParqueoEntity idSesionParqueo(String placa) {
 
-        factory.getSesionParqueoDAO().salidaVehiculo(sesionParqueoEntity);
-        factory.getFacturacionDao().crear(facturacionEntity);
-    }
+		var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase())
+				.setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 
+		var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
+		return resultados.get(0);
+	}
 
-    private SesionParqueoEntity idSesionParqueo(String placa) {
+	private TarifaEntity objetenerTarifa(UUID idSede, UUID idTipoVehiculo) {
 
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+		var tarifa = TarifaEntity.build().setSede(SedeEntity.build().setId(idSede))
+				.setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo));
 
-        var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
-                .setId(estadoActivo.getId()));
+		var resultados = factory.getTarifaDAO().consultar(tarifa);
+		return resultados.get(0);
+	}
 
-        var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
-        return resultados.get(0);
-    }
+	private UUID generarIdentificadorFactura() {
+		UUID id = UUIDHelper.generate();
+		boolean existeId = true;
 
-    private TarifaEntity objetenerTarifa(UUID idSede, UUID idTipoVehiculo) {
+		while (existeId) {
+			id = UUIDHelper.generate();
+			var facturaEntity = FacturacionEntitiy.build().setId(id);
+			var resultados = factory.getFacturacionDao().consultar(facturaEntity);
+			existeId = !resultados.isEmpty();
+		}
+		return id;
+	}
 
-        var tarifa = TarifaEntity.build().setSede(SedeEntity.build().setId(idSede))
-                .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo));
+	private void validarSesionExiste(String placa) {
 
-        var resultados = factory.getTarifaDAO().consultar(tarifa);
-        return resultados.get(0);
-    }
+		var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase())
+				.setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 
-    private UUID generarIdentificadorFactura() {
-        UUID id = UUIDHelper.generate();
-        boolean existeId = true;
+		var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
 
-        while (existeId) {
-            id = UUIDHelper.generate();
-            var facturaEntity = FacturacionEntitiy.build().setId(id);
-            var resultados = factory.getFacturacionDao().consultar(facturaEntity);
-            existeId = !resultados.isEmpty();
-        }
-        return id;
-    }
+		if (resultados.isEmpty()) {
+			var mensajeUsuario = "El vehiculo no cuenta con una sesion de parqueo Activa";
+			throw new BusinessGPException(mensajeUsuario);
+		}
 
-    private void validarSesionExiste(String placa){
-
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
-
-        var idSesion = SesionParqueoEntity.build().setPlaca(placa.toUpperCase()).setEstado(EstadoEntity.build()
-                .setId(estadoActivo.getId()));
-
-        var resultados = factory.getSesionParqueoDAO().consultar(idSesion);
-
-        if (resultados.isEmpty()){
-            var mensajeUsuario = "El vehiculo no cuenta con una sesion de parqueo Activa";
-            throw new BusinessGPException(mensajeUsuario);
-        }
-
-    }
+	}
 }

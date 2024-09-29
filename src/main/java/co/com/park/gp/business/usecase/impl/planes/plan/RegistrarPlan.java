@@ -61,10 +61,9 @@ public class RegistrarPlan implements UseCaseWithoutReturn<PlanDomain> {
     }
 
     private void validarSesionActiva(String placa){
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var sesionParqueoEntity = SesionParqueoEntity.build().setPlaca(placa)
-                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+                .setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 

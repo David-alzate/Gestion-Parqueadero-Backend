@@ -60,7 +60,7 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
                 .setPlaca(data.getPlaca()).setTipoVehiculo(TipoVehiculoAssemblerEntity.getInstance().toEntity(data.getTipoVehiculo()))
                 .setEstado(EstadoAssemblerEntity.getInstance().toEntity(data.getEstado()))
                 .setFechaHoraIngreso(data.getFechaHoraIngreso());
-
+       
         factory.getSesionParqueoDAO().ingresarVehiculo(sesionParqueoEnity);
 
     }
@@ -80,11 +80,10 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
     }
 
     private void validarMismoVehiculoEstadoActivo(String placa){
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var sesionParqueoEntity = SesionParqueoEntity.build()
                 .setPlaca(placa)
-                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+                .setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 
         var resultados = factory.getSesionParqueoDAO().consultar(sesionParqueoEntity);
 
@@ -119,10 +118,9 @@ public class IngresarVehiculo implements UseCaseWithoutReturn<SesionParqueoDomai
 
     private void validarConfiguracionSedeTarifa(UUID idSede, UUID idTipoVehicul) {
 
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
         var tarifaEntity = TarifaEntity.build().setSede(SedeEntity.build().setId(idSede))
                 .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehicul))
-                .setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+                .setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 
         var resultadosTarifa = factory.getTarifaDAO().consultar(tarifaEntity);
 

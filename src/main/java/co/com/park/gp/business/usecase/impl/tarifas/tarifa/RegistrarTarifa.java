@@ -6,6 +6,7 @@ import co.com.park.gp.business.assembler.entity.impl.tarifas.EstadoAssemblerEnti
 import co.com.park.gp.business.assembler.entity.impl.tarifas.TipoTarifaAssemblerEntity;
 import co.com.park.gp.business.domain.tarifas.TarifaDomain;
 import co.com.park.gp.business.usecase.UseCaseWithoutReturn;
+import co.com.park.gp.crosscutting.enums.EstadoEnum;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.crosscutting.helpers.ObjectHelper;
 import co.com.park.gp.crosscutting.helpers.UUIDHelper;
@@ -66,7 +67,7 @@ public class RegistrarTarifa implements UseCaseWithoutReturn<TarifaDomain> {
 
         var resultados = factory.getTarifaDAO().consultar(tarifaEntity);
 
-        if(!resultados.isEmpty() && estado.equals("Activa")){
+        if(!resultados.isEmpty() && estado.equals(EstadoEnum.ACTIVO.getNombre())){
             var mensajeUsuario = "Ya existe una tarifa activa para esa sede con este tipo de vehiculo";
             throw new BusinessGPException(mensajeUsuario);
         }

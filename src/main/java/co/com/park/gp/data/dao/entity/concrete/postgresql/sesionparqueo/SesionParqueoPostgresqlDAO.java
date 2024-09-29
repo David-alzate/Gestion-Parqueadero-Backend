@@ -23,12 +23,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionParqueoDAO {
+	
+	private final DAOFactory factory;
 
-	private final EstadoEntity estadoActivo;
 
-	public SesionParqueoPostgresqlDAO(final Connection conexion, final DAOFactory factory) {
+	public SesionParqueoPostgresqlDAO(final Connection conexion, DAOFactory factory) {
 		super(conexion);
-		this.estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
+		this.factory = factory;
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
 			sentenciaSqlPreparada.setObject(4, data.getEmpleado().getId());
 			sentenciaSqlPreparada.setObject(5, data.getFechaHoraIngreso());
 			sentenciaSqlPreparada.setObject(6, data.getTipoVehiculo().getId());
-			sentenciaSqlPreparada.setObject(7, estadoActivo.getId());
+			sentenciaSqlPreparada.setObject(7, EstadoEnum.ACTIVO.getId(factory));
 
 			sentenciaSqlPreparada.executeUpdate();
 
@@ -263,7 +264,7 @@ public class SesionParqueoPostgresqlDAO extends SqlConnection implements SesionP
 	public int consultaCeldasOcupadas(UUID idSede, UUID idTipoVehiculo) {
 		SesionParqueoEntity sesionParqueoEntity = SesionParqueoEntity.build().setSede(SedeEntity.build().setId(idSede))
 				.setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo))
-				.setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+				.setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
 		List<SesionParqueoEntity> resultados = consultar(sesionParqueoEntity);
 		if (resultados.isEmpty()) {
 			return 0;

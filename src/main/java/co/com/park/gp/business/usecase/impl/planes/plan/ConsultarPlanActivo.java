@@ -27,10 +27,9 @@ public class ConsultarPlanActivo implements UseCaseWithReturn<PlanDomain, List<P
 
     @Override
     public List<PlanDomain> execute(PlanDomain data) {
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var planFilter = PlanAssemblerEntity.getInstance().toEntity(data);
-        var planActivo = planFilter.setEstado(EstadoEntity.build().setId(estadoActivo.getId()));
+        var planActivo = planFilter.setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
         var resultadosEntity = factory.getPlanDAO().consultar(planActivo);
         return PlanAssemblerEntity.getInstance().toDomainCollection(resultadosEntity);
     }

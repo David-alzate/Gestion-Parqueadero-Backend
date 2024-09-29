@@ -42,8 +42,6 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
         validarEmail(data.getCorreoElectronico());
         validarMismoNumeroIdentificacionMismoTipoEmpleado(data.getNumeroIdentificacion(), data.getTipoEmpleado().getNombre());
         validarMismoCorreoMismoTipoEmpleado(data.getCorreoElectronico(), data.getTipoEmpleado().getNombre());
-        
-        var estadoActivo = factory.getEstadoDAO().consultarPorDescripcion(EstadoEnum.ACTIVO.getNombre());
 
         var empleadoEntity = EmpleadoEntity.build().setId(generarIdentificadorEmpleado())
                 .setTipoIdentificacion(
@@ -51,7 +49,7 @@ public class RegistrarEmpleado implements UseCaseWithoutReturn<EmpleadoDomain> {
                 .setNumeroIdentificacion(data.getNumeroIdentificacion()).setNombre(data.getNombre())
                 .setApellido(data.getApellido()).setCorreoElectronico(data.getCorreoElectronico())
                 .setTipoEmpleado(TipoEmpleadoAssemblerEntity.getInstance().toEntity(data.getTipoEmpleado()))
-                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setEstado(EstadoEntity.build().setId(estadoActivo.getId()))
+                .setSede(SedeAssemblerEntity.getInstance().toEntity(data.getSede())).setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)))
                 .setPassword(TextHelper.hashPassword(data.getPassword()));
 
         factory.getEmpleadoDAO().crear(empleadoEntity);
