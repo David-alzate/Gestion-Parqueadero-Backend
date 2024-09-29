@@ -15,71 +15,75 @@ import co.com.park.gp.entity.parqueaderos.ParqueaderoEntity;
 
 public final class RegistrarParqueadero implements UseCaseWithoutReturn<ParqueaderoDomain> {
 
-    private final DAOFactory factory;
+	private final DAOFactory factory;
 
-    public RegistrarParqueadero(final DAOFactory factory) {
-        if (ObjectHelper.getObjectHelper().isNull(factory)) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
-            var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
-            throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
-        }
+	public RegistrarParqueadero(final DAOFactory factory) {
+		if (ObjectHelper.getObjectHelper().isNull(factory)) {
+			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00069);
+			var mensajeTecnico = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00070);
+			throw new BusinessGPException(mensajeUsuario, mensajeTecnico);
+		}
 
-        this.factory = factory;
-    }
+		this.factory = factory;
+	}
 
-    @Override
-    public void execute(final ParqueaderoDomain data) {
+	@Override
+	public void execute(final ParqueaderoDomain data) {
 
-        validarParqueadero(data.getNombre());
-        validarParqueaderoExiste(data.getNombre());
+		validarParqueadero(data.getNombre());
+		validarParqueaderoExiste(data.getNombre());
 
-        var parqueaderoEntity = ParqueaderoEntity.build().setId(generarIdentificadorSede()).setNombre(data.getNombre());
+		var parqueaderoEntity = ParqueaderoEntity.build().setId(generarIdentificadorSede()).setNombre(data.getNombre());
 
-        factory.getParqueaderoDAO().crear(parqueaderoEntity);
+		factory.getParqueaderoDAO().crear(parqueaderoEntity);
 
-    }
+	}
 
-    private final UUID generarIdentificadorSede() { 
-        UUID id = UUIDHelper.generate();
-        boolean existeId = true;
+	private final UUID generarIdentificadorSede() {
+		UUID id = UUIDHelper.generate();
+		boolean existeId = true;
 
-        while (existeId) {
-            id = UUIDHelper.generate();
-            var parqueaderoEntity = ParqueaderoEntity.build().setId(id);
-            var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
-            existeId = !resultados.isEmpty();
-        }
-        return id;
-    }
+		while (existeId) {
+			id = UUIDHelper.generate();
+			var parqueaderoEntity = ParqueaderoEntity.build().setId(id);
+			var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
+			existeId = !resultados.isEmpty();
+		}
+		return id;
+	}
 
-    private void validarParqueadero(final String nombreParqueadero) {
+	private void validarParqueadero(final String nombreParqueadero) {
 
-        if (TextHelper.isNullOrEmpty(nombreParqueadero)) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00075);
-            throw new BusinessGPException(mensajeUsuario);
-        }
+		if (TextHelper.isNullOrEmpty(nombreParqueadero)) {
+			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00075);
+			throw new BusinessGPException(mensajeUsuario);
+		}
 
-        if (nombreParqueadero.length() < 2) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00076), nombreParqueadero);
-            throw new BusinessGPException(mensajeUsuario);
-        }
+		if (nombreParqueadero.length() < 2) {
+			var mensajeUsuario = TextHelper.reemplazarParametro(
+					MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00076), nombreParqueadero);
+			throw new BusinessGPException(mensajeUsuario);
+		}
 
-        if (nombreParqueadero.length() > 40) {
-            var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00077);
-            throw new BusinessGPException(mensajeUsuario);
-        }
+		if (nombreParqueadero.length() > 40) {
+			var mensajeUsuario = MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00077);
+			throw new BusinessGPException(mensajeUsuario);
+		}
 
-    }
+	}
 
-    private void validarParqueaderoExiste(final String nombreParqueadero) {
-        var parqueaderoEntity = ParqueaderoEntity.build().setNombre(nombreParqueadero);
-        var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
-        if (!resultados.isEmpty()) {
-            var mensajeUsuario = TextHelper.reemplazarParametro(
-                    MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00110), nombreParqueadero);
-            throw new BusinessGPException(mensajeUsuario);
-        }
-    }
+	private void validarParqueaderoExiste(final String nombreParqueadero) {
+		var parqueaderoEntity = ParqueaderoEntity.build().setNombre(nombreParqueadero.toLowerCase());
+		var resultados = factory.getParqueaderoDAO().consultar(parqueaderoEntity);
+		if (!resultados.isEmpty()) {
+			var nombreParqueaderoEntity = resultados.get(0).getNombre();
+
+			if (nombreParqueaderoEntity.equalsIgnoreCase(nombreParqueadero)) {
+				var mensajeUsuario = TextHelper.reemplazarParametro(
+						MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00110), nombreParqueadero);
+				throw new BusinessGPException(mensajeUsuario);
+			}
+		}
+	}
 
 }

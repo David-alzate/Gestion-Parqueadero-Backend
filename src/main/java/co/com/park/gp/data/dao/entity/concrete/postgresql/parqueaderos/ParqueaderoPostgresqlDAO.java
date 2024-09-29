@@ -39,7 +39,7 @@ public class ParqueaderoPostgresqlDAO extends SqlConnection implements Parqueade
         }
 
         if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-            sentenciaSql.append(" AND p.nombre = ?");
+            sentenciaSql.append(" AND LOWER(p.nombre) = ?");
             parametros.add(data.getNombre());
         }
 

@@ -89,7 +89,7 @@ public class SedePostgresqlDAO extends SqlConnection implements SedeDAO {
         }
 
         if (!TextHelper.isNullOrEmpty(data.getNombre())) {
-            sentenciaSql.append(" AND s.nombresede= ?");
+            sentenciaSql.append(" AND LOWER(s.nombresede) = ?");
             parametros.add(data.getNombre());
         }
 

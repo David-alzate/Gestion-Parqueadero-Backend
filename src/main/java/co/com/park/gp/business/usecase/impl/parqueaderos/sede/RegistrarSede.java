@@ -123,16 +123,20 @@ public final class RegistrarSede implements UseCaseWithoutReturn<SedeDomain> {
     }
 
     private void validarSedeMismoNombreMismoParqueaero(final String nombreSede, final UUID idParqueadero) {
-        var sedeEntity = SedeEntity.build().setNombre(nombreSede)
+        var sedeEntity = SedeEntity.build().setNombre(nombreSede.toLowerCase())
                 .setParqueadero(ParqueaderoEntity.build().setId(idParqueadero));
 
         var resultados = factory.getSedeDAO().consultar(sedeEntity);
 
         if (!resultados.isEmpty()) {
-            var mensajeUsuario = TextHelper
-                    .reemplazarParametro(MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00056), nombreSede);
-            throw new BusinessGPException(mensajeUsuario);
-        }
+			var nombreParqueaderoEntity = resultados.get(0).getNombre();
+
+			if (nombreParqueaderoEntity.equalsIgnoreCase(nombreSede)) {
+				var mensajeUsuario = TextHelper.reemplazarParametro(
+						MessageCatalogStrategy.getContenidoMensaje(CodigoMensaje.M00056), nombreSede);
+				throw new BusinessGPException(mensajeUsuario);
+			}
+		}
 
     }
 
