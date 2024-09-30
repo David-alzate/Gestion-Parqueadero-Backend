@@ -1,11 +1,13 @@
 package co.com.park.gp.controller.tarifas;
 
+import co.com.park.gp.business.facade.impl.planes.plan.ConsultarPlanActivoFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tarifa.ConsultarTarifaFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tarifa.EliminarTarifaFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tarifa.ModificarTarifaFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tarifa.RegistrarTarifaFacade;
 import co.com.park.gp.controller.response.tarifa.TarifaResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
+import co.com.park.gp.dto.planes.PlanDTO;
 import co.com.park.gp.dto.tarifas.TarifaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +46,34 @@ public class TarifaController {
 
             var mensajeUsuario = "Se ha presentado un problema al consultar la información de las tarifas";
             tarifaResponse.getMensajes().add(mensajeUsuario);
+        }
+
+        return new ResponseEntity<>(tarifaResponse, httpStatusCode);
+    }
+
+    @GetMapping("/activas")
+    public ResponseEntity<TarifaResponse> consultarActivos() {
+
+        var httpStatusCode = HttpStatus.ACCEPTED;
+        var tarifaResponse = new TarifaResponse();
+
+        try {
+            var tarifaDto = TarifaDTO.build();
+            var facade = new ConsultarTarifaFacade();
+
+            tarifaResponse.setDatos(facade.execute(tarifaDto));
+            tarifaResponse.getMensajes().add("Tarifas Activas Consultado exitosamente");
+
+        } catch (final GPException excepcion) {
+            httpStatusCode = HttpStatus.BAD_REQUEST;
+            tarifaResponse.getMensajes().add(excepcion.getMensajeUsuario());
+
+        } catch (final Exception excepcion) {
+            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            var mensajeUsuario = "se ha presentado un problema tratando de consultar las tarifas Activos";
+            tarifaResponse.getMensajes().add(mensajeUsuario);
+
         }
 
         return new ResponseEntity<>(tarifaResponse, httpStatusCode);
