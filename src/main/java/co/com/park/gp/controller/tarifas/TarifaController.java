@@ -1,10 +1,7 @@
 package co.com.park.gp.controller.tarifas;
 
 import co.com.park.gp.business.facade.impl.planes.plan.ConsultarPlanActivoFacade;
-import co.com.park.gp.business.facade.impl.tarifas.tarifa.ConsultarTarifaFacade;
-import co.com.park.gp.business.facade.impl.tarifas.tarifa.EliminarTarifaFacade;
-import co.com.park.gp.business.facade.impl.tarifas.tarifa.ModificarTarifaFacade;
-import co.com.park.gp.business.facade.impl.tarifas.tarifa.RegistrarTarifaFacade;
+import co.com.park.gp.business.facade.impl.tarifas.tarifa.*;
 import co.com.park.gp.controller.response.tarifa.TarifaResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.dto.planes.PlanDTO;
@@ -18,11 +15,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tarifas/")
 public class TarifaController {
-
-    @GetMapping("/dummy/")
-    public TarifaDTO dummy() {
-        return TarifaDTO.build();
-    }
 
     @GetMapping
     public ResponseEntity<TarifaResponse> consultar() {
@@ -59,7 +51,7 @@ public class TarifaController {
 
         try {
             var tarifaDto = TarifaDTO.build();
-            var facade = new ConsultarTarifaFacade();
+            var facade = new ConsultarTarifaActivaFacade();
 
             tarifaResponse.setDatos(facade.execute(tarifaDto));
             tarifaResponse.getMensajes().add("Tarifas Activas Consultado exitosamente");

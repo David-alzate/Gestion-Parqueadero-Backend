@@ -91,11 +91,10 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         }
     }
 
-    @Override
     public List<PlanEntity> consultar(PlanEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT p.id, s.id as idSede, s.nombresede as nombreSede, ");
-        sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, v.tipovehiculo_id as idTipoVehiculo, ");
+        sentenciaSql.append("v.id as idVehiculo, v.placa as placaVehiculo, v.tipovehiculo_id as idTipoVehiculo, tv.tipovehiculo as nombreTipoVehiculo, ");
         sentenciaSql.append("c.id as idCliente, c.nombre as nombreCliente, c.numeroidentificacion as numeroIdentificacionCliente, ");
         sentenciaSql.append("tp.id as idTipoPlan, tp.nombre as tipoPlanNombre, ");
         sentenciaSql.append("p.fechainicio, p.fechafin, ");
@@ -103,6 +102,7 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
         sentenciaSql.append("FROM plan p ");
         sentenciaSql.append("INNER JOIN sede s ON s.id = p.sede_id ");
         sentenciaSql.append("INNER JOIN vehiculo v ON v.id = p.vehiculo_id ");
+        sentenciaSql.append("INNER JOIN tipovehiculo tv ON tv.id = v.tipovehiculo_id ");
         sentenciaSql.append("INNER JOIN cliente c ON c.id = p.cliente_id ");
         sentenciaSql.append("INNER JOIN tipoplan tp ON tp.id = p.tipoplan_id ");
         sentenciaSql.append("INNER JOIN estado es ON es.id = p.estado_id ");
@@ -144,6 +144,16 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
             sentenciaSql.append(" AND es.id = ?");
             parametros.add(data.getEstado().getId());
         }
+        
+     // Filtro dinámico por tipo de vehículo
+        if (!ObjectHelper.getObjectHelper().isNull(data.getVehiculo()) &&
+            !ObjectHelper.getObjectHelper().isNull(data.getVehiculo().getTipoVehiculo()) &&
+            !ObjectHelper.getObjectHelper().isNull(data.getVehiculo().getTipoVehiculo().getId()) &&
+            !data.getVehiculo().getTipoVehiculo().getId().equals(UUIDHelper.getDefault())) {
+            
+            sentenciaSql.append(" AND tv.id = ?");
+            parametros.add(data.getVehiculo().getTipoVehiculo().getId());
+        }
 
         final List<PlanEntity> planes = new ArrayList<>();
 
@@ -166,6 +176,13 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
                     vehiculo.setId(UUIDHelper.convertToUUID(resultado.getString("idVehiculo")));
                     vehiculo.setPlaca(resultado.getString("placaVehiculo"));
                     vehiculo.setTipoVehiculo(TipoVehiculoEntity.build().setId(UUIDHelper.convertToUUID(resultado.getString("idTipoVehiculo"))));
+                    plan.setVehiculo(vehiculo);
+                    
+                 // Asignar el tipo de vehículo con el nombre obtenido
+                    TipoVehiculoEntity tipoVehiculo = TipoVehiculoEntity.build();
+                    tipoVehiculo.setId(UUIDHelper.convertToUUID(resultado.getString("idTipoVehiculo")));
+                    tipoVehiculo.setTipoVehiculo(resultado.getString("nombreTipoVehiculo"));
+                    vehiculo.setTipoVehiculo(tipoVehiculo);
                     plan.setVehiculo(vehiculo);
 
                     ClienteEntity cliente = ClienteEntity.build();
@@ -242,4 +259,16 @@ public class PlanPostgresqlDAO extends SqlConnection implements PlanDAO {
             throw new DataGPException(mensajeUsuario, mensajeTecnico, excepcion);
         }
     }
+
+	@Override
+	public int consultaCeldasOcupadasPlan(UUID idSede, UUID idTipoVehiculo) {
+		PlanEntity planEntity = PlanEntity.build().setSede(SedeEntity.build().setId(idSede))
+				.setVehiculo(VehiculoEntity.build().setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo)))
+				.setEstado(EstadoEntity.build().setId(EstadoEnum.ACTIVO.getId(factory)));
+		List<PlanEntity> resultados = consultar(planEntity);
+		if (resultados.isEmpty()) {
+			return 0;
+		}
+		return resultados.size();
+	}
 }

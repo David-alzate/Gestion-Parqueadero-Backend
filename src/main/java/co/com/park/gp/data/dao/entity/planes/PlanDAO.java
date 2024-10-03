@@ -9,4 +9,5 @@ import co.com.park.gp.entity.planes.PlanEntity;
 import java.util.UUID;
 
 public interface PlanDAO extends CreateDAO<PlanEntity>, RetriveDAO<PlanEntity>,UpdateDAO<PlanEntity>, DeleteDAO<UUID>{
+	int consultaCeldasOcupadasPlan(UUID idSede, UUID idTipoVehiculo);
 }

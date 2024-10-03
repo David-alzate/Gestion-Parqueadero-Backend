@@ -32,7 +32,6 @@ import co.com.park.gp.data.dao.entity.tarifas.TipoTarifaDAO;
 import co.com.park.gp.data.dao.entity.vehiculos.VehiculoDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import co.com.park.gp.crosscutting.exceptions.custom.DataGPException;
 import co.com.park.gp.crosscutting.messagecatalog.MessageCatalogStrategy;
 import co.com.park.gp.crosscutting.messagecatalog.data.CodigoMensaje;
@@ -229,15 +228,15 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //        DAOFactory factory = DAOFactory.getFactory();
 //        System.out.println("Iniciando transacción...");
 //        factory.iniciarTransaccion();
-
-
-//        System.out.println("Consultar Celdas Ocupadas JDM Principal - Carro");
-//        var resultadosCeldasOcupadas = factory.getSesionParqueoDAO()
-//                .consultaCeldasOcupadas(UUIDHelper.convertToUUID("25eb6b44-3950-46fe-bc81-fc8c01610413"),
-//                        UUIDHelper.convertToUUID("92ad8df6-52bc-48e2-a381-58c241209b25"));
 //
-//        System.out.println("Celdas Ocupadas : " + resultadosCeldasOcupadas);
 //
+//        System.out.println("Consultar Celdas Ocupadas Plan ");
+//        var resultadosCeldasOcupadas = factory.getPlanDAO()
+//                .consultaCeldasOcupadasPlan(UUIDHelper.convertToUUID("b8d75f5a-39dd-4288-9d67-417c8220319e"),
+//                        UUIDHelper.convertToUUID("ccc3c63c-37a3-441f-88b1-467a2070eaa4"));
+//
+//        System.out.println("Celdas Ocupadas Plan: " + resultadosCeldasOcupadas);
+
 //        System.out.println("Consultar Celdas Disponibles JDM Principal - Carro");
 //        var resultadosCeldasDisponibles = factory.getCeldaDao()
 //                .celdasDisponibles(UUIDHelper.convertToUUID("25eb6b44-3950-46fe-bc81-fc8c01610413"),
@@ -255,8 +254,8 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //            System.out.println("idTarifa : " + tarifaEntity.getId() + ", idSede: " + tarifaEntity.getSede().getId() +
 //                    ", tarifa: " + tarifaEntity.getTarifa());
 //        }
-
-
+//
+//
 //        System.out.println("Consultar Sede");
 //        var resultadosSede = factory.getSedeDAO().consultar(SedeEntity.build().setParqueadero(ParqueaderoEntity.build().setId(UUIDHelper.convertToUUID("e1a1e0a0-0000-0000-0000-000000000001"))));
 //
