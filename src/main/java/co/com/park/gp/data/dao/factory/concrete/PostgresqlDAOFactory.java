@@ -230,13 +230,13 @@ public final class PostgresqlDAOFactory extends SqlConnection implements DAOFact
 //        factory.iniciarTransaccion();
 //
 //
-//        System.out.println("Consultar Celdas Ocupadas Plan ");
-//        var resultadosCeldasOcupadas = factory.getPlanDAO()
-//                .consultaCeldasOcupadasPlan(UUIDHelper.convertToUUID("b8d75f5a-39dd-4288-9d67-417c8220319e"),
-//                        UUIDHelper.convertToUUID("ccc3c63c-37a3-441f-88b1-467a2070eaa4"));
+////        System.out.println("Consultar Celdas Ocupadas Plan ");
+////        var resultadosCeldasOcupadas = factory.getPlanDAO()
+////                .consultaCeldasOcupadasPlan(UUIDHelper.convertToUUID("b8d75f5a-39dd-4288-9d67-417c8220319e"),
+////                        UUIDHelper.convertToUUID("ccc3c63c-37a3-441f-88b1-467a2070eaa4"));
+////
+////        System.out.println("Celdas Ocupadas Plan: " + resultadosCeldasOcupadas);
 //
-//        System.out.println("Celdas Ocupadas Plan: " + resultadosCeldasOcupadas);
-
 //        System.out.println("Consultar Celdas Disponibles JDM Principal - Carro");
 //        var resultadosCeldasDisponibles = factory.getCeldaDao()
 //                .celdasDisponibles(UUIDHelper.convertToUUID("25eb6b44-3950-46fe-bc81-fc8c01610413"),

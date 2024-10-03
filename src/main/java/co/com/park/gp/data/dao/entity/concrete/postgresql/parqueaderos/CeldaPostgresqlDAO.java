@@ -185,12 +185,13 @@ public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
 
     @Override
     public int celdasDisponibles(UUID idSede, UUID idTipoVehiculo) {
-        var celdasOcupadas = factory.getSesionParqueoDAO().consultaCeldasOcupadas(idSede, idTipoVehiculo);
+        var celdasOcupadaSesionesParqueo = factory.getSesionParqueoDAO().consultaCeldasOcupadas(idSede, idTipoVehiculo);
+        var celdasOcupadasPlanes = factory.getPlanDAO().consultaCeldasOcupadasPlan(idSede, idTipoVehiculo);
         var resultadoCeldas = factory.getCeldaDao().consultar(CeldaEntity.build()
                 .setSede(SedeEntity.build().setId(idSede))
                 .setTipoVehiculo(TipoVehiculoEntity.build().setId(idTipoVehiculo)));
 
         var totalCeldas = resultadoCeldas.get(0).getCantidadCeldas();
-        return totalCeldas - celdasOcupadas;
+        return totalCeldas - celdasOcupadaSesionesParqueo - celdasOcupadasPlanes;
     }
 }
