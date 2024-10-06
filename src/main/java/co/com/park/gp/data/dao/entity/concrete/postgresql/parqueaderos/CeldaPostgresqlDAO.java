@@ -185,6 +185,12 @@ public class CeldaPostgresqlDAO extends SqlConnection implements CeldaDAO {
 
     @Override
     public int celdasDisponibles(UUID idSede, UUID idTipoVehiculo) {
+    	
+    	if(idSede.equals(UUIDHelper.getDefault()) || idTipoVehiculo.equals(UUIDHelper.getDefault()) || ObjectHelper.getObjectHelper().isNull(idSede) || ObjectHelper.getObjectHelper().isNull(idTipoVehiculo)) {
+    		var mensajeUsuario = "Se ha presentado un problema tratando de consultar las celdas disponibles";
+			throw new DataGPException(mensajeUsuario);
+    	}
+    	
         var celdasOcupadaSesionesParqueo = factory.getSesionParqueoDAO().consultaCeldasOcupadas(idSede, idTipoVehiculo);
         var celdasOcupadasPlanes = factory.getPlanDAO().consultaCeldasOcupadasPlan(idSede, idTipoVehiculo);
         var resultadoCeldas = factory.getCeldaDao().consultar(CeldaEntity.build()

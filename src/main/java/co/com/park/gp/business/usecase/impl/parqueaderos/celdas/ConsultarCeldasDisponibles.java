@@ -29,3 +29,4 @@ public class ConsultarCeldasDisponibles implements UseCaseWithReturn<CeldaDomain
 	}
 
 }
+	
