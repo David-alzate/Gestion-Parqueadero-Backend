@@ -1,10 +1,8 @@
 package co.com.park.gp.controller.tarifas;
 
-import co.com.park.gp.business.facade.impl.planes.plan.ConsultarPlanActivoFacade;
 import co.com.park.gp.business.facade.impl.tarifas.tarifa.*;
 import co.com.park.gp.controller.response.tarifa.TarifaResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
-import co.com.park.gp.dto.planes.PlanDTO;
 import co.com.park.gp.dto.tarifas.TarifaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
