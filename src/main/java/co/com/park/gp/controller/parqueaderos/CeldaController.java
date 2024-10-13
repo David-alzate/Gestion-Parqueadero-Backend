@@ -7,7 +7,10 @@ import co.com.park.gp.business.facade.impl.parqueaderos.celdas.ModificarCeldaFac
 import co.com.park.gp.business.facade.impl.parqueaderos.celdas.RegistrarCeldaFacade;
 import co.com.park.gp.controller.response.parqueaderos.CeldaResponse;
 import co.com.park.gp.crosscutting.exceptions.GPException;
+import co.com.park.gp.dto.comunes.TipoVehiculoDTO;
 import co.com.park.gp.dto.parqueaderos.CeldaDTO;
+import co.com.park.gp.dto.parqueaderos.SedeDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,135 +21,135 @@ import java.util.UUID;
 @RequestMapping("/celdas/")
 public class CeldaController {
 
-    @GetMapping
-    public ResponseEntity<CeldaResponse> consultar() {
+	@GetMapping
+	public ResponseEntity<CeldaResponse> consultar() {
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var celdaResponse = new CeldaResponse();
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var celdaResponse = new CeldaResponse();
 
-        try {
-            var celdaDto = CeldaDTO.build();
-            var facade = new ConsultarCeldaFacade();
+		try {
+			var celdaDto = CeldaDTO.build();
+			var facade = new ConsultarCeldaFacade();
 
-            celdaResponse.setDatos(facade.execute(celdaDto));
-            celdaResponse.getMensajes().add("Celdas Consultadas Exitosamente");
+			celdaResponse.setDatos(facade.execute(celdaDto));
+			celdaResponse.getMensajes().add("Celdas Consultadas Exitosamente");
 
-        } catch (final GPException excepcion) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
+		} catch (final GPException excepcion) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
 
-        } catch (final Exception excepcion) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (final Exception excepcion) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Error al consultar las celdas";
-            celdaResponse.getMensajes().add(mensajeUsuario);
+			var mensajeUsuario = "Error al consultar las celdas";
+			celdaResponse.getMensajes().add(mensajeUsuario);
 
-        }
+		}
 
-        return new ResponseEntity<>(celdaResponse, httpStatusCode);
-    }
-    
-    @GetMapping("/Disponibles")
-    public ResponseEntity<CeldaResponse> consultarCeldasDisponibles() {
+		return new ResponseEntity<>(celdaResponse, httpStatusCode);
+	}
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var celdaResponse = new CeldaResponse();
+	@GetMapping("/Disponibles/{idSede}/{idTipoVehiculo}")
+	public ResponseEntity<CeldaResponse> consultarCeldasDisponibles(@PathVariable("idSede") UUID idSede,
+			@PathVariable("idTipoVehiculo") UUID idTipoVehiculo) {
 
-        try {
-            var celdaDto = CeldaDTO.build();
-            
-            var facade = new ConsultarCeldasDisponiblesFacade();
-            var celdasDisponibles = facade.execute(celdaDto);
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var celdaResponse = new CeldaResponse();
 
-            celdaResponse.setDatos(celdasDisponibles);
-            celdaResponse.getMensajes().add("Celdas Disponibles Consultadas Exitosamente");
+		try {
+			var celdaDto = CeldaDTO.build().setSede(SedeDTO.build().setId(idSede))
+					.setTipoVehiculo(TipoVehiculoDTO.build().setId(idTipoVehiculo));
 
-        } catch (final GPException excepcion) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			var facade = new ConsultarCeldasDisponiblesFacade();
+			var celdasDisponibles = facade.execute(celdaDto);
 
-        } catch (final Exception excepcion) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+			celdaResponse.setDatos(celdasDisponibles);
+			celdaResponse.getMensajes().add("Celdas Disponibles Consultadas Exitosamente");
 
-            var mensajeUsuario = "Error al consultar las celdas";
-            celdaResponse.getMensajes().add(mensajeUsuario);
-        }
+		} catch (final GPException excepcion) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
 
-        return new ResponseEntity<>(celdaResponse, httpStatusCode);
-    }
+		} catch (final Exception excepcion) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
+			var mensajeUsuario = "Error al consultar las celdas";
+			celdaResponse.getMensajes().add(mensajeUsuario);
+		}
 
-    @PostMapping
-    public ResponseEntity<CeldaResponse> crear(@RequestBody CeldaDTO celda) {
+		return new ResponseEntity<>(celdaResponse, httpStatusCode);
+	}
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var celdaResponse = new CeldaResponse();
+	@PostMapping
+	public ResponseEntity<CeldaResponse> crear(@RequestBody CeldaDTO celda) {
 
-        try {
-            var facade = new RegistrarCeldaFacade();
-            facade.execute(celda);
-            celdaResponse.getMensajes().add("Creacion de celda exitosa");
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var celdaResponse = new CeldaResponse();
 
-        } catch (final GPException excepcion) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
-        } catch (final Exception excepcion) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		try {
+			var facade = new RegistrarCeldaFacade();
+			facade.execute(celda);
+			celdaResponse.getMensajes().add("Creacion de celda exitosa");
 
-            var mensajeUsuario = "Se ha presentado un error registrando la celda";
-            celdaResponse.getMensajes().add(mensajeUsuario);
-        }
+		} catch (final GPException excepcion) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			celdaResponse.getMensajes().add(excepcion.getMensajeUsuario());
+		} catch (final Exception excepcion) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        return new ResponseEntity<>(celdaResponse, httpStatusCode);
+			var mensajeUsuario = "Se ha presentado un error registrando la celda";
+			celdaResponse.getMensajes().add(mensajeUsuario);
+		}
 
-    }
+		return new ResponseEntity<>(celdaResponse, httpStatusCode);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CeldaResponse> eliminar(@PathVariable UUID id) {
+	}
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var celdaResponse = new CeldaResponse();
+	@DeleteMapping("/{id}")
+	public ResponseEntity<CeldaResponse> eliminar(@PathVariable UUID id) {
 
-        try {
-            var facade = new EliminarCeldaFacade();
-            facade.execute(id);
-            celdaResponse.getMensajes().add("Celda eliminada existosamente ");
-        } catch (final GPException exception) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            celdaResponse.getMensajes().add(exception.getMensajeUsuario());
-        } catch (final Exception exception) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var celdaResponse = new CeldaResponse();
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la celda";
-            celdaResponse.getMensajes().add(mensajeUsuario);
+		try {
+			var facade = new EliminarCeldaFacade();
+			facade.execute(id);
+			celdaResponse.getMensajes().add("Celda eliminada existosamente ");
+		} catch (final GPException exception) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			celdaResponse.getMensajes().add(exception.getMensajeUsuario());
+		} catch (final Exception exception) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        }
-        return new ResponseEntity<>(celdaResponse, httpStatusCode);
-    }
+			var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la celda";
+			celdaResponse.getMensajes().add(mensajeUsuario);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CeldaResponse> modificar(@PathVariable UUID id, @RequestBody CeldaDTO celda) {
+		}
+		return new ResponseEntity<>(celdaResponse, httpStatusCode);
+	}
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var celdaResponse = new CeldaResponse();
+	@PutMapping("/{id}")
+	public ResponseEntity<CeldaResponse> modificar(@PathVariable UUID id, @RequestBody CeldaDTO celda) {
 
-        try {
-            celda.setId(id);
-            var facade = new ModificarCeldaFacade();
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var celdaResponse = new CeldaResponse();
 
-            facade.execute(celda);
-            celdaResponse.getMensajes().add("Celda modificado existosamente ");
-        } catch (final GPException exception) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            celdaResponse.getMensajes().add(exception.getMensajeUsuario());
-        } catch (final Exception exception) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		try {
+			celda.setId(id);
+			var facade = new ModificarCeldaFacade();
 
-            var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la celda";
-            celdaResponse.getMensajes().add(mensajeUsuario);
-        }
-        return new ResponseEntity<>(celdaResponse, httpStatusCode);
-    }
+			facade.execute(celda);
+			celdaResponse.getMensajes().add("Celda modificado existosamente ");
+		} catch (final GPException exception) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			celdaResponse.getMensajes().add(exception.getMensajeUsuario());
+		} catch (final Exception exception) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
+			var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la celda";
+			celdaResponse.getMensajes().add(mensajeUsuario);
+		}
+		return new ResponseEntity<>(celdaResponse, httpStatusCode);
+	}
 
 }

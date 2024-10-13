@@ -8,34 +8,34 @@ import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.data.dao.factory.DAOFactory;
 import co.com.park.gp.dto.parqueaderos.CeldaDTO;
 
-public class ConsultarCeldasDisponiblesFacade implements FacadeWhitReturn<CeldaDTO, Integer>{
-	
+public class ConsultarCeldasDisponiblesFacade implements FacadeWhitReturn<CeldaDTO, Integer> {
+
 	private final DAOFactory daoFactory;
 
-    public ConsultarCeldasDisponiblesFacade() {
-        daoFactory = DAOFactory.getFactory();
-    }
+	public ConsultarCeldasDisponiblesFacade() {
+		daoFactory = DAOFactory.getFactory();
+	}
 
 	@Override
 	public Integer execute(CeldaDTO dto) {
 		try {
 
-            var useCase = new ConsultarCeldasDisponibles(daoFactory);
-            var celdaDomain = CeldaAssemblerDTO.getInstance().toDomain(dto);
-            var resultadosDomain = useCase.execute(celdaDomain);
+			var useCase = new ConsultarCeldasDisponibles(daoFactory);
+			var celdaDomain = CeldaAssemblerDTO.getInstance().toDomain(dto);
+			var resultadosDomain = useCase.execute(celdaDomain);
 
-            return resultadosDomain;
+			return resultadosDomain;
 
-        } catch (final GPException exception) {
-            throw exception;
-        } catch (final Exception exception) {
-            var mensajeUsuario = "Se ha presentado un problema al consultar la información de las celdas";
-            var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el select en la tabla \"celda\" de la base de datos.";
+		} catch (final GPException exception) {
+			throw exception;
+		} catch (final Exception exception) {
+			var mensajeUsuario = "Se ha presentado un problema al consultar la información de las celdas";
+			var mensajeTecnico = "Se ha presentado una SQLException tratando de realizar el select en la tabla \"celda\" de la base de datos.";
 
-            throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
-        } finally {
-            daoFactory.cerrarConexion();
-        }
+			throw new BusinessGPException(mensajeTecnico, mensajeUsuario, exception);
+		} finally {
+			daoFactory.cerrarConexion();
+		}
 	}
 
 }
