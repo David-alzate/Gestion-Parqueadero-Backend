@@ -25,7 +25,7 @@ public class MetodoPagoPostgresqlDAO extends SqlConnection implements MetodoPago
     public List<MetodoPagoEntity> consultar(MetodoPagoEntity data) {
         final StringBuilder sentenciaSql = new StringBuilder();
         sentenciaSql.append("SELECT mp.id, mp.nombre ");
-        sentenciaSql.append("FROM metodo_pago mp ");
+        sentenciaSql.append("FROM metodopago mp ");
         sentenciaSql.append("WHERE 1=1 ");
 
         final List<Object> parametros = new ArrayList<>();

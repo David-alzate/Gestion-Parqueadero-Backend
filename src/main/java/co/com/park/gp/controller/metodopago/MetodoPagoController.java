@@ -14,33 +14,33 @@ import co.com.park.gp.dto.facturacion.MetodoPagoDTO;
 @RestController
 @RequestMapping("/metodoPago/")
 public class MetodoPagoController {
-	
-    @GetMapping
-    public ResponseEntity<MetodoPagoResponse> consultar() {
 
-        var httpStatusCode = HttpStatus.ACCEPTED;
-        var metodoPagoResponse = new MetodoPagoResponse();
+	@GetMapping
+	public ResponseEntity<MetodoPagoResponse> consultar() {
 
-        try {
-            var metodoPagoDto = MetodoPagoDTO.build();
-            var facade = new ConsultarMetodoPagoFacade();
+		var httpStatusCode = HttpStatus.ACCEPTED;
+		var metodoPagoResponse = new MetodoPagoResponse();
 
-            metodoPagoResponse.setDatos(facade.execute(metodoPagoDto));
-            metodoPagoResponse.getMensajes().add("Metodos de Pago consultados Exitosamente");
+		try {
+			var metodoPagoDto = MetodoPagoDTO.build();
+			var facade = new ConsultarMetodoPagoFacade();
 
-        } catch (final GPException excepcion) {
-            httpStatusCode = HttpStatus.BAD_REQUEST;
-            metodoPagoResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			metodoPagoResponse.setDatos(facade.execute(metodoPagoDto));
+			metodoPagoResponse.getMensajes().add("Metodos de Pago consultados Exitosamente");
 
-        } catch (final Exception excepcion) {
-            httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (final GPException excepcion) {
+			httpStatusCode = HttpStatus.BAD_REQUEST;
+			metodoPagoResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			excepcion.printStackTrace();
+		} catch (final Exception excepcion) {
+			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
-            var mensajeUsuario = "Error al consultar las celdas";
-            metodoPagoResponse.getMensajes().add(mensajeUsuario);
+			var mensajeUsuario = "Error al consultar El metodo de pago";
+			metodoPagoResponse.getMensajes().add(mensajeUsuario);
+			excepcion.printStackTrace();
+		}
 
-        }
-
-        return new ResponseEntity<>(metodoPagoResponse, httpStatusCode);
-    }
+		return new ResponseEntity<>(metodoPagoResponse, httpStatusCode);
+	}
 
 }
