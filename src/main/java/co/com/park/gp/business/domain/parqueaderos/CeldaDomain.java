@@ -11,7 +11,7 @@ public final class CeldaDomain {
     private UUID id;
     private SedeDomain sede;
     private TipoVehiculoDomain tipoVehiculo;
-    private int CantidadCeldas;
+    private int cantidadCeldas;
 
     public CeldaDomain(UUID id, SedeDomain sede, TipoVehiculoDomain tipoVehiculo, int cantidadCeldas) {
         setId(id);
@@ -57,10 +57,10 @@ public final class CeldaDomain {
     }
 
     public int getCantidadCeldas() {
-        return CantidadCeldas;
+        return cantidadCeldas;
     }
 
     public void setCantidadCeldas(int cantidadCeldas) {
-        CantidadCeldas = cantidadCeldas;
+    	cantidadCeldas = cantidadCeldas;
     }
 }

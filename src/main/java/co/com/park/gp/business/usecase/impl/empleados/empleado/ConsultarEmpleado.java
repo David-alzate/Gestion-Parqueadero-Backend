@@ -34,3 +34,4 @@ public class ConsultarEmpleado implements UseCaseWithReturn<EmpleadoDomain, List
     }
 
 }
+    

@@ -50,8 +50,8 @@ public class CeldaController {
 	}
 
 	@GetMapping("/Disponibles/{idSede}/{idTipoVehiculo}")
-	public ResponseEntity<CeldaResponse> consultarCeldasDisponibles(@PathVariable("idSede") UUID idSede,
-			@PathVariable("idTipoVehiculo") UUID idTipoVehiculo) {
+	public ResponseEntity<CeldaResponse> consultarCeldasDisponibles(@PathVariable UUID idSede,
+			@PathVariable UUID idTipoVehiculo) {
 
 		var httpStatusCode = HttpStatus.ACCEPTED;
 		var celdaResponse = new CeldaResponse();

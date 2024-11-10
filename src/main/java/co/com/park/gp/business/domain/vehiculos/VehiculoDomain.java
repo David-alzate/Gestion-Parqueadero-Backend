@@ -36,11 +36,11 @@ public final class VehiculoDomain {
     }
 
     public void setTipoVehiculo(TipoVehiculoDomain tipoVehiculo) {
-        this.tipoVehiculo = ObjectHelper.getObjectHelper().getDefaultValue(tipoVehiculo, TipoVehiculoDomain.build());;
+        this.tipoVehiculo = ObjectHelper.getObjectHelper().getDefaultValue(tipoVehiculo, TipoVehiculoDomain.build());
     }
 
     public void setPlaca(String placa) {
-        this.placa = TextHelper.applyTrim(placa);;
+        this.placa = TextHelper.applyTrim(placa);
     }
 
     public UUID getId() {

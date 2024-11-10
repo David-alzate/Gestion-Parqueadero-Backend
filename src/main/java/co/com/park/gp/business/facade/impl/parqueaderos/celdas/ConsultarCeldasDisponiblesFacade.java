@@ -22,9 +22,8 @@ public class ConsultarCeldasDisponiblesFacade implements FacadeWhitReturn<CeldaD
 
 			var useCase = new ConsultarCeldasDisponibles(daoFactory);
 			var celdaDomain = CeldaAssemblerDTO.getInstance().toDomain(dto);
-			var resultadosDomain = useCase.execute(celdaDomain);
 
-			return resultadosDomain;
+			return useCase.execute(celdaDomain);
 
 		} catch (final GPException exception) {
 			throw exception;

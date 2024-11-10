@@ -6,7 +6,6 @@ import co.com.park.gp.business.usecase.impl.tarifas.tarifa.ConsultarTarifasActiv
 import co.com.park.gp.crosscutting.exceptions.GPException;
 import co.com.park.gp.crosscutting.exceptions.custom.BusinessGPException;
 import co.com.park.gp.data.dao.factory.DAOFactory;
-import co.com.park.gp.dto.planes.PlanDTO;
 import co.com.park.gp.dto.tarifas.TarifaDTO;
 
 import java.util.List;
