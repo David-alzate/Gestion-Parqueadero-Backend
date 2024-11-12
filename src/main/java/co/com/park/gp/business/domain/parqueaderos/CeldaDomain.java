@@ -61,6 +61,6 @@ public final class CeldaDomain {
     }
 
     public void setCantidadCeldas(int cantidadCeldas) {
-    	cantidadCeldas = cantidadCeldas;
+    	this.cantidadCeldas = cantidadCeldas;
     }
 }

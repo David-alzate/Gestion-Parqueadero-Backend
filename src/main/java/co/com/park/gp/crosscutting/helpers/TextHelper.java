@@ -8,8 +8,8 @@ public class TextHelper {
     public static final String EMPTY = "";
     public static final String UNDERLINE = "_";
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
-    private static final Pattern PLACA_CARRO_PATTERN = Pattern.compile("^[A-Z]{3}[0-9]{3}$");
-    private static final Pattern PLACA_MOTO_PATTERN = Pattern.compile("^[A-Z]{3}[0-9]{2}[A-Z]$");
+    private static final Pattern PLACA_CARRO_PATTERN = Pattern.compile("^[A-Z]{3}\\d{3}$");
+    private static final Pattern PLACA_MOTO_PATTERN = Pattern.compile("^[A-Z]{3}\\d{2}[A-Z]$");
 
     private TextHelper() {
         super();
@@ -71,12 +71,10 @@ public class TextHelper {
         return string.toLowerCase();
     }
     
-    // Método para hashear la contraseña
     public static String hashPassword(String plainPassword) {
         return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
     }
 
-    // Método para verificar la contraseña
     public static boolean checkPassword(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }

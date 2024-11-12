@@ -8,6 +8,7 @@ class GpApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Metodo vacio a proposito
 	}
 
 }
