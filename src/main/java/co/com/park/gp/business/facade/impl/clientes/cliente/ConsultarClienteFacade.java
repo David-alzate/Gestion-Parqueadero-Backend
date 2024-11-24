@@ -24,7 +24,6 @@ public class ConsultarClienteFacade implements FacadeWhitReturn<ClienteDTO, List
             var useCase = new ConsultarCliente(daoFactory);
             var clienteDomain = ClienteAssemblerDTO.getInstance().toDomain(dto);
             var resultadosDomain = useCase.execute(clienteDomain);
-
             return ClienteAssemblerDTO.getInstance().toDTOCollection(resultadosDomain);
 
         } catch (final GPException exception) {
