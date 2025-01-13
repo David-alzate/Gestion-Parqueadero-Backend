@@ -1,7 +1,8 @@
-# Gestion Parqueadero - Backend
+# Gestión Parqueadero - Backend
 
 ## Introducción
-El backend del proyecto para parqueaderos proporciona la infraestructura necesaria para gestionar de manera eficiente los procesos asociados a la administración de parqueaderos vehiculares. Este sistema está desarrollado en **Java** utilizando **Spring Boot** y emplea **PostgreSQL** como sistema de gestión de bases de datos. La solución está diseñada para automatizar funciones clave como el registro de entrada y salida de vehículos, la gestión de tarifas, el control de abonados y la generación de informes estadísticos.
+El backend del proyecto para parqueaderos proporciona la infraestructura necesaria para gestionar de manera eficiente los procesos asociados a la administración de parqueaderos vehiculares. Este sistema está desarrollado en **Java** utilizando **Spring Boot** y emplea **PostgreSQL** como sistema de gestión de bases de datos. La solución está diseñada para automatizar funciones clave como el registro de entrada y salida de vehículos, la gestión de tarifas, el control de abonados y la generación de informes estadísticos.  
+Este backend se comunica con el [frontend del sistema de gestión de parqueaderos](<https://github.com/David-alzate/Gestion-Parqueadero-FrontEnd>), desarrollado en Angular, para proporcionar una experiencia de usuario completa.
 
 ---
 
@@ -28,12 +29,12 @@ El backend del proyecto para parqueaderos proporciona la infraestructura necesar
 
 ### Interfaz de Administración
 - Creación y gestión de perfiles de empleados.
-- 
+
 ---
 
 ## Tecnologías Utilizadas
 - **Lenguaje de programación:** Java  
 - **Framework:** Spring Boot  
 - **Base de datos:** PostgreSQL  
-- **Maven:** Gestión de dependencias  
+- **Maven:** Gestión de dependencias
 
